@@ -20,7 +20,9 @@
       
         <tags>
             
-            <tag> blog,Markdown </tag>
+            <tag> blog </tag>
+            
+            <tag> Markdown </tag>
             
         </tags>
       
@@ -45,7 +47,9 @@
       
         <tags>
             
-            <tag> Hexo,blog </tag>
+            <tag> Hexo </tag>
+            
+            <tag> blog </tag>
             
         </tags>
       
