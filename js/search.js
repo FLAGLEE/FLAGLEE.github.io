@@ -1,12 +1,12 @@
 /* eslint-disable */
 var SearchService = "";
 
-(function($) {
+(function ($) {
   /**
    * A super class of common logics for all search services
    * @param options : (object)
    */
-  SearchService = function(options) {
+  SearchService = function (options) {
     var self = this;
 
     self.config = $.extend({
@@ -31,11 +31,26 @@ var SearchService = "";
         btn_prev: "#u-search .btn-prev"
       },
       brands: {
-        'hexo': {logo: '', url: ''},
-        'google': {logo: 'google.svg', url: 'https://cse.google.com'},
-        'algolia': {logo: 'algolia.svg', url: 'https://www.algolia.com'},
-        'baidu': {logo: 'baidu.svg', url: 'http://zn.baidu.com/cse/home/index'},
-        'azure': {logo: 'azure.svg', url: 'https://azure.microsoft.com/en-us/services/search/'}
+        'hexo': {
+          logo: '',
+          url: ''
+        },
+        'google': {
+          logo: 'google.svg',
+          url: 'https://cse.google.com'
+        },
+        'algolia': {
+          logo: 'algolia.svg',
+          url: 'https://www.algolia.com'
+        },
+        'baidu': {
+          logo: 'baidu.svg',
+          url: 'http://zn.baidu.com/cse/home/index'
+        },
+        'azure': {
+          logo: 'azure.svg',
+          url: 'https://azure.microsoft.com/en-us/services/search/'
+        }
       },
       imagePath: ROOT + "img/"
     }, options);
@@ -51,18 +66,18 @@ var SearchService = "";
       current: 1
     };
 
-    self.parseSelectors = function() {
+    self.parseSelectors = function () {
       for (var key in self.config.selectors) {
         self.dom[key] = $(self.config.selectors[key]);
       }
     };
 
-    self.beforeQuery = function() {
+    self.beforeQuery = function () {
       if (!self.open) {
         self.dom.container.fadeIn();
         self.dom.body.addClass('modal-active');
       }
-      self.dom.input.each(function(index,elem) {
+      self.dom.input.each(function (index, elem) {
         $(elem).val(self.queryText);
       });
       document.activeElement.blur();
@@ -71,7 +86,7 @@ var SearchService = "";
       self.startLoading();
     };
 
-    self.afterQuery = function() {
+    self.afterQuery = function () {
       self.dom.modal_body.scrollTop(0);
       self.dom.modal_ajax_content.addClass('loaded');
       self.stopLoading();
@@ -81,14 +96,13 @@ var SearchService = "";
      * Perform a complete serach operation including UI updates and query
      * @param startIndex {int} start index or page number
      */
-    self.search = function(startIndex, callback) {
+    self.search = function (startIndex, callback) {
       self.beforeQuery();
       if (self.search instanceof Function) {
-        self.query(self.queryText, startIndex, function() {
+        self.query(self.queryText, startIndex, function () {
           self.afterQuery();
         });
-      }
-      else {
+      } else {
         console.log("query() does not exist.");
         self.onQueryError(self.queryText, '');
         self.afterQuery();
@@ -100,9 +114,9 @@ var SearchService = "";
      * @param queryText: (string)
      * @param status: (string)
      */
-    self.onQueryError = function(queryText, status) {
+    self.onQueryError = function (queryText, status) {
       var errMsg = "";
-      if (status === "success") errMsg = "No result found for \"" +queryText+ "\".";
+      if (status === "success") errMsg = "No result found for \"" + queryText + "\".";
       else if (status === "timeout") errMsg = "Unfortunate timeout.";
       else errMsg = "Mysterious failure.";
       self.dom.modal_results.html("");
@@ -110,13 +124,13 @@ var SearchService = "";
       self.dom.modal_error.show();
     };
 
-    self.nextPage = function() {
+    self.nextPage = function () {
       if (self.nav.next !== -1) {
         self.search(self.nav.next);
       }
     };
 
-    self.prevPage = function() {
+    self.prevPage = function () {
       if (self.nav.prev !== -1) {
         self.search(self.nav.prev);
       }
@@ -129,12 +143,12 @@ var SearchService = "";
      * @param digest : (string) digest
      * @param index : 标号
      */
-    self.buildResult = function(url, title, digest, index) {
+    self.buildResult = function (url, title, digest, index) {
       var html = "";
       html = "<li>";
-      html += "<a class='result' href='" +url+ "'>";
-      html += "<span class='title'>" +title+ "</span>";
-      if (digest !== "") html += "<span class='digest'>" +digest+ "</span>";
+      html += "<a class='result' href='" + url + "'>";
+      html += "<span class='title'>" + title + "</span>";
+      if (digest !== "") html += "<span class='digest'>" + digest + "</span>";
       html += "</a>";
       html += "</li>";
       return html;
@@ -144,7 +158,7 @@ var SearchService = "";
      * Close the modal, resume body scrolling
      * no param
      */
-    self.close = function() {
+    self.close = function () {
       self.open = false;
       self.dom.container.fadeOut();
       self.dom.body.removeClass('modal-active');
@@ -154,7 +168,7 @@ var SearchService = "";
      * Searchform submit event handler
      * @param queryText : (string) the query text
      */
-    self.onSubmit = function(event) {
+    self.onSubmit = function (event) {
       event.preventDefault();
       self.queryText = $(this).find('.u-search-input').val();
       if (self.queryText) {
@@ -166,11 +180,11 @@ var SearchService = "";
      * Start loading bar animation
      * no param
      */
-    self.startLoading = function() {
+    self.startLoading = function () {
       self.dom.modal_loading_bar.show();
-      self.loadingTimer = setInterval(function() {
-        self.percentLoaded = Math.min(self.percentLoaded+5,95);
-        self.dom.modal_loading_bar.css('width', self.percentLoaded+'%');
+      self.loadingTimer = setInterval(function () {
+        self.percentLoaded = Math.min(self.percentLoaded + 5, 95);
+        self.dom.modal_loading_bar.css('width', self.percentLoaded + '%');
       }, 100);
     };
 
@@ -178,11 +192,11 @@ var SearchService = "";
      * Stop loading bar animation
      * no param
      */
-    self.stopLoading = function() {
+    self.stopLoading = function () {
       clearInterval(self.loadingTimer);
       self.dom.modal_loading_bar.css('width', '100%');
       self.dom.modal_loading_bar.fadeOut();
-      setTimeout(function() {
+      setTimeout(function () {
         self.percentLoaded = 0;
         self.dom.modal_loading_bar.css('width', '0%');
       }, 300);
@@ -192,18 +206,18 @@ var SearchService = "";
      * Add service branding
      * @param service {String} service name
      */
-    self.addLogo = function(service) {
+    self.addLogo = function (service) {
       var html = "";
       if (self.config.brands[service] && self.config.brands[service].logo) {
-        html += "<a href='" +self.config.brands[service].url+ "' class='" +service+ "'>";
-        html +=    '<img src="' +self.config.imagePath+self.config.brands[service].logo+ '" />';
+        html += "<a href='" + self.config.brands[service].url + "' class='" + service + "'>";
+        html += '<img src="' + self.config.imagePath + self.config.brands[service].logo + '" />';
         html += "</a>";
         self.dom.modal_logo.html(html);
       }
     };
 
-    self.destroy = function() {
-      self.dom.form.each(function(index,elem) {
+    self.destroy = function () {
+      self.dom.form.each(function (index, elem) {
         $(elem).off('submit');
       });
       self.dom.modal_overlay.off('click');
@@ -217,11 +231,11 @@ var SearchService = "";
      * Load template and register event handlers
      * no param
      */
-    self.init = function() {
+    self.init = function () {
       $('body').append(template);
       self.parseSelectors();
       self.dom.modal_footer.show();
-      self.dom.form.each(function(index,elem) {
+      self.dom.form.each(function (index, elem) {
         $(elem).on('submit', self.onSubmit);
       });
       self.dom.modal_overlay.on('click', self.close);
@@ -237,33 +251,33 @@ var SearchService = "";
 })(jQuery);
 
 var AlgoliaSearch;
-(function($) {
+(function ($) {
   'use strict';
 
   /**
    * Search by Algolia Search
    * @param options : (object)
    */
-  AlgoliaSearch = function(options) {
+  AlgoliaSearch = function (options) {
     SearchService.apply(this, arguments);
     var self = this;
-    var endpoint = "https://" +self.config.appId+ "-dsn.algolia.net/1/indexes/" + self.config.indexName;
+    var endpoint = "https://" + self.config.appId + "-dsn.algolia.net/1/indexes/" + self.config.indexName;
     self.addLogo('algolia');
 
     /**
      * Generate result list html
      * @param data : (array) result items
      */
-    self.buildResultList = function(data) {
+    self.buildResultList = function (data) {
       var html = "";
-      $.each(data, function(index, row) {
+      $.each(data, function (index, row) {
         var url = row.permalink || row.path || "";
         if (!row.permalink && row.path) {
           url = ROOT + url;
         }
         var title = row.title;
         var digest = "";
-        html += self.buildResult(url, title, digest, index+1);
+        html += self.buildResult(url, title, digest, index + 1);
       });
       return html;
     };
@@ -272,32 +286,29 @@ var AlgoliaSearch;
      * Generate metadata after a successful query
      * @param data : (object) the raw search response data
      */
-    self.buildMetadata = function(data) {
+    self.buildMetadata = function (data) {
       self.nav.current = data.page * data.hitsPerPage + 1;
       self.nav.currentCount = data.hits.length;
       self.nav.total = parseInt(data.nbHits);
       self.dom.modal_metadata.children('.total').html(self.nav.total);
-      self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current+self.nav.currentCount-1));
+      self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current + self.nav.currentCount - 1));
       if (self.nav.total > 0) {
         self.dom.modal_metadata.show();
-      }
-      else {
+      } else {
         self.dom.modal_metadata.hide();
       }
 
-      if (data.page < data.nbPages-1) {
-        self.nav.next = (data.page+1)+1;
+      if (data.page < data.nbPages - 1) {
+        self.nav.next = (data.page + 1) + 1;
         self.dom.btn_next.show();
-      }
-      else {
+      } else {
         self.nav.next = -1;
         self.dom.btn_next.hide();
       }
       if (data.page > 0) {
-        self.nav.prev = (data.page+1)-1;
+        self.nav.prev = (data.page + 1) - 1;
         self.dom.btn_prev.show();
-      }
-      else {
+      } else {
         self.nav.prev = -1;
         self.dom.btn_prev.hide();
       }
@@ -309,19 +320,18 @@ var AlgoliaSearch;
      * @param page : (int) the current page (start from 1)
      * @param callback : (function)
      */
-    self.query = function(queryText, page, callback) {
+    self.query = function (queryText, page, callback) {
       $.get(endpoint, {
         query: queryText,
-        page: page-1,
+        page: page - 1,
         hitsPerPage: self.config.per_page,
         "x-algolia-application-id": self.config.appId,
         "x-algolia-api-key": self.config.apiKey
-      }, function(data, status) {
+      }, function (data, status) {
         if (status === 'success' && data.hits && data.hits.length > 0) {
           var results = self.buildResultList(data.hits);
           self.dom.modal_results.html(results);
-        }
-        else {
+        } else {
           self.onQueryError(queryText, status);
         }
         self.buildMetadata(data);
@@ -337,17 +347,17 @@ var AlgoliaSearch;
 })(jQuery);
 
 var AzureSearch;
-(function($) {
+(function ($) {
   'use strict';
 
   /**
    * Search by Azure Search API
    * @param options : (object)
    */
-  AzureSearch = function(options) {
+  AzureSearch = function (options) {
     SearchService.apply(this, arguments);
     var self = this;
-    var endpoint = "https://" +self.config.serviceName+ ".search.windows.net/indexes/" +self.config.indexName+ "/docs?api-version=2015-02-28";
+    var endpoint = "https://" + self.config.serviceName + ".search.windows.net/indexes/" + self.config.indexName + "/docs?api-version=2015-02-28";
     self.nav.current = 1;
     self.addLogo('azure');
 
@@ -355,9 +365,9 @@ var AzureSearch;
      * Generate result list html
      * @param data : (array) result items
      */
-    self.buildResultList = function(data) {
+    self.buildResultList = function (data) {
       var html = "";
-      $.each(data, function(index, row) {
+      $.each(data, function (index, row) {
         var url = row.permalink || row.path || "";
         if (!row.permalink && row.path) {
           url = "/" + url;
@@ -374,32 +384,29 @@ var AzureSearch;
      * @param data : (object) the raw response data
      * @param startIndex : (int) requested start index of current query
      */
-    self.buildMetadata = function(data, startIndex) {
+    self.buildMetadata = function (data, startIndex) {
       self.nav.current = startIndex;
       self.nav.currentCount = data.value.length;
       self.nav.total = parseInt(data['@odata.count']);
       self.dom.modal_metadata.children('.total').html(self.nav.total);
-      self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current+self.nav.currentCount-1));
+      self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current + self.nav.currentCount - 1));
       if (self.nav.total > 0) {
         self.dom.modal_metadata.show();
-      }
-      else {
+      } else {
         self.dom.modal_metadata.hide();
       }
 
-      if (self.nav.current+self.nav.currentCount <= self.nav.total) {
-        self.nav.next = self.nav.current+self.nav.currentCount;
+      if (self.nav.current + self.nav.currentCount <= self.nav.total) {
+        self.nav.next = self.nav.current + self.nav.currentCount;
         self.dom.btn_next.show();
-      }
-      else {
+      } else {
         self.nav.next = -1;
         self.dom.btn_next.hide();
       }
       if (self.nav.current > 1) {
-        self.nav.prev = self.nav.current-self.config.per_page;
+        self.nav.prev = self.nav.current - self.config.per_page;
         self.dom.btn_prev.show();
-      }
-      else {
+      } else {
         self.nav.prev = -1;
         self.dom.btn_prev.hide();
       }
@@ -411,7 +418,7 @@ var AzureSearch;
      * @param page : (int) the current page (start from 1)
      * @param callback : (function)
      */
-    self.query = function(queryText, startIndex, callback) {
+    self.query = function (queryText, startIndex, callback) {
       $.ajax({
         url: endpoint,
         headers: {
@@ -421,17 +428,16 @@ var AzureSearch;
         data: {
           search: queryText,
           $orderby: "date desc",
-          $skip: startIndex-1,
+          $skip: startIndex - 1,
           $top: self.config.per_page,
           $count: true
         },
         type: "GET",
-        success: function(data, status) {
+        success: function (data, status) {
           if (status === 'success' && data.value && data.value.length > 0) {
             var results = self.buildResultList(data.value);
             self.dom.modal_results.html(results);
-          }
-          else {
+          } else {
             self.onQueryError(queryText, status);
           }
           self.buildMetadata(data, startIndex);
@@ -448,7 +454,7 @@ var AzureSearch;
 })(jQuery);
 
 var BaiduSearch;
-(function($) {
+(function ($) {
   'use strict';
 
   /**
@@ -456,7 +462,7 @@ var BaiduSearch;
    * Search by Baidu Search API
    * @param options : (object)
    */
-  BaiduSearch = function(options) {
+  BaiduSearch = function (options) {
     SearchService.apply(this, arguments);
     var self = this;
     var endpoint = "";
@@ -466,10 +472,10 @@ var BaiduSearch;
      * Generate result list html
      * @param data : (array) result items
      */
-    self.buildResultList = function(data, queryText) {
+    self.buildResultList = function (data, queryText) {
       var results = [],
-          html = "";
-      $.each(data, function(index, post) {
+        html = "";
+      $.each(data, function (index, post) {
         if (self.contentSearch(post, queryText))
           html += self.buildResult(post.linkUrl, post.title, post.abstract);
       });
@@ -480,22 +486,22 @@ var BaiduSearch;
      * Generate metadata after a successful query
      * @param data : (object) the raw google custom search response data
      */
-    self.buildMetadata = function(data) {
+    self.buildMetadata = function (data) {
 
     };
 
-    self.loadScript = function() {
-      self.dom.input.each(function(index,elem) {
+    self.loadScript = function () {
+      self.dom.input.each(function (index, elem) {
         $(elem).attr('disabled', true);
       });
-      var script = "<script src='http://zhannei.baidu.com/api/customsearch/apiaccept?sid=" +self.config.apiId+ "&v=2.0&callback=customSearch.initBaidu' type='text/javascript' charset='utf-8'></script>";
+      var script = "<script src='http://zhannei.baidu.com/api/customsearch/apiaccept?sid=" + self.config.apiId + "&v=2.0&callback=customSearch.initBaidu' type='text/javascript' charset='utf-8'></script>";
       self.dom.body.append(script);
     };
 
-    self.initBaidu = function() {
+    self.initBaidu = function () {
       self.cse = new BCse.Search(self.config.apiId);
       //self.cse.setPageNum(self.config.per_page);
-      self.dom.input.each(function(index,elem) {
+      self.dom.input.each(function (index, elem) {
         $(elem).attr('disabled', false);
       });
     };
@@ -506,20 +512,19 @@ var BaiduSearch;
      * @param page {Integer}
      * @param callback {Function}
      */
-    self.query = function(queryText, page, callback) {
-      self.cse.getResult(queryText, function(data) {
+    self.query = function (queryText, page, callback) {
+      self.cse.getResult(queryText, function (data) {
         console.log("Searching: " + queryText);
-        self.cse.getError(function(data) {
+        self.cse.getError(function (data) {
           console.log(data);
         });
         if (data.length > 0) {
           self.buildResultList(data, queryText);
-          self.cse.getSearchInfo(queryText, function(data) {
+          self.cse.getSearchInfo(queryText, function (data) {
             console.log(data);
             self.buildMetadata(data);
           });
-        }
-        else {
+        } else {
           self.nav.total = 0;
           self.nav.next = -1;
           self.nav.prev = -1;
@@ -542,14 +547,14 @@ var BaiduSearch;
 })(jQuery);
 
 var GoogleCustomSearch = "";
-(function($) {
+(function ($) {
   'use strict';
 
   /**
    * Search by Google Custom Search Engine JSON API
    * @param options : (object)
    */
-  GoogleCustomSearch = function(options) {
+  GoogleCustomSearch = function (options) {
     SearchService.apply(this, arguments);
     var self = this;
     var endpoint = "https://www.googleapis.com/customsearch/v1";
@@ -559,12 +564,12 @@ var GoogleCustomSearch = "";
      * Generate result list html
      * @param data : (array) result items
      */
-    self.buildResultList = function(data) {
+    self.buildResultList = function (data) {
       var html = "";
-      $.each(data, function(index, row) {
+      $.each(data, function (index, row) {
         var url = row.link;
         var title = row.title;
-        var digest = (row.htmlSnippet || "").replace('<br>','');
+        var digest = (row.htmlSnippet || "").replace('<br>', '');
         html += self.buildResult(url, title, digest);
       });
       return html;
@@ -574,31 +579,28 @@ var GoogleCustomSearch = "";
      * Generate metadata after a successful query
      * @param data : (object) the raw google custom search response data
      */
-    self.buildMetadata = function(data) {
+    self.buildMetadata = function (data) {
       if (data.queries && data.queries.request && data.queries.request[0].totalResults !== '0') {
         self.nav.current = data.queries.request[0].startIndex;
         self.nav.currentCount = data.queries.request[0].count;
         self.nav.total = parseInt(data.queries.request[0].totalResults);
         self.dom.modal_metadata.children('.total').html(self.nav.total);
-        self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current+self.nav.currentCount-1));
+        self.dom.modal_metadata.children('.range').html(self.nav.current + "-" + (self.nav.current + self.nav.currentCount - 1));
         self.dom.modal_metadata.show();
-      }
-      else {
+      } else {
         self.dom.modal_metadata.hide();
       }
       if (data.queries && data.queries.nextPage) {
         self.nav.next = data.queries.nextPage[0].startIndex;
         self.dom.btn_next.show();
-      }
-      else {
+      } else {
         self.nav.next = -1;
         self.dom.btn_next.hide();
       }
       if (data.queries && data.queries.previousPage) {
         self.nav.prev = data.queries.previousPage[0].startIndex;
         self.dom.btn_prev.show();
-      }
-      else {
+      } else {
         self.nav.prev = -1;
         self.dom.btn_prev.hide();
       }
@@ -610,19 +612,18 @@ var GoogleCustomSearch = "";
      * @param startIndex : (int) the index of first item (start from 1)
      * @param callback : (function)
      */
-    self.query = function(queryText, startIndex, callback) {
+    self.query = function (queryText, startIndex, callback) {
       $.get(endpoint, {
         key: self.config.apiKey,
         cx: self.config.engineId,
         q: queryText,
         start: startIndex,
         num: self.config.per_page
-      }, function(data, status) {
+      }, function (data, status) {
         if (status === 'success' && data.items && data.items.length > 0) {
           var results = self.buildResultList(data.items);
           self.dom.modal_results.html(results);
-        }
-        else {
+        } else {
           self.onQueryError(queryText, status);
         }
         self.buildMetadata(data);
@@ -637,18 +638,18 @@ var GoogleCustomSearch = "";
 })(jQuery);
 
 var HexoSearch;
-(function($) {
+(function ($) {
   'use strict';
 
   /**
-  * Search by Hexo generator json content
-  * @param options : (object)
-  */
-  HexoSearch = function(options) {
+   * Search by Hexo generator json content
+   * @param options : (object)
+   */
+  HexoSearch = function (options) {
     SearchService.apply(this, arguments);
     var self = this;
-    self.config.endpoint = ROOT + ((options||{}).endpoint || "content.json");
-    self.config.endpoint = self.config.endpoint.replace("//","/"); //make sure the url is correct
+    self.config.endpoint = ROOT + ((options || {}).endpoint || "content.json");
+    self.config.endpoint = self.config.endpoint.replace("//", "/"); //make sure the url is correct
     self.cache = "";
 
     /**
@@ -657,22 +658,21 @@ var HexoSearch;
      * @param post : the post object
      * @param queryText : the search query
      */
-    self.contentSearch = function(post, queryText) {
+    self.contentSearch = function (post, queryText) {
       var post_title = post.title.trim().toLowerCase(),
-          post_content = post.text.trim().toLowerCase(),
-          keywords = queryText.trim().toLowerCase().split(" "),
-          foundMatch = false,
-          index_title = -1,
-          index_content = -1,
-          first_occur = -1;
+        post_content = post.text.trim().toLowerCase(),
+        keywords = queryText.trim().toLowerCase().split(" "),
+        foundMatch = false,
+        index_title = -1,
+        index_content = -1,
+        first_occur = -1;
       if (post_title !== '' && post_content !== '') {
-        $.each(keywords, function(index, word) {
+        $.each(keywords, function (index, word) {
           index_title = post_title.indexOf(word);
           index_content = post_content.indexOf(word);
           if (index_title < 0 && index_content < 0) {
             foundMatch = false;
-          }
-          else {
+          } else {
             foundMatch = true;
             if (index_content < 0) {
               index_content = 0;
@@ -683,18 +683,18 @@ var HexoSearch;
           }
           if (foundMatch) {
             post_content = post.text.trim();
-            var start = 0, end = 0;
+            var start = 0,
+              end = 0;
             if (first_occur >= 0) {
-              start = Math.max(first_occur-40, 0);
+              start = Math.max(first_occur - 40, 0);
               end = (start === 0) ? Math.min(200, post_content.length) : Math.min(first_occur + 120, post_content.length);
               var match_content = post_content.substring(start, end);
-              keywords.forEach(function(keyword) {
+              keywords.forEach(function (keyword) {
                 var regS = new RegExp(keyword, "gi");
-                match_content = match_content.replace(regS, "<b mark>"+keyword+"</b>");
+                match_content = match_content.replace(regS, "<b mark>" + keyword + "</b>");
               });
               post.digest = match_content + "......";
-            }
-            else {
+            } else {
               end = Math.min(200, post_content.length);
               post.digest = post_content.trim().substring(0, end);
             }
@@ -708,11 +708,11 @@ var HexoSearch;
      * Generate result list html
      * @param data : (array) result items
      */
-    self.buildResultList = function(data, queryText) {
+    self.buildResultList = function (data, queryText) {
       var results = [],
-          html = "";
+        html = "";
       var i = 1;
-      $.each(data, function(index, post) {
+      $.each(data, function (index, post) {
         if (self.contentSearch(post, queryText))
           html += self.buildResult(post.permalink, post.title, post.digest, i++);
       });
@@ -723,7 +723,7 @@ var HexoSearch;
      * Generate metadata after a successful query
      * @param data : (object) the raw google custom search response data
      */
-    self.buildMetadata = function(data) {
+    self.buildMetadata = function (data) {
       self.dom.modal_footer.hide();
     };
 
@@ -733,7 +733,7 @@ var HexoSearch;
      * @param startIndex : (int) the index of first item (start from 1)
      * @param callback : (function)
      */
-    self.query = function(queryText, startIndex, callback) {
+    self.query = function (queryText, startIndex, callback) {
       if (!self.cache) {
         $.get(self.config.endpoint, {
           key: self.config.apiKey,
@@ -741,15 +741,14 @@ var HexoSearch;
           q: queryText,
           start: startIndex,
           num: self.config.per_page
-        }, function(data, status) {
+        }, function (data, status) {
           if (status !== 'success' ||
-              !data ||
-              (!data.posts && !data.pages) ||
-              (data.posts.length < 1 && data.pages.length < 1)
-            ) {
+            !data ||
+            (!data.posts && !data.pages) ||
+            (data.posts.length < 1 && data.pages.length < 1)
+          ) {
             self.onQueryError(queryText, status);
-          }
-          else {
+          } else {
             self.cache = data;
             var results = "";
             results += self.buildResultList(data.pages, queryText);
@@ -761,8 +760,7 @@ var HexoSearch;
             callback(data);
           }
         });
-      }
-      else {
+      } else {
         var results = "";
         results += self.buildResultList(self.cache.pages, queryText);
         results += self.buildResultList(self.cache.posts, queryText);
