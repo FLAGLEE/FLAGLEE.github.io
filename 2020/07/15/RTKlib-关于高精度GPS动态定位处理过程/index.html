@@ -21,6 +21,8 @@
     <meta name="keywords" content="GNSS,GPS,BDS,RTKlib,RTK">
   
   
+    <meta name="description" content="RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见RTKlib.com。Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和双频接收器而定制，旨在提高性能。二进制文件以及完整原始代码见http://rtkexplorer.com/downloa...">
+  
 
   <!-- feed -->
   
@@ -238,7 +240,7 @@
         
         <a class="title flat-box" target="_self" href='/'>
           
-            <img class='logo' src='/images/flag2.png'/>
+            <img class='logo' src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/flag2.png'/>
           
           
           
@@ -748,7 +750,7 @@
               
 <div class='new-meta-item author'>
   <a href="https://flaglee.cn" rel="nofollow">
-    <img src="/images/FLAG.jpg">
+    <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/FLAG.jpg">
     <p>FLAG</p>
   </a>
 </div>
@@ -796,7 +798,12 @@
         <div class="article-entry" itemprop="articleBody">
           
           
-          
+          <p>RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见<a href="http://www.rtklib.com/" target="_blank" rel="noopener">RTKlib.com</a>。<br>Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和双频接收器而定制，旨在提高性能。二进制文件以及完整原始代码见<a href="http://rtkexplorer.com/downloads/rtklib-code/" target="_blank" rel="noopener">http://rtkexplorer.com/downloads/rtklib-code/</a>。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/RTKLIB.jpg" alt="RTKlib流程" title="RTKlib流程图"></p>
+<a id="more"></a>
+
+<p>本文主要介绍用 RTKLIB 实现精密动态定位的过程，该过程包括观测文件和导航文件的读取、基准站位置的计算、流动站位置的求解、运行结果的输出。</p>
+<h2 id="主函数配置"><a href="#主函数配置" class="headerlink" title="主函数配置"></a>主函数配置</h2><h2 id="解算流程"><a href="#解算流程" class="headerlink" title="解算流程"></a>解算流程</h2><h2 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h2><h2 id="求解基站参数"><a href="#求解基站参数" class="headerlink" title="求解基站参数"></a>求解基站参数</h2><h2 id="相对动态定位"><a href="#相对动态定位" class="headerlink" title="相对动态定位"></a>相对动态定位</h2>
           
             <div class='article_footer'>
               
@@ -849,14 +856,14 @@
   <div class='content article-entry'>
     
       
-        <div class='fancybox'><img src='/images/QQ.jpg'
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ.jpg'
         
           height='64px'
         ></div>
       
     
       
-        <div class='fancybox'><img src='/images/WeChat.jpg'
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/WeChat.jpg'
         
           height='64px'
         ></div>
@@ -880,10 +887,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-16T08:35:31+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-17T12:56:05+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jul 16, 2020</p>
+    <p>更新于：Jul 17, 2020</p>
   </a>
 </div>
 
@@ -910,7 +917,8 @@
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary=RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见RTKlib.com。Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和双频接收器而定制，旨在提高性能。二进制文件以及完整原始代码见http://rtkexplorer.com/downloads/rtklib-code/。
+"
           
           >
           
@@ -922,7 +930,8 @@
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary=RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见RTKlib.com。Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和双频接收器而定制，旨在提高性能。二进制文件以及完整原始代码见http://rtkexplorer.com/downloads/rtklib-code/。
+"
           
           >
           
@@ -934,7 +943,8 @@
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary="
+          href="http://service.weibo.com/share/share.php?url=https://flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/&title=RTKlib-关于高精度GPS动态定位处理过程 - 闲情记趣|FLAG's blog&summary=RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见RTKlib.com。Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和双频接收器而定制，旨在提高性能。二进制文件以及完整原始代码见http://rtkexplorer.com/downloads/rtklib-code/。
+"
           
           >
           
@@ -1030,7 +1040,7 @@
 
   <div class='content'>
     
-      <img src="/images/welcome.jpg" height="77px">
+      <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/welcome.jpg" height="77px">
     
       <script type="text/javascript" src="//rf.revolvermaps.com/0/0/4.js?i=5yol452r422&amp;m=2&amp;h=104&amp;c=ff0000&amp;r=0" async="async"></script>
     
@@ -1105,6 +1115,20 @@
     
 
 
+
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#主函数配置"><span class="toc-number">1.</span> <span class="toc-text">主函数配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解算流程"><span class="toc-number">2.</span> <span class="toc-text">解算流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件读取"><span class="toc-number">3.</span> <span class="toc-text">文件读取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解基站参数"><span class="toc-number">4.</span> <span class="toc-text">求解基站参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对动态定位"><span class="toc-number">5.</span> <span class="toc-text">相对动态定位</span></a></li></ol>
+    </div>
+  </section>
 
 
   
@@ -1203,7 +1227,7 @@
 
   <br>
   <div style="display: inline-block;vertical-align:middle">
-    <img src="/images/beian.png">
+    <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/beian.png">
   </div>
   <div style="display: inline-block">
     <a href="http://www.beian.miit.gov.cn/" style="color:Tomato;font-weight:bold" target="_blank">鲁ICP备20022872号</a>
