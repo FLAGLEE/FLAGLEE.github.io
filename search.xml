@@ -20,13 +20,13 @@
       
         <tags>
             
-            <tag> QT </tag>
-            
             <tag> GNSS </tag>
             
             <tag> RTKlib </tag>
             
             <tag> RTK </tag>
+            
+            <tag> QT </tag>
             
         </tags>
       
@@ -53,13 +53,13 @@
             
             <tag> GNSS </tag>
             
-            <tag> RTKlib </tag>
-            
-            <tag> RTK </tag>
-            
             <tag> GPS </tag>
             
             <tag> BDS </tag>
+            
+            <tag> RTKlib </tag>
+            
+            <tag> RTK </tag>
             
         </tags>
       
