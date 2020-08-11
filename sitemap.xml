@@ -11,7 +11,7 @@
   <url>
     <loc>https://www.flaglee.cn/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/</loc>
     
-    <lastmod>2020-07-22</lastmod>
+    <lastmod>2020-08-11</lastmod>
     
   </url>
   
@@ -88,21 +88,7 @@
 
   
   <url>
-    <loc>https://www.flaglee.cn/tags/Hexo/</loc>
-    <lastmod>2020-08-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/blog/</loc>
-    <lastmod>2020-08-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/Markdown/</loc>
+    <loc>https://www.flaglee.cn/tags/QT/</loc>
     <lastmod>2020-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -110,20 +96,6 @@
   
   <url>
     <loc>https://www.flaglee.cn/tags/GNSS/</loc>
-    <lastmod>2020-08-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/GPS/</loc>
-    <lastmod>2020-08-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/BDS/</loc>
     <lastmod>2020-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -144,7 +116,35 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/QT/</loc>
+    <loc>https://www.flaglee.cn/tags/GPS/</loc>
+    <lastmod>2020-08-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/BDS/</loc>
+    <lastmod>2020-08-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/blog/</loc>
+    <lastmod>2020-08-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/Markdown/</loc>
+    <lastmod>2020-08-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/Hexo/</loc>
     <lastmod>2020-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -153,7 +153,7 @@
 
   
   <url>
-    <loc>https://www.flaglee.cn/categories/blog/</loc>
+    <loc>https://www.flaglee.cn/categories/GNSS/</loc>
     <lastmod>2020-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -167,7 +167,7 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/categories/GNSS/</loc>
+    <loc>https://www.flaglee.cn/categories/blog/</loc>
     <lastmod>2020-08-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
