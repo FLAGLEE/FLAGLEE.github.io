@@ -16,8 +16,12 @@
 
   <!-- 页面元数据 -->
   
-    <title>吐槽 - 闲情记趣|FLAG&#39;s blog</title>
+    <title>Python多任务编程：进程和线程 - 闲情记趣|FLAG&#39;s blog</title>
   
+  
+    <meta name="description" content="
+一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。多任务的最大好处是充分利用 CPU 资源，提高程序的执行效率。
+">
   
 
   <!-- feed -->
@@ -170,93 +174,7 @@
       }
     </style>
     
-  <div class="cover-wrapper">
-    
-      <cover class='cover artitalk half'>
-        <div class='cover-body'>
-  <div class='a'>
-    
-      <img class='logo' src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/logo5.png'/>
-    
-    
-    
-      <p class="subtitle">This is Major Tom to Ground Control.</p>
-    
-  </div>
-  <div class='b'>
-    
-      <div class="m_search">
-        <form name="searchform" class="form u-search-form">
-          <input type="text" class="input u-search-input" placeholder="" />
-          <i class="icon fas fa-search fa-fw"></i>
-        </form>
-      </div>
-    
-    <div class='menu navigation'>
-      <ul class='cover-list-h'>
-        
-          
-            <li>
-              <a class="nav home"
-                href="/"
-                
-                
-                id="home">
-                <i class='fas fa-feather-alt fa-fw'></i>首页
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/archives/"
-                
-                
-                id="archives">
-                <i class='fas fa-book fa-fw'></i>博文
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/shuoshuo/"
-                
-                
-                id="shuoshuo">
-                <i class='fas fa-comment-dots fa-fw'></i>说说
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/comment/"
-                
-                  rel="external nofollow noopener noreferrer"
-                
-                
-                id="comment">
-                <i class='fas fa-comments fa-fw'></i>留言
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/about/"
-                
-                
-                id="about">
-                <i class='fa fa-flag fa-fw'></i>关于
-              </a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-</div>
-
-      </cover>
-    
-    <div id="loading-bar-wrapper">
+  <div id="loading-bar-wrapper">
   <div id="loading-bar"></div>
 </div>
 <header class="l_header shadow blur">
@@ -749,10 +667,9 @@
 
 <script>setLoadingBarProgress(40);</script>
 
-  </div>
 
 
-    <div class="l_body">
+    <div class="l_body nocover">
       <div class="body-wrapper">
         
 
@@ -760,7 +677,7 @@
   
 
   
-    <article id="artitalk" class="post white-box reveal shadow blur article-type-artitalk" itemscope itemprop="blogPost">
+    <article id="post" class="post white-box reveal shadow blur article-type-post" itemscope itemprop="blogPost">
       
 
 
@@ -772,8 +689,8 @@
         
           
   <h1 class="title">
-    <a href="/shuoshuo/index.html">
-      吐槽
+    <a href="/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/">
+      Python多任务编程：进程和线程
     </a>
   </h1>
 
@@ -803,7 +720,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：Jul 5, 2020</p>
+    <p>发布于：Sep 4, 2020</p>
   </a>
 </div>
 
@@ -826,54 +743,199 @@
       <section class="article typo">
         <div class="article-entry" itemprop="articleBody">
           
-              <div id="artitalk_main"></div>
           
+          <blockquote>
+<p>一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。<br>多任务的最大好处是充分利用 CPU 资源，提高程序的执行效率。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="多任务的概念"><a href="#多任务的概念" class="headerlink" title="多任务的概念"></a>多任务的概念</h2><p>多任务是指在同一时间内执行多个任务。多任务能充分利用 CPU 资源，提高程序的执行效率，让程序具备处理多个任务的能力。</p>
+<p>多任务的执行方式：</p>
+<ul>
+<li>并发</li>
+<li>并行</li>
+</ul>
+<p><strong>并发</strong></p>
+<pre><code>任务数 &gt; CPU核心数，在一段时间内交替去执行任务。对于单核cpu处理多任务,操作系统轮流让各个软件交替执行。
+假如:软件1执行0.01秒，切换到软件2，软件2执行0.01秒，再切换到软件3，执行0.01秒……这样反复执行下去。
+表面上看，每个软件都是交替执行的，但是，由于CPU的执行速度实在是太快了，我们感觉就像这些软件都在同时执行一样，这里需要注意单核cpu是并发的执行多任务的。</code></pre><p><strong>并行</strong></p>
+<pre><code>任务数 &lt; CPU核心数，对于多核cpu处理多任务，操作系统会给cpu的每个内核安排一个执行的软件，多个内核是真正的一起执行软件。
+这里需要注意多核cpu是并行的执行多任务，始终有多个软件一起执行。并行才是多个任务真正意义一起执行。</code></pre><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a>进程的概念</h3><p>一个正在运行的程序或者软件就是一个进程，它是操作系统进行资源分配的基本单位，也就是说每启动一个进程，操作系统都会给其分配一定的运行资源(内存资源)保证进程的运行。</p>
+<p>比如:现实生活中的公司可以理解成是一个进程，公司提供办公资源(电脑、办公桌椅等)，真正干活的是员工，员工可以理解成线程。</p>
+<p><strong>一个程序运行后至少有一个进程，一个进程默认有一个线程，进程里面可以创建多个线程，线程是依附在进程里面的，没有进程就没有线程。</strong></p>
+
           
-           <html>
+            <div class='article_footer'>
+              
+                
+  
+    
+    
 
-<!-- 自定义样式 -->
 
-<style>
-            .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel {
-              background: linear-gradient(-45deg, #FFD972, #EFA7A7, #FCBCB8, #A7E8BD) 0% 0% / 400% 400%;
-              animation: 15s ease 0s infinite normal none running gradientBG;
-              color: white;
-            }
-            .cbp_tmtimeline>li .cbp_tmlabel {
-              background: linear-gradient(-45deg, #FFD972, #EFA7A7, #FCBCB8, #A7E8BD) 0% 0% / 400% 400%;
-              animation: 15s ease 0s infinite normal none running gradientBG;
-              color: white;
-            }
-            .cbp_tmtimeline>li:nth-child(odd) .cbp_tmlabel:after {
-              border-right-color:  #FCBCB8
-            }
-            .cbp_tmtimeline>li .cbp_tmlabel:after {
-              border-right-color:  #A7E8BD
-            }
-            .button {
-              background: linear-gradient(-45deg, #FFD972, #EFA7A7, #FCBCB8, #A7E8BD) 0% 0% / 400% 400%;
-              animation: 15s ease 0s infinite normal none running gradientBG;
-              color: white;
-            }
-            @keyframes gradientBG {
-                0% {
-                    background-position: 0% 50%;
-                }
-                50% {
-                    background-position: 100% 50%;
-                }
-                100% {
-                    background-position: 0% 50%;
-                }
-            }
-          </style>
 
- <!-- 自定义样式.end -->
+  
 
-</html>
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      
+        
+          <div style="text-align:center">💗您的喜欢是作者写作最大的动力💗</div>
+        
+      
+        
+          <div style="text-align:center">😃👇有问题欢迎加博主QQ或微信联系👇😃</div>
+        
+      
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+      
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/WeChat.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
           
         </div>
         
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-04T23:34:42+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：Sep 4, 2020</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.flaglee.cn/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/&title=Python多任务编程：进程和线程 - 闲情记趣|FLAG's blog&summary=
+一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。多任务的最大好处是充分利用 CPU 资源，提高程序的执行效率。
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.flaglee.cn/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/&title=Python多任务编程：进程和线程 - 闲情记趣|FLAG's blog&summary=
+一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。多任务的最大好处是充分利用 CPU 资源，提高程序的执行效率。
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=https://www.flaglee.cn/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/&title=Python多任务编程：进程和线程 - 闲情记趣|FLAG's blog&summary=
+一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。多任务的最大好处是充分利用 CPU 资源，提高程序的执行效率。
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+        
+        
+          <div class="prev-next">
+            
+            
+              <a class='next' href='/2020/08/10/%E4%BD%BF%E7%94%A8QT%E7%BC%96%E8%AF%91RTKLIB-GUI%E7%A8%8B%E5%BA%8F/'>
+                <p class='title'>使用QT编译RTKLIB的GUI程序<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>
+近期在基于 RTKLIB 改了一些代码，但一直是基于源码运行的，于是便想着编译一个自己的图形用户界面。查阅 manual 2.4.2 手册上使用的是  Embarcadero C++ Buil...</p>
+              </a>
+            
+          </div>
         
       </section>
     </article>
@@ -884,7 +946,24 @@
 
 
 
-  
+  <article class="post white-box reveal comments shadow blur">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+          </div>
+        </section>
+      
+      
+    </section>
+  </article>
 
 
   
@@ -895,6 +974,13 @@
 <!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
 
 
+
+  <script>
+    window.subData = {
+      title: 'Python多任务编程：进程和线程',
+      tools: true
+    }
+  </script>
 
 
 </div>
@@ -990,6 +1076,20 @@
     
 
 
+
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多任务的概念"><span class="toc-number">1.</span> <span class="toc-text">多任务的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进程"><span class="toc-number">2.</span> <span class="toc-text">进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程的概念"><span class="toc-number">2.1.</span> <span class="toc-text">进程的概念</span></a></li></ol></li></ol>
+    </div>
+  </section>
 
 
   
@@ -1200,26 +1300,6 @@
 
 
 
-  <script>
-    var appID ="B87OcxJyXAYqoU2U9LoQ7cFf-MdYXbMMI";
-    var appKEY ="jJXhT0lp6ivebTY3Bv4AckRC";
-    
-    
-    
-        var per="10";
-    
-    
-    
-    
-        var lazy=1;
-    
-    
-    
-    
-    
-  </script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/artitalk"></script>
-
 
 
   <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-volantis@2/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
@@ -1318,6 +1398,60 @@
 
 
 
+
+  
+    
+<script src="/js/valine.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var meta = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick','mail','link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function(item){
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+  var valine = new Valine();
+  function emoji(path, idx, ext) {
+      return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  valine.init({
+    el: '#valine_container',
+    meta: meta,
+    
+    appId: "PTG9uQqktRPr46BlMpak0Xiq-gzGzoHsz",
+    appKey: "AX0b83MMJKlMHAiIN2sa3wUC",
+    placeholder: "填写昵称和邮箱即可评论,输入正确邮箱方便收到回复通知哦~",
+    pageSize:'10',
+    avatar:'robohash',
+    lang:'zh-cn',
+    visitor: 'true',
+    highlight: 'true',
+    mathJax: 'false',
+    enableQQ: 'true',
+    requiredFields: requiredFields,
+    emojiCDN: 'https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/emoji/valine/',
+    emojiMaps: emojiMaps
+  })
+  </script>
 
 
 
