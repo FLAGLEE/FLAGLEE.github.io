@@ -4277,18 +4277,21 @@ ul.list-v >li>a.active {
 .menu-phone li ul.list-v ul {
   right: calc(100% - 0.5 * 16px);
 }
-.l_header .wrapper .m_search {
-  margin-left: auto;
-  margin-right: 16px;
+.l_header .wrapper {
+  max-width: 1080px;
+  margin: auto;
+}
+@media screen and (min-width: 2048px) {
+  .l_header .wrapper {
+    max-width: 55vw;
+  }
 }
 .l_header .wrapper .menu {
-  order: 1;
+  flex: 1 1 auto;
+  margin: 0 16px 0 0;
 }
-.l_header .wrapper .menu li ul.list-v {
-  right: 0;
-}
-.l_header .wrapper .menu li ul.list-v ul {
-  right: calc(100% - 0.5 * 16px);
+.l_header .wrapper .menu .list-v ul {
+  left: calc(100% - 0.5 * 16px);
 }
 .menu-phone {
   display: none;
