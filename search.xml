@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>C语言中内存分区与内存管理详解</title>
+      <link href="/2020/09/08/C%E4%B8%AD%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/"/>
+      <url>/2020/09/08/C%E4%B8%AD%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E8%AF%A6%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>c 语言五大内存分区</p><ul><li>栈区（stack）:由编译器自动分配与释放，存放函数的参数值，局部变量，临时变量等等，它们获取的方式都是由编译器自动执行的</li><li>堆区（heap）:该区由程序员申请后使用，需要手动释放否则会造成内存泄漏。一般由程序员分配与释放，基程序员不释放，程序结束时可能由操作系统回收（C/C++没有此等回收机制，Java/C#有），注意它与数据结构中的堆是两回事，分配方式倒是类似于链表。</li><li>全局/静态存储区：存放全局变量和静态变量（包括静态全局变量与静态局部变量），全局变量和静态变量的存储是放在一块儿的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。</li><li>文字常量区：常量在统一运行被创建，常量区的内存是只读的，程序结束后由系统释放。</li><li>程序代码区：存放程序的二进制代码，内存由系统管理</li></ul></blockquote><a id="more"></a><h2 id="c-语言五大内存分区"><a href="#c-语言五大内存分区" class="headerlink" title="c 语言五大内存分区"></a>c 语言五大内存分区</h2><p><strong>栈区：</strong></p><p>在函数中定义的变量存放的内存区域。</p><p>常见的 int、float、char 等变量均存放于栈区中，它的特点是由系统自动分配与释放，不需要程序员考虑资源回收的问题，方便简洁。</p><p>ps：栈区的地址分配是从内存的高地址开始向地地址分配。</p><p><strong>堆区：</strong></p><p>程序员通过指令自主向系统申请的内存区域，大小由程序员决定，它在使用完后同样需要程序员通过指令去释放该区域内存，否则将有可能出现内存的浪费与溢出。</p><p>C 语言中申请堆区指令为：</p><pre><code class="c">int *p = (int *) malloc( N * sizeof(int) );  //分配N个int型（4字节）的内存，即 4 * N 个字节</code></pre><p>ps：但指针 p 存放于栈区。</p><p>C 语言中释放堆区指令为：</p><pre><code class="c">free( p ); //注意此处参数为指针</code></pre><p>使用中应该注意，尽量不要去修改 p 指针对应的地址值，否则在内存释放时将出现错误。（编译可通过，运行出现问题）</p><p><strong>全局变量&amp;静态变量区：</strong></p><p>全局变量与静态变量本应是两个概念，但由于它们在内存中存放的区域相同，所以将他们放在一起讨论。</p><p>全局变量：</p><p>位于所有函数外部定义的变量，在整个工程中可见，可修改。</p><p>静态变量：</p><p>位于所有函数内部定义的由 static 修饰的变量，仅在定义的函数中可见，可修改。（这是它与全局变量的关键区别）</p><p>ps：静态变量仅在第一次创建时初始化一次，之后自动跳过初始化语句。</p><p>全局变量与静态变量均由系统分配和释放内存，若未对它们进行初始化操作，系统将自动将其值设置为 0。（堆区与栈区则不会）</p><p><strong>文字常量区：</strong></p><p>用于存放文字等不可修改的常量，由系统分配和释放内存。</p><p>常见的使用：</p><pre><code class="c">char *s = &quot;HelloWorld&quot;;//该字符串 HelloWorld 即存放于文字常量区，不可修改</code></pre><p>ps：但指针 s 存放于栈区。</p><p>pps：若在程序中尝试对其修改（例如尝试修改第一个字符 *s = ‘h’;），将出现编译可通过，运行报错的情况。</p><p>同时因注意它与 const 修饰的变量之间的区别：</p><pre><code class="c">char aa = &#39;A&#39;;//aa存放于栈区const char bb = &#39;B&#39;; //bb同样存放于栈区</code></pre><p>const 修饰的变量仅仅用于告诉编译器 bb 是一个常量，如果后续的程序中有出现尝试修改 bb 的操作时，编译将报错。</p><p>这种写法主要是为了防止程序员在后续的代码中误操作 bb 变量而添加的一个约束条件，并不会影响它存放的位置。</p><p><strong>程序代码区：</strong></p><p>用于存储程序编译连接后生成的二进制机器码指令的内存区域。该部分内容可通过反汇编操作将机器码转换为汇编语言。</p><p><strong>C 语言例子：</strong></p><pre><code class="c">#include &lt;stdio.h&gt;static unsigned int val1 = 1;        //val1存放在.data段unsigned int val2 = 1;               //初始化的全局变量存放在.data段unsigned int val3 ;                  //未初始化的全局变量存放在.bss段const unsigned int val4 = 1;         //val4存放在.rodata（只读数据段）unsigned char Demo(unsigned int num) //num 存放在栈区{  char var = &quot;123456&quot;;               //var存放在栈区，&quot;123456&quot;存放在常量区  unsigned int num1 = 1 ;            //num1存放在栈区  static unsigned int num2 = 0;      //num2存放在.data段  const unsigned int num3 = 7;       //num3存放在栈区  void *p;  p = malloc(8);                     //p存放在堆区  free(p);  return 1;}void main(){  unsigned int num = 0 ;  num = Demo(num);                   //Demo()函数的返回值存放在栈区。}</code></pre><h2 id="可执行程序程序三段"><a href="#可执行程序程序三段" class="headerlink" title="可执行程序程序三段"></a>可执行程序程序三段</h2><p>一个程序的 3 个基本段：text 段，dtae 段，bss 段 text 段在内存中被映射为只读，但 date 段与 bss 段是可写的</p><ul><li>text 段：代码段，就是放程序代码的，编译时确定，只读</li><li>date 段：存放在编译阶段（而非运行时）就能确定的数据，可读可写。也就是通常所说的静态存储区，赋了初值的全局变量和赋初值的静态变量存放在这个区域，常量也存在这个区域</li><li>bss 段：已经定义但没赋初值的全局变量和静态变量存放在这个区域。</li></ul><p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F%E4%B8%89%E6%AE%B5.gif" alt=""></p><p>可执行程序程序三段与五大分区两者之间区别是：</p><ul><li>代码段，数据段，堆栈段是 cpu 级别的概念</li><li>五大分区属于语言级别的概念，两者是不同的概念。</li></ul><h2 id="存储类型关键字定义变量与函数作用域与生命周期"><a href="#存储类型关键字定义变量与函数作用域与生命周期" class="headerlink" title="存储类型关键字定义变量与函数作用域与生命周期"></a>存储类型关键字定义变量与函数作用域与生命周期</h2><p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B%E5%85%B3%E9%94%AE%E5%AD%97%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%B8%8E%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></p><ul><li>auto 变量：函数的局部变量，如果没有声明为 static,函数中定义的局部变量全部为 auto 类型，auto 变量包括未加 static 声明的局部变量和函数的形参。在函数调用时系统会给他们分配存储空间，在函数调用结束后会自动释放这些空间。属于动态存储方式。</li><li>static 变量：用 static 声明的局部变量在调用结束后不会消失而保存原来的值。static 局部变量定义使用后值会存储下来。所以使用 static 局部变量定义只需要一次赋值。静态局部变量的作用域仅限于所定义的函数。但函数结束后变量的值会保留。直到整个程序运行结束。全局变量从定义开始作用于整个文件直至程序运行结束。</li><li>register 寄存器变量：寄存器变量可以提高 c 语言的执行效率，即将局部变量的值存入 CPU 的寄存器中。需要注意的是！！！：1.只有动态存储的变量（自动局部变量和形参）才可以作为寄存器变量来存储，局部静态变量不可以定义为寄存器变量。2.计算机的寄存器数目是有限的，所以不能定义任意多个寄存器变量。</li><li>extern 外部变量：即全局变量的外部表现形式，是在函数外部定义的变量。全局变量的作用域为从定义开始到源文件结束。exten 对该变量作外部变量声明，扩展变量作用域。</li></ul><h2 id="堆与栈的区别"><a href="#堆与栈的区别" class="headerlink" title="堆与栈的区别"></a>堆与栈的区别</h2><ol><li><p>申请方式</p><ul><li>stack:栈;由系统自动分配，自动开辟空间</li><li>heap:由程序员自己申请并指明大小，c 中 malloc,c++中 new。如 p1=(char<em>)malloc(10);p2=(char</em>)new(10);但需要注意的是 p1,p2 本事是在栈中的</li></ul></li><li><p>申请后系统的响应</p><ul><li>栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出</li><li>堆：首先操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个大于所申请空间的堆节点，然后将该节点从空闲节点链表中删除，并将该节点的空间分配给程序。另外对于大部分系统，会在这块内存空间中的首地址处记录本次分配的大小，这样代码中的 delete 语句才能正确的释放本内存空间。另外由于找到的堆节点大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。</li></ul></li><li><p>申请大小的限制</p><ul><li>栈：在 windows 下栈是向低地址扩展的数据结构，是一块连续的内存区域。所以栈的栈顶地址和最大容量是系统预先设定好的。在 windows 下栈的大小是 2M.因此能从栈获得的空间比较小。</li><li>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是是由于系统用链表来存储空闲内存地址的，所以是不连续的。而链表的遍历方向是由低地址到高地址。堆得大小受限于计算机系统中有效的虚拟内存大小。相比较而言堆获得的空间比较灵活，也比较大。</li></ul></li><li><p>申请效率的比较</p><ul><li>栈：由系统自动分配，速度较快，但程序员是无法控制的。</li><li>堆：由 new 分配的内存，一般速度比较慢，而且比较容易产生内存碎片，不过用起来最方便。</li></ul></li><li><p>堆和栈中的存储内容</p><ul><li>栈：在函数调用时，第一个进栈的是主函数中的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数。在大多数 c 编译器中，参数是由右往左压栈的，然后是函数中的局部变量。静态变量是不入栈的。当函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，，也就是主函数的下一条指令，程序由该点继续执行。</li><li>堆：一般是在堆的头部用一个字节存放堆得大小，其他内容自己安排。</li></ul></li><li><p>存取效率的比较</p></li></ol><pre><code class="c">1 char str1[]=&quot;aaaaaa&quot;;2 char \*str2=&quot;cccccc&quot;;</code></pre><ul><li>第一行是在运行时刻赋值的，第二行是在编译时就已经确定的，但在以后的存取过程中，在栈上的数组比指针指向的字符串快。</li></ul><h2 id="堆内存管理函数"><a href="#堆内存管理函数" class="headerlink" title="堆内存管理函数"></a>堆内存管理函数</h2><p>C 标准函数库提供了许多函数来实现对堆上内存管理，其中包括：malloc()函数，free()函数，calloc()函数和 realloc()函数。使用这些函数需要包含头文件 stdlib.h。它们的声明如下：</p><pre><code class="c">void _malloc(size_t n);void free(void _ p);void _calloc(size_t n, size_t size);void _realloc(void \* p, size_t n);</code></pre><h3 id="malloc"><a href="#malloc" class="headerlink" title="malloc()"></a>malloc()</h3><p>malloc()函数可以从堆上获得指定字节的内存空间，其函数声明如下：</p><pre><code class="c">void \* malloc(size_t n);</code></pre><p>其中，形参 n 为要求 分配的字节数。如果函数执行成功，malloc()返回获得内存空间的首地址；如果函数执行失败，那么返回值为 NULL。由于 malloc()函数值的类型为 void 型指针，因此，可以将其值类型转换后赋给任意类型指针，这样就可以通过操作该类型指针来操作从堆上获得的内存空间。</p><p>需要注意的是，malloc()函数分配得到的内存空间是未初始化的。因此，一般在使用该内存空间时，要调用另一个函数 memset 来将其初始化为全 0。memset 函数的声明如下：</p><pre><code class="c">void _ memset (void _ p, int c, size_t n);</code></pre><p>该函数可以将指定的内存空间按字节单位置为指定的字符 c。其中，p 为要清零的内存空间的首地址，c 为要设定的值，n 为被操作的内存空间的字节长度。如果要用 memset 清 0，变量 c 实参要为 0。malloc()函数和 memset 函数的操作语句一般如下：</p><pre><code class="c">int _p = NULL;p = (int _) malloc(sizeof(int));if (p == NULL){    printf(&quot;Can’t get memory!\n&quot;);}memset(p, 0, sizeof(int));</code></pre><p>注意：通过 malloc()函数得到的堆内存必须使用 memset()函数来初始化。</p><p>示例代码：</p><pre><code class="c">#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;string.h&gt;int main(){    int _p = NULL;    p = (int _) malloc(sizeof(int));    if (NULL == p){        printf(&quot;Can&#39;t get memory!\n&quot;);        return -1;    }    printf(&quot;%d\n&quot;, *p);             // 输出分配的空间上的值    memset(p, 0, sizeof(int));      // 将p指向的空间清0    printf(&quot;%d\n&quot;, *p);             // 输出调用memset函数后的结果    *p = 2;    printf(&quot;%d\n&quot;, *p);    return 0;}</code></pre><h3 id="free"><a href="#free" class="headerlink" title="free()"></a>free()</h3><p>从堆上获得的内存空间在程序结束以后，系统不会将其自动释放，需要程序员来自己管理。一个程序结束时，必须保证所有从堆上获得的内存空间已被安全释放，否则，会导致内存泄露。例如上面的 demo 就会发生内存泄露。</p><p>free()函数可以实现释放内存的功能。其函数声明为：</p><pre><code class="c">void free(void * p);</code></pre><p>由于形参为 void 指针，free()函数可以接受任意类型的指针实参。</p><p>但是，free()函数只是释放指针指向的内容，而该指针仍然指向原来指向的地方，此时，指针为野指针，如果此时操作该指针会导致不可预期的错误。安全做法 是：在使用 free()函数释放指针指向的空间之后，将指针的值置为 NULL。因此，对于上面的 demo，需要在 return</p><p>语句前加入以下两行语句：</p><pre><code class="c">free(p);p = NULL;</code></pre><p>注意：使用 malloc()函数分配的堆空间在程序结束之前必须释放。</p><h3 id="calloc"><a href="#calloc" class="headerlink" title="calloc()"></a>calloc()</h3><p>calloc()函数的功能与 malloc()函数的功能相似，都是从堆分配内存。其函数声明如下：</p><pre><code class="c">void *calloc(size_t n, size_t size);</code></pre><p>函数返回值为 void 型指针。如果执行成功，函数从堆上获得 size X n 的字节空间，并返回该空间的首地址。如果执行失败，函数返回 NULL。该函数与 malloc()函数的一个显著不同时是，calloc()函数得到的内存空间是经过初始化的，其内容全为 0。calloc()函数适合为数组申请空间，可以将 size 设置为数组元素的空间长度，将 n 设置为数组的容量。</p><p>示例代码：</p><pre><code class="c">#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#define SIZE 5int main(){    int *p = NULL;    int i = 0;    // 为p从堆上分配SIZE个int型空间    p = (int *) calloc(SIZE, sizeof(int));    if (NULL == p)    {        printf(&quot;Error in calloc.\n&quot;);        return -1;    }    // 为p指向的SIZE个int型空间赋值    for (i = 0; i &lt; SIZE; i++)    {        p[i] = i;    }    // 输出各个空间的值    for (i = 0; i &lt; SIZE; i++)    {        printf(&quot;p[%d]=%d\n&quot;, i, p[i]);    }    free(p);    p = NULL;    return 0;}</code></pre><p>提示：calloc()函数的分配的内存也需要自行释放。</p><h3 id="realloc"><a href="#realloc" class="headerlink" title="realloc()"></a>realloc()</h3><p>realloc()函数的功能比 malloc()函数和 calloc()函数的功能更为丰富，可以实现内存分配和内存释放的功能，其函数声明如下：</p><pre><code class="c">void * realloc(void * p, size_t n);</code></pre><p>其中，指针 p 必须为指向堆内存空间的指针，即由 malloc()函数、calloc()函数或 realloc()函数分配空间的指针。realloc()函数将指针 p 指向的内存块的大小改变为 n 字节。如果 n 小于或等于 p 之前指向的空间大小，那么。保持原有状态不变。如果 n 大于原来 p 之前指向的空间大小，那么，系统将 重新为 p 从堆上分配一块大小为 n 的内存空间，同时，将原来指向空间的内容依次复制到新的内存空间上，p 之前指向的空间被释放。realloc()函数分配的空间也是未初始化的。</p><p>注意：使用 malloc()函数，calloc()函数和 realloc()函数分配的内存空间都要使用 free()函数或指针参数为 NULL 的 realloc()函数来释放。</p><p>示例代码：</p><pre><code class="c">#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;int main(){    int *p = NULL;    p = (int *) malloc(sizeof(int));    *p = 3;    printf(&quot;p=%p\n&quot;, p);    printf(&quot;*p=%d\n&quot;, *p);    p = (int *) realloc(p, sizeof(int));    printf(&quot;p=%p\n&quot;, p);    printf(&quot;*p=%d\n&quot;, *p);    p = (int *) realloc(p, 3 * sizeof(int));    printf(&quot;p=%p\n&quot;, p);    printf(&quot;*p=%d&quot;, *p);    // 释放p指向的空间    realloc(p, 0);    p = NULL;    return 0;}</code></pre><p>下面要注意的几点是：</p><ol><li>函数 malloc()和 calloc()都可以用来动态分配内存空间。 malloc()函数有一个参数，即分配的内存空间的大小，malloc()在分配内存的时候会保留一定的空间用来记录分配情况，分配的次数越多，这些记录占用的空间就越多。 另外，根据 malloc()实现策略的不同，malloc()每次在分配的时候，可能分配的空间比实际要求的多些，多次分配会导致更多的这种浪费，当然，这些都跟 malloc()的实现有关； calloc()函数有两个参数，分别为元素的个数和每个元素的大小，这两个参数的乘积就是要分配的内存空间的大小。如果调用成功，它们都将返回所分配内存空间的首地址。</li><li>函数 malloc()和 calloc()的主要区别是前者不能初始化所分配的内存空间，而后者可以。</li><li>realloc()可以对给定的指针所指的空间进行扩大或者缩小，无论是扩张或者缩小，原有内存中的内容将保持不变。当然，对于缩小，则被缩小的那一部分的内容会丢失。</li><li>realloc()并不保证调整后的内存空间和原来的内存空间保持同一内存地址，相反，realloc()返回的指针很可能指向一个新地址。所以在代码 中，我们必须将 realloc()的返回值，重新赋值给 p ： p = (int _) realloc (p, sizeof(int) _ 15);</li></ol><hr><p><strong>realloc()函数，另外一个注意点：</strong></p><p>realloc()有可能操作失败，返回 NULL，所以不要把它的返回值直接赋值给原来的指针变量，以免原值丢失：</p><pre><code class="c">#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;int main(){    char *str = NULL;    str = (char *)malloc(sizeof(char));    *str = &#39;a&#39;;    char *p = (char *)realloc(str, sizeof(char) * 10);    if (p != NULL)    {        str = p;    }    printf(&quot;%s\n&quot;, str);    return 0;}</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> C </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+            <tag> 内存分区 </tag>
+            
+            <tag> 内存管理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Python多任务编程：进程和线程</title>
       <link href="/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/"/>
       <url>/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</url>
@@ -51,13 +80,13 @@
       
         <tags>
             
+            <tag> QT </tag>
+            
             <tag> GNSS </tag>
             
             <tag> RTKlib </tag>
             
             <tag> RTK </tag>
-            
-            <tag> QT </tag>
             
         </tags>
       
@@ -84,13 +113,13 @@
             
             <tag> GNSS </tag>
             
-            <tag> GPS </tag>
-            
-            <tag> BDS </tag>
-            
             <tag> RTKlib </tag>
             
             <tag> RTK </tag>
+            
+            <tag> GPS </tag>
+            
+            <tag> BDS </tag>
             
         </tags>
       
