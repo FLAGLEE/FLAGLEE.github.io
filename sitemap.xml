@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flaglee.cn/2020/09/14/Python%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/</loc>
+    
+    <lastmod>2020-09-14</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.flaglee.cn/shuoshuo/index.html</loc>
     
     <lastmod>2020-09-14</lastmod>
@@ -109,35 +116,14 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/</loc>
+    <loc>https://www.flaglee.cn/tags/%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/%E8%BF%9B%E7%A8%8B/</loc>
-    <lastmod>2020-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2020-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/blog/</loc>
-    <lastmod>2020-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/Markdown/</loc>
+    <loc>https://www.flaglee.cn/tags/pygame/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -165,7 +151,14 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/QT/</loc>
+    <loc>https://www.flaglee.cn/tags/blog/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/Markdown/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -173,6 +166,20 @@
   
   <url>
     <loc>https://www.flaglee.cn/tags/GNSS/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/GPS/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/BDS/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -193,21 +200,35 @@
   </url>
   
   <url>
+    <loc>https://www.flaglee.cn/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/%E8%BF%9B%E7%A8%8B/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/QT/</loc>
+    <lastmod>2020-09-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flaglee.cn/tags/Hexo/</loc>
-    <lastmod>2020-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/GPS/</loc>
-    <lastmod>2020-09-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/BDS/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -223,14 +244,14 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/categories/Markdown/</loc>
+    <loc>https://www.flaglee.cn/categories/C/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/categories/C/</loc>
+    <loc>https://www.flaglee.cn/categories/Markdown/</loc>
     <lastmod>2020-09-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
