@@ -775,7 +775,106 @@
 <h3 id="人工智能、机器学习、深度学习关系"><a href="#人工智能、机器学习、深度学习关系" class="headerlink" title="人工智能、机器学习、深度学习关系"></a>人工智能、机器学习、深度学习关系</h3><p>机器学习包含了很多种不同的算法，深度学习就是其中之一，其他方法包括决策树，聚类，贝叶斯等。</p>
 <p>深度学习的灵感来自大脑的结构和功能，即许多神经元的互连。人工神经网络（ANN）是模拟大脑生物结构的算法。</p>
 <p>不管是机器学习还是深度学习，都属于人工智能（AI）的范畴。</p>
-
+<h2 id="Jupyter-Notebook"><a href="#Jupyter-Notebook" class="headerlink" title="Jupyter Notebook"></a>Jupyter Notebook</h2><h3 id="Jupyter-Notebook-简介"><a href="#Jupyter-Notebook-简介" class="headerlink" title="Jupyter Notebook 简介"></a>Jupyter Notebook 简介</h3><p>Jupyter 项目是一个非盈利的开源项目，源于 2014 年的 ipython 项目，因为它逐渐发展为支持跨所有编程语言的交互式数据科学和科学计算。</p>
+<p>实时运行的代码、叙事性的文本和可视化被整合在一起，方便使用代码和数据来讲述故事，Jupyter Notebook 相比 Pycharm 在画图和数据展示方面更有优势。</p>
+<ul>
+<li><p>Jupyter Notebook，原名 IPython Notbook，是 IPython 的加强网页版，一个开源 Web 应用程序</p>
+</li>
+<li><p>名字源自 Julia、Python 和 R（数据科学的三种开源语言）</p>
+</li>
+<li><p>是一款程序员和科学工作者的编程/文档/笔记/展示软件</p>
+</li>
+<li><p>.ipynb 文件格式是用于计算型叙述的 JSON 文档格式的正式规范</p>
+</li>
+<li><p>传统软件开发：工程／目标明确</p>
+<ul>
+<li>需求分析，设计架构，开发模块，测试</li>
+</ul>
+</li>
+<li><p>数据挖掘：艺术／目标不明确</p>
+<ul>
+<li>目的是具体的洞察目标，而不是机械的完成任务</li>
+<li>通过执行代码来理解问题</li>
+<li>迭代式地改进代码来改进解决方法</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/jupyternotebook.png" alt=""></p>
+<h3 id="Jupyter-Notebook-使用"><a href="#Jupyter-Notebook-使用" class="headerlink" title="Jupyter Notebook 使用"></a>Jupyter Notebook 使用</h3><p><strong>安装</strong></p>
+<p>安装 Jupyter Notebook 的前提是需要安装了 Python（3.3 版本及以上，或 2.7 版本）。</p>
+<pre><code>pip install jupyter</code></pre><p><strong>启动</strong></p>
+<p>在终端中输入以下命令：</p>
+<pre><code>jupyter notebook</code></pre><p>想让 notebook 打开指定目录，只要进入此目录后执行命令即可。</p>
+<p>执行命令之后，在终端中将会显示一系列 notebook 的服务器信息，同时浏览器将会自动启动 Jupyter Notebook。</p>
+<p>注意：之后在 Jupyter Notebook 的所有操作，都请保持终端不要关闭，因为一旦关闭终端，就会断开与本地服务器的链接，你将无法在 Jupyter Notebook 中进行其他操作啦。</p>
+<p><strong>新建 notebook 文档</strong></p>
+<p>notebook 的文档格式是.ipynb</p>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/createnotebook.png" alt=""></p>
+<p>点击标题（如 Untitled）修改文档名</p>
+<h3 id="Jupyter-Notebook-操作"><a href="#Jupyter-Notebook-操作" class="headerlink" title="Jupyter Notebook 操作"></a>Jupyter Notebook 操作</h3><p><strong>cell 操作</strong></p>
+<ul>
+<li><p>什么是 cell？</p>
+<ul>
+<li><p>cell：一对 In Out 会话被视作一个代码单元，称为 cell</p>
+</li>
+<li><p>cell 行号前的 * ，表示  代码正在运行</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Jupyter 支持两种模式：</p>
+<ul>
+<li><p>编辑模式（Enter）</p>
+<ul>
+<li><p>命令模式下回车 Enter 或鼠标双击 cell 进入编辑模式</p>
+</li>
+<li><p>可以操作 cell 内文本或代码，剪切／复制／粘贴移动等操作</p>
+</li>
+</ul>
+</li>
+<li><p>命令模式（Esc）</p>
+<ul>
+<li><p>按 Esc 退出编辑，进入命令模式</p>
+</li>
+<li><p>可以操作 cell 单元本身进行剪切／复制／粘贴／移动等操作</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>鼠标操作</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E5%B7%A5%E5%85%B7%E6%A0%8Fcell.png" alt=""></p>
+<p><strong>快捷键操作</strong></p>
+<ul>
+<li><p>两种模式通用快捷键</p>
+<ul>
+<li>Shift+Enter，执行本单元代码，并跳转到下一单元</li>
+<li>Ctrl+Enter，执行本单元代码，留在本单元</li>
+</ul>
+</li>
+<li><p>命令模式：按 ESC 进入</p>
+<ul>
+<li><p>Y，cell 切换到 Code 模式</p>
+</li>
+<li><p>M，cell 切换到 Markdown 模式</p>
+</li>
+<li><p>A，在当前 cell 的上面添加 cell</p>
+</li>
+<li><p>B，在当前 cell 的下面添加 cell</p>
+</li>
+<li><p>双击 D：删除当前 cell</p>
+</li>
+</ul>
+</li>
+<li><p>编辑模式：按 Enter 进入</p>
+<ul>
+<li>与常规方式一样</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/Notebook%E6%93%8D%E4%BD%9C.png" alt=""></p>
+<hr>
+<p><a href="https://zhuanlan.zhihu.com/p/33105153" target="_blank" rel="noopener">Jupyter Notebook 介绍、安装及使用教程</a></p>
+<h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><h2 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h2><h2 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h2>
           
             <div class='article_footer'>
               
@@ -859,7 +958,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-18T13:51:44+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-18T20:00:05+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Sep 18, 2020</p>
@@ -1129,7 +1228,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
     </div>
   </section>
 
