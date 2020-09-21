@@ -882,8 +882,232 @@
 <li>是专门用于开发 2D 图表(包括 3D 图表)</li>
 <li>以渐进、交互式方式实现数据可视化</li>
 </ul>
-<hr>
-<p>学习中，先占坑</p>
+<h3 id="Matplotlib-使用"><a href="#Matplotlib-使用" class="headerlink" title="Matplotlib 使用"></a>Matplotlib 使用</h3><p><strong>matplotlib.pytplot 包含了一系列类似于 matlab 的画图函数。</strong></p>
+<pre><code class="python">import matplotlib.pyplot as plt</code></pre>
+<p><strong>图形绘制流程：</strong></p>
+<ul>
+<li>1.创建画布 – plt.figure()</li>
+</ul>
+<pre><code class="python">plt.figure(figsize=(), dpi=)
+    figsize:指定图的长宽
+    dpi:图像的清晰度
+    返回fig对象</code></pre>
+<ul>
+<li><p>2.绘制图像 – plt.plot(x, y)</p>
+<ul>
+<li>以折线图为例</li>
+</ul>
+</li>
+<li><p>3.显示图像 – plt.show()</p>
+</li>
+</ul>
+<h3 id="基础绘图功能"><a href="#基础绘图功能" class="headerlink" title="基础绘图功能"></a>基础绘图功能</h3><p><strong>以折线图为例：</strong></p>
+<pre><code class="python">import matplotlib.pyplot as plt
+import random
+from pylab import mpl
+
+# 设置显示中文字体
+mpl.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]
+# 设置正常显示符号
+mpl.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+# 0.准备数据
+x = range(60)
+y_shanghai = [random.uniform(15, 18) for i in x]
+
+# 1.创建画布
+plt.figure(figsize=(20, 8), dpi=100)
+
+# 2.绘制图像
+plt.plot(x, y_shanghai)
+
+# 2.1 添加x,y轴刻度
+# 构造x,y轴刻度标签
+x_ticks_label = [&quot;11点{}分&quot;.format(i) for i in x]
+y_ticks = range(40)
+
+# 刻度显示
+plt.xticks(x[::5], x_ticks_label[::5])
+plt.yticks(y_ticks[::5])
+
+# 2.2 添加网格显示
+plt.grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+
+# 2.3 添加描述信息
+plt.xlabel(&quot;时间&quot;)
+plt.ylabel(&quot;温度&quot;)
+plt.title(&quot;中午11点--12点某城市温度变化图&quot;, fontsize=20)
+
+# 2.4 图像保存
+plt.savefig(&quot;./test.png&quot;)
+
+# 3.图像显示
+plt.show()</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E6%B7%BB%E5%8A%A0%E6%8F%8F%E8%BF%B0%E4%BF%A1%E6%81%AF.png" alt=""></p>
+<h3 id="在一个坐标系中绘制多个图像"><a href="#在一个坐标系中绘制多个图像" class="headerlink" title="在一个坐标系中绘制多个图像"></a>在一个坐标系中绘制多个图像</h3><p><strong>多次 plot</strong></p>
+<pre><code class="python"># 增加北京的温度数据
+y_beijing = [random.uniform(1, 3) for i in x]
+
+# 绘制折线图
+plt.plot(x, y_shanghai)
+# 使用多次plot可以画多个折线
+plt.plot(x, y_beijing, color=&#39;r&#39;, linestyle=&#39;--&#39;)</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E5%9B%BE%E5%83%8F%E5%B1%82%E5%AE%8C%E5%96%84%E6%8A%98%E7%BA%BF%E5%9B%BE.png" alt=""></p>
+<p><strong>设置图形风格</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E8%AE%BE%E7%BD%AE%E5%9B%BE%E5%BD%A2%E9%A3%8E%E6%A0%BC.png" alt=""></p>
+<p><strong>显示图例</strong></p>
+<p>如果只在 plt.plot()中设置 label 还不能最终显示出图例，还需要通过 plt.legend()将图例显示出来。</p>
+<pre><code class="python"># 绘制折线图
+plt.plot(x, y_shanghai, label=&quot;上海&quot;)
+# 使用多次plot可以画多个折线
+plt.plot(x, y_beijing, color=&#39;r&#39;, linestyle=&#39;--&#39;, label=&quot;北京&quot;)
+
+# 显示图例
+plt.legend(loc=&quot;best&quot;)</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ%E6%88%AA%E5%9B%BE20200921171203.png" alt=""></p>
+<h3 id="多个坐标系显示"><a href="#多个坐标系显示" class="headerlink" title="多个坐标系显示"></a>多个坐标系显示</h3><pre><code class="python"># 0.准备数据
+x = range(60)
+y_shanghai = [random.uniform(15, 18) for i in x]
+y_beijing = [random.uniform(1, 5) for i in x]
+
+# 1.创建画布
+# plt.figure(figsize=(20, 8), dpi=100)
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(20, 8), dpi=100)
+
+
+# 2.绘制图像
+# plt.plot(x, y_shanghai, label=&quot;上海&quot;)
+# plt.plot(x, y_beijing, color=&quot;r&quot;, linestyle=&quot;--&quot;, label=&quot;北京&quot;)
+axes[0].plot(x, y_shanghai, label=&quot;上海&quot;)
+axes[1].plot(x, y_beijing, color=&quot;r&quot;, linestyle=&quot;--&quot;, label=&quot;北京&quot;)
+
+# 2.1 添加x,y轴刻度
+# 构造x,y轴刻度标签
+x_ticks_label = [&quot;11点{}分&quot;.format(i) for i in x]
+y_ticks = range(40)
+
+# 刻度显示
+# plt.xticks(x[::5], x_ticks_label[::5])
+# plt.yticks(y_ticks[::5])
+axes[0].set_xticks(x[::5])
+axes[0].set_yticks(y_ticks[::5])
+axes[0].set_xticklabels(x_ticks_label[::5])
+axes[1].set_xticks(x[::5])
+axes[1].set_yticks(y_ticks[::5])
+axes[1].set_xticklabels(x_ticks_label[::5])
+
+# 2.2 添加网格显示
+# plt.grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+axes[0].grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+axes[1].grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+
+# 2.3 添加描述信息
+# plt.xlabel(&quot;时间&quot;)
+# plt.ylabel(&quot;温度&quot;)
+# plt.title(&quot;中午11点--12点某城市温度变化图&quot;, fontsize=20)
+axes[0].set_xlabel(&quot;时间&quot;)
+axes[0].set_ylabel(&quot;温度&quot;)
+axes[0].set_title(&quot;中午11点--12点某城市温度变化图&quot;, fontsize=20)
+axes[1].set_xlabel(&quot;时间&quot;)
+axes[1].set_ylabel(&quot;温度&quot;)
+axes[1].set_title(&quot;中午11点--12点某城市温度变化图&quot;, fontsize=20)
+
+# # 2.4 图像保存
+plt.savefig(&quot;./test.png&quot;)
+
+# # 2.5 添加图例
+# plt.legend(loc=0)
+axes[0].legend(loc=0)
+axes[1].legend(loc=0)
+
+
+# 3.图像显示
+plt.show()</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ%E6%88%AA%E5%9B%BE20200921171350.png" alt=""></p>
+<h3 id="常见图形绘制"><a href="#常见图形绘制" class="headerlink" title="常见图形绘制"></a>常见图形绘制</h3><p><a href="https://matplotlib.org/index.html" target="_blank" rel="noopener">matplotlib 示例</a></p>
+<p><strong>散点图绘制</strong></p>
+<p>api：plt.scatter(x, y)</p>
+<pre><code class="python"># 0.准备数据
+x = [225.98, 247.07, 253.14, 457.85, 241.58, 301.01,  20.67, 288.64,
+       163.56, 120.06, 207.83, 342.75, 147.9 ,  53.06, 224.72,  29.51,
+        21.61, 483.21, 245.25, 399.25, 343.35]
+y = [196.63, 203.88, 210.75, 372.74, 202.41, 247.61,  24.9 , 239.34,
+       140.32, 104.15, 176.84, 288.23, 128.79,  49.64, 191.74,  33.1 ,
+        30.74, 400.02, 205.35, 330.64, 283.45]
+
+# 1.创建画布
+plt.figure(figsize=(20, 8), dpi=100)
+
+# 2.绘制散点图
+plt.scatter(x, y)
+
+# 3.显示图像
+plt.show()</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E6%95%A3%E7%82%B9%E5%9B%BE%E7%BB%98%E5%88%B6.png" alt=""></p>
+<p><strong>柱状图绘制</strong></p>
+<p>api：plt.bar(x, width, align=’center’, **kwargs)</p>
+<p>Parameters:</p>
+<ul>
+<li><p>x : 需要传递的数据</p>
+</li>
+<li><p>width : 柱状图的宽度</p>
+</li>
+<li><p>align : 每个柱状图的位置对齐方式</p>
+<ul>
+<li>{‘center’, ‘edge’}, optional, default: ‘center’</li>
+</ul>
+</li>
+<li><p>**kwargs :</p>
+<ul>
+<li>color:选择柱状图的颜色</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 0.准备数据
+# 电影名字
+movie_name = [&#39;雷神3：诸神黄昏&#39;,&#39;正义联盟&#39;,&#39;东方快车谋杀案&#39;,&#39;寻梦环游记&#39;,&#39;全球风暴&#39;,&#39;降魔传&#39;,&#39;追捕&#39;,&#39;七十七天&#39;,&#39;密战&#39;,&#39;狂兽&#39;,&#39;其它&#39;]
+# 横坐标
+x = range(len(movie_name))
+# 票房数据
+y = [73853,57767,22354,15969,14839,8725,8716,8318,7916,6764,52222]
+
+# 1.创建画布
+plt.figure(figsize=(20, 8), dpi=100)
+
+# 2.绘制柱状图
+plt.bar(x, y, width=0.5, color=[&#39;b&#39;,&#39;r&#39;,&#39;g&#39;,&#39;y&#39;,&#39;c&#39;,&#39;m&#39;,&#39;y&#39;,&#39;k&#39;,&#39;c&#39;,&#39;g&#39;,&#39;b&#39;])
+
+# 2.1b修改x轴的刻度显示
+plt.xticks(x, movie_name)
+
+# 2.2 添加网格显示
+plt.grid(linestyle=&quot;--&quot;, alpha=0.5)
+
+# 2.3 添加标题
+plt.title(&quot;电影票房收入对比&quot;)
+
+# 3.显示图像
+plt.show()</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E7%94%B5%E5%BD%B1%E7%A5%A8%E6%88%BF%E6%94%B6%E5%85%A5%E5%AF%B9%E6%AF%94.png" alt=""></p>
+<p><strong>直方图</strong></p>
+<p>api：matplotlib.pyplot.hist(x, bins=None)</p>
+<p>Parameters:</p>
+<ul>
+<li>x : 需要传递的数据</li>
+<li>bins : 组距</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E7%9B%B4%E6%96%B9%E5%9B%BE%E6%84%8F%E4%B9%89.png" alt=""></p>
+<p><strong>饼图</strong></p>
+<p>api：plt.pie(x, labels=,autopct=,colors)</p>
+<p>Parameters:</p>
+<ul>
+<li>x:数量，自动算百分比</li>
+<li>labels:每部分名称</li>
+<li>autopct:占比显示指定%1.2f%%</li>
+<li>colors:每部分颜色</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E9%A5%BC%E5%9B%BE%E6%84%8F%E4%B9%89.png"/>
+
 <h2 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h2><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/Numpy.png"/>
 
 <ul>
@@ -991,10 +1215,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-19T10:54:39+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-21T17:21:50+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Sep 19, 2020</p>
+    <p>更新于：Sep 21, 2020</p>
   </a>
 </div>
 
@@ -1003,7 +1227,7 @@
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>机器学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>深度学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Numpy/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Numpy</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Pandas/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Pandas</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Jupyter-Notebook/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Jupyter Notebook</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>机器学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>深度学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Matplotlib/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Matplotlib</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Numpy/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Numpy</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Pandas/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Pandas</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Jupyter-Notebook/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Jupyter Notebook</p></a></div>
 
 
         
@@ -1184,7 +1408,7 @@
 
 
     <div class='content'>
-      <a href="/tags/BDS/" style="font-size: 14px; color: #999">BDS</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/GNSS/" style="font-size: 19px; color: #777">GNSS</a> <a href="/tags/GPS/" style="font-size: 14px; color: #999">GPS</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #999">Hexo</a> <a href="/tags/Jupyter-Notebook/" style="font-size: 14px; color: #999">Jupyter Notebook</a> <a href="/tags/Markdown/" style="font-size: 14px; color: #999">Markdown</a> <a href="/tags/Numpy/" style="font-size: 14px; color: #999">Numpy</a> <a href="/tags/Pandas/" style="font-size: 14px; color: #999">Pandas</a> <a href="/tags/Python/" style="font-size: 24px; color: #555">Python</a> <a href="/tags/QT/" style="font-size: 14px; color: #999">QT</a> <a href="/tags/RTK/" style="font-size: 19px; color: #777">RTK</a> <a href="/tags/RTKlib/" style="font-size: 19px; color: #777">RTKlib</a> <a href="/tags/blog/" style="font-size: 19px; color: #777">blog</a> <a href="/tags/pygame/" style="font-size: 14px; color: #999">pygame</a> <a href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA/" style="font-size: 14px; color: #999">内存分区</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/" style="font-size: 14px; color: #999">多任务</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 14px; color: #999">机器学习</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 14px; color: #999">深度学习</a> <a href="/tags/%E7%BA%BF%E7%A8%8B/" style="font-size: 14px; color: #999">线程</a> <a href="/tags/%E8%BF%9B%E7%A8%8B/" style="font-size: 14px; color: #999">进程</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 14px; color: #999">项目</a>
+      <a href="/tags/BDS/" style="font-size: 14px; color: #999">BDS</a> <a href="/tags/C/" style="font-size: 14px; color: #999">C</a> <a href="/tags/GNSS/" style="font-size: 19px; color: #777">GNSS</a> <a href="/tags/GPS/" style="font-size: 14px; color: #999">GPS</a> <a href="/tags/Hexo/" style="font-size: 14px; color: #999">Hexo</a> <a href="/tags/Jupyter-Notebook/" style="font-size: 14px; color: #999">Jupyter Notebook</a> <a href="/tags/Markdown/" style="font-size: 14px; color: #999">Markdown</a> <a href="/tags/Matplotlib/" style="font-size: 14px; color: #999">Matplotlib</a> <a href="/tags/Numpy/" style="font-size: 14px; color: #999">Numpy</a> <a href="/tags/Pandas/" style="font-size: 14px; color: #999">Pandas</a> <a href="/tags/Python/" style="font-size: 24px; color: #555">Python</a> <a href="/tags/QT/" style="font-size: 14px; color: #999">QT</a> <a href="/tags/RTK/" style="font-size: 19px; color: #777">RTK</a> <a href="/tags/RTKlib/" style="font-size: 19px; color: #777">RTKlib</a> <a href="/tags/blog/" style="font-size: 19px; color: #777">blog</a> <a href="/tags/pygame/" style="font-size: 14px; color: #999">pygame</a> <a href="/tags/%E5%86%85%E5%AD%98%E5%88%86%E5%8C%BA/" style="font-size: 14px; color: #999">内存分区</a> <a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 14px; color: #999">内存管理</a> <a href="/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/" style="font-size: 14px; color: #999">多任务</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 14px; color: #999">机器学习</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 14px; color: #999">深度学习</a> <a href="/tags/%E7%BA%BF%E7%A8%8B/" style="font-size: 14px; color: #999">线程</a> <a href="/tags/%E8%BF%9B%E7%A8%8B/" style="font-size: 14px; color: #999">进程</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 14px; color: #999">项目</a>
     </div>
   </section>
 
@@ -1261,7 +1485,7 @@
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matplotlib-使用"><span class="toc-number">3.1.</span> <span class="toc-text">Matplotlib 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础绘图功能"><span class="toc-number">3.2.</span> <span class="toc-text">基础绘图功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个坐标系中绘制多个图像"><span class="toc-number">3.3.</span> <span class="toc-text">在一个坐标系中绘制多个图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个坐标系显示"><span class="toc-number">3.4.</span> <span class="toc-text">多个坐标系显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图形绘制"><span class="toc-number">3.5.</span> <span class="toc-text">常见图形绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
     </div>
   </section>
 
