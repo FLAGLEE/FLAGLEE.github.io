@@ -775,6 +775,7 @@
 <h3 id="人工智能、机器学习、深度学习关系"><a href="#人工智能、机器学习、深度学习关系" class="headerlink" title="人工智能、机器学习、深度学习关系"></a>人工智能、机器学习、深度学习关系</h3><p>机器学习包含了很多种不同的算法，深度学习就是其中之一，其他方法包括决策树，聚类，贝叶斯等。</p>
 <p>深度学习的灵感来自大脑的结构和功能，即许多神经元的互连。人工神经网络（ANN）是模拟大脑生物结构的算法。</p>
 <p>不管是机器学习还是深度学习，都属于人工智能（AI）的范畴。</p>
+<hr>
 <h2 id="Jupyter-Notebook"><a href="#Jupyter-Notebook" class="headerlink" title="Jupyter Notebook"></a>Jupyter Notebook</h2><h3 id="Jupyter-Notebook-简介"><a href="#Jupyter-Notebook-简介" class="headerlink" title="Jupyter Notebook 简介"></a>Jupyter Notebook 简介</h3><p>Jupyter 项目是一个非盈利的开源项目，源于 2014 年的 ipython 项目，因为它逐渐发展为支持跨所有编程语言的交互式数据科学和科学计算。</p>
 <p>实时运行的代码、叙事性的文本和可视化被整合在一起，方便使用代码和数据来讲述故事，Jupyter Notebook 相比 Pycharm 在画图和数据展示方面更有优势。</p>
 <ul>
@@ -874,8 +875,9 @@
 </ul>
 <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/Notebook%E6%93%8D%E4%BD%9C.png" width="600"  align="center" />
 
-<hr>
+<p>附：</p>
 <p><a href="https://zhuanlan.zhihu.com/p/33105153" target="_blank" rel="noopener">Jupyter Notebook 介绍、安装及使用教程</a></p>
+<hr>
 <h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/matplotlib%E5%9B%BE%E6%A0%87.png"/>
 
 <ul>
@@ -1108,6 +1110,7 @@ plt.show()</code></pre>
 </ul>
 <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/%E9%A5%BC%E5%9B%BE%E6%84%8F%E4%B9%89.png"/>
 
+<hr>
 <h2 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h2><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/Numpy.png"/>
 
 <ul>
@@ -1117,9 +1120,547 @@ plt.show()</code></pre>
 </li>
 <li><p>Numpy <strong>使用 ndarray 对象来处理多维数组</strong>，该对象是一个快速而灵活的大数据容器。</p>
 </li>
+<li><p>NumPy 提供了一个<strong>N 维数组类型 ndarray</strong>，它描述了<strong>相同类型</strong>的“items”的集合。</p>
+</li>
 </ul>
+<p>用 ndarray 进行存储：</p>
+<pre><code class="python">import numpy as np
+
+# 创建ndarray
+score = np.array(
+[[80, 89, 86, 67, 79],
+[78, 97, 89, 67, 81],
+[90, 94, 78, 67, 74],
+[91, 91, 90, 67, 69],
+[76, 87, 75, 67, 86],
+[70, 79, 84, 67, 84],
+[94, 92, 93, 67, 64],
+[86, 85, 83, 67, 80]])
+
+score</code></pre>
+<p>返回结果：</p>
+<pre><code class="python">array([[80, 89, 86, 67, 79],
+       [78, 97, 89, 67, 81],
+       [90, 94, 78, 67, 74],
+       [91, 91, 90, 67, 69],
+       [76, 87, 75, 67, 86],
+       [70, 79, 84, 67, 84],
+       [94, 92, 93, 67, 64],
+       [86, 85, 83, 67, 80]])</code></pre>
+<p>机器学习的最大特点就是大量的数据运算，那么如果没有一个快速的解决方案，那可能现在 python 也在机器学习领域达不到好的效果。</p>
+<p>Numpy 专门针对 ndarray 的操作和运算进行了设计，所以数组的存储效率和输入输出性能远优于 Python 中的嵌套列表，数组越大，Numpy 的优势就越明显。</p>
+<h3 id="ndarray-的优势"><a href="#ndarray-的优势" class="headerlink" title="ndarray 的优势"></a>ndarray 的优势</h3><p><strong>内存块风格</strong><br>ndarray 跟原生 python 列表的不同:</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ截图20201007114126.png"/>
+
+<p>从图中我们可以看出 ndarray 在存储数据的时候，数据与数据的地址都是连续的，这样就给使得批量操作数组元素时速度更快。</p>
+<p>这是因为 ndarray 中的所有元素的类型都是相同的，而 Python 列表中的元素类型是任意的，所以 ndarray 在存储元素时内存可以连续，而 python 原生 list 就只能通过寻址方式找到下一个元素，这虽然也导致了在通用性能方面 Numpy 的 ndarray 不及 Python 原生 list，但在科学计算中，Numpy 的 ndarray 就可以省掉很多循环语句，代码使用方面比 Python 原生 list 简单的多。</p>
+<p><strong>ndarray 支持并行化运算（向量化运算）</strong><br>numpy 内置了并行运算功能，当系统有多个核心时，做某种计算时，numpy 会自动做并行计算</p>
+<p><strong>效率远高于纯 Python 代码</strong><br>Numpy 底层使用 C 语言编写，内部解除了 GIL（全局解释器锁），其对数组的操作速度不受 Python 解释器的限制，所以，其效率远高于纯 Python 代码。</p>
+<h3 id="N-维数组-ndarray"><a href="#N-维数组-ndarray" class="headerlink" title="N 维数组-ndarray"></a>N 维数组-ndarray</h3><p><strong>1 ndarray 的属性</strong></p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/ndarray属性.png"/>
+
+<p><strong>2 ndarray 的形状</strong></p>
+<p>首先创建一些数组，分别打印出形状。</p>
+<pre><code class="python"># 创建不同形状的数组
+&gt;&gt;&gt; a = np.array([[1,2,3],[4,5,6]])
+&gt;&gt;&gt; b = np.array([1,2,3,4])
+&gt;&gt;&gt; c = np.array([[[1,2,3],[4,5,6]],[[1,2,3],[4,5,6]]])
+
+&gt;&gt;&gt; a.shape
+&gt;&gt;&gt; b.shape
+&gt;&gt;&gt; c.shape
+
+(2, 3)  # 二维数组
+(4,)    # 一维数组
+(2, 2, 3) # 三维数组</code></pre>
+<p>如何理解数组的形状？</p>
+<p>二维数组：<br><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/数组1.png"/></p>
+<p>三维数组：<br><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/数组2.png"/></p>
+<p><strong>3 ndarray 的类型</strong></p>
+<pre><code class="python">&gt;&gt;&gt; type(score.dtype)
+
+&lt;type &#39;numpy.dtype&#39;&gt;</code></pre>
+<p>dtype 是 numpy.dtype 类型，先看看对于数组来说都有哪些类型</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/np类型.png"/>
+
+<p>创建数组的时候指定类型</p>
+<pre><code class="python">&gt;&gt;&gt; a = np.array([[1, 2, 3],[4, 5, 6]], dtype=np.float32)
+&gt;&gt;&gt; a.dtype
+dtype(&#39;float32&#39;)
+
+&gt;&gt;&gt; arr = np.array([&#39;python&#39;, &#39;tensorflow&#39;, &#39;scikit-learn&#39;, &#39;numpy&#39;], dtype = np.string_)
+&gt;&gt;&gt; arr
+array([b&#39;python&#39;, b&#39;tensorflow&#39;, b&#39;scikit-learn&#39;, b&#39;numpy&#39;], dtype=&#39;|S12&#39;)</code></pre>
+<p>注意：若不指定，整数默认 int64，小数默认 float64</p>
+<h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><h4 id="生成数组的方法"><a href="#生成数组的方法" class="headerlink" title="生成数组的方法"></a>生成数组的方法</h4><p><strong>生成 0 和 1 的数组</strong></p>
+<ul>
+<li>np.ones(shape, dtype)</li>
+<li>np.ones_like(a, dtype)</li>
+<li>np.zeros(shape, dtype)</li>
+<li>np.zeros_like(a, dtype)</li>
+</ul>
+<pre><code class="python">ones = np.ones((4,8))
+ones</code></pre>
+<p>返回结果:</p>
+<pre><code class="python">array([[1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.],
+       [1., 1., 1., 1., 1., 1., 1., 1.]])</code></pre>
+<pre><code class="python">np.zeros_like(ones)</code></pre>
+<p>返回结果:</p>
+<pre><code class="python">array([[0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0.],
+       [0., 0., 0., 0., 0., 0., 0., 0.]])</code></pre>
+<p><strong>从现有数组生成</strong></p>
+<p>生成方式</p>
+<ul>
+<li><p>np.array(object, dtype)</p>
+</li>
+<li><p>np.asarray(a, dtype)</p>
+</li>
+</ul>
+<pre><code class="python">a = np.array([[1,2,3],[4,5,6]])
+# 从现有的数组当中创建
+a1 = np.array(a)
+# 相当于索引的形式，并没有真正的创建一个新的
+a2 = np.asarray(a)</code></pre>
+<p><strong>关于 array 和 asarray 的不同</strong></p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/array和asarray的区别.png"/>
+
+<p><strong>生成固定范围的数组</strong></p>
+<p><strong>np.linspace (start, stop, num, endpoint)</strong></p>
+<ul>
+<li>创建等差数组 — 指定数量</li>
+<li>参数:<ul>
+<li>start:序列的起始值</li>
+<li>stop:序列的终止值</li>
+<li>num:要生成的等间隔样例数量，默认为 50</li>
+<li>endpoint:序列中是否包含 stop 值，默认为 ture</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 生成等间隔的数组
+np.linspace(0, 100, 11)
+返回结果：
+
+array([  0.,  10.,  20.,  30.,  40.,  50.,  60.,  70.,  80.,  90., 100.])</code></pre>
+<p><strong>np.arange(start,stop, step, dtype)</strong></p>
+<ul>
+<li>创建等差数组 — 指定步长</li>
+<li>参数<ul>
+<li>step:步长,默认值为 1</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">np.arange(10, 50, 2)
+返回结果：
+
+array([10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42,44, 46, 48])</code></pre>
+<p><strong>np.logspace(start,stop, num)</strong></p>
+<ul>
+<li><p>创建等比数列</p>
+</li>
+<li><p>参数:</p>
+<ul>
+<li>num:要生成的等比数列数量，默认为 50</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 生成10^x
+np.logspace(0, 2, 3)
+返回结果:
+
+array([  1.,  10., 100.])</code></pre>
+<p><strong>生成随机数组</strong></p>
+<p><strong>正态分布</strong>创建方式:</p>
+<ul>
+<li><p>np.random.randn(d0, d1, …, dn)</p>
+<ul>
+<li>功能：从标准正态分布中返回一个或多个样本值</li>
+</ul>
+</li>
+<li><p>np.random.normal(loc=0.0, scale=1.0, size=None)</p>
+<ul>
+<li><p>loc：float</p>
+<ul>
+<li>此概率分布的均值（对应着整个分布的中心 centre）</li>
+</ul>
+</li>
+<li><p>scale：float</p>
+<ul>
+<li>此概率分布的标准差（对应于分布的宽度，scale 越大越矮胖，scale 越小，越瘦高）</li>
+</ul>
+</li>
+<li><p>size：int or tuple of ints</p>
+<ul>
+<li>输出的 shape，默认为 None，只输出一个值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>np.random.standard_normal(size=None)</p>
+<ul>
+<li>返回指定形状的标准正态分布的数组。</li>
+</ul>
+</li>
+</ul>
+<p>举例：生成均值为 1.75，标准差为 1 的正态分布数据，100000000 个</p>
+<pre><code class="python">x1 = np.random.normal(1.75, 1, 100000000)
+返回结果：
+
+array([2.90646763, 1.46737886, 2.21799024, ..., 1.56047411, 1.87969135,0.9028096 ])</code></pre>
+<pre><code class="python"># 生成均匀分布的随机数
+x1 = np.random.normal(1.75, 1, 100000000)
+
+# 画图看分布状况
+# 1）创建画布
+plt.figure(figsize=(20, 10), dpi=100)
+
+# 2）绘制直方图
+plt.hist(x1, 1000)
+
+# 3）显示图像
+plt.show()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/随机生成正态分布.png"/>
+
+<p><strong>均匀分布</strong>创建方式</p>
+<ul>
+<li><p>np.random.rand(d0, d1, …, dn)</p>
+<ul>
+<li>返回[0.0，1.0)内的一组均匀分布的数。</li>
+</ul>
+</li>
+<li><p>np.random.uniform(low=0.0, high=1.0, size=None)</p>
+<ul>
+<li><p>功能：从一个均匀分布[low,high)中随机采样，注意定义域是左闭右开，即包含 low，不包含 high.</p>
+</li>
+<li><p>参数介绍:</p>
+<ul>
+<li><p>low: 采样下界，float 类型，默认值为 0；</p>
+</li>
+<li><p>high: 采样上界，float 类型，默认值为 1；</p>
+</li>
+<li><p>size: 输出样本数目，为 int 或元组(tuple)类型，例如，size=(m,n,k), 则输出 mnk 个样本，缺省时输出 1 个值。</p>
+</li>
+</ul>
+</li>
+<li><p>返回值：ndarray 类型，其形状和参数 size 中描述一致。</p>
+</li>
+</ul>
+</li>
+<li><p>np.random.randint(low, high=None, size=None, dtype=’l’)</p>
+<ul>
+<li><p>从一个均匀分布中随机采样，生成一个整数或 N 维整数数组，</p>
+</li>
+<li><p>取数范围：若 high 不为 None 时，取[low,high)之间随机整数，否则取值[0,low)之间随机整数。</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 生成均匀分布的随机数
+x2 = np.random.uniform(-1, 1, 100000000)
+返回结果：
+
+array([ 0.22411206,  0.31414671,  0.85655613, ..., -0.92972446,
+0.95985223,  0.23197723])</code></pre>
+<pre><code class="python">画图看分布状况：
+
+import matplotlib.pyplot as plt
+
+# 生成均匀分布的随机数
+x2 = np.random.uniform(-1, 1, 100000000)
+
+# 画图看分布状况
+# 1）创建画布
+plt.figure(figsize=(10, 10), dpi=100)
+
+# 2）绘制直方图
+plt.hist(x=x2, bins=1000)  # x代表要使用的数据，bins表示要划分区间数
+
+# 3）显示图像
+plt.show()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/均匀分布.png"/>
+
+<h4 id="数组的索引、切片"><a href="#数组的索引、切片" class="headerlink" title="数组的索引、切片"></a>数组的索引、切片</h4><p>一维、二维、三维的数组如何索引？</p>
+<ul>
+<li>直接进行索引,切片</li>
+<li>对象[:, :] – 先行后列</li>
+</ul>
+<p>二维数组索引方式：</p>
+<ul>
+<li>举例：获取第一个股票的前 3 个交易日的涨跌幅数据</li>
+</ul>
+<pre><code class="python"># 二维的数组，两个维度
+stock_change[0, 0:3]
+返回结果：
+
+array([-0.03862668, -1.46128096, -0.75596237])</code></pre>
+<p>三维数组索引方式：</p>
+<pre><code class="python"># 三维
+a1 = np.array([ [[1,2,3],[4,5,6]], [[12,3,34],[5,6,7]]])
+# 返回结果
+array([[[ 1,  2,  3],
+        [ 4,  5,  6]],
+
+       [[12,  3, 34],
+        [ 5,  6,  7]]])
+# 索引、切片
+&gt;&gt;&gt; a1[0, 0, 1]   # 输出: 2</code></pre>
+<h4 id="形状修改"><a href="#形状修改" class="headerlink" title="形状修改"></a>形状修改</h4><ul>
+<li><p>ndarray.reshape(shape, order)</p>
+<ul>
+<li><p>返回一个具有相同数据域，但 shape 不一样的视图</p>
+</li>
+<li><p>行、列不进行互换</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">    # 在转换形状的时候，一定要注意数组的元素匹配
+    stock_change.reshape([5, 4])
+    stock_change.reshape([-1,10])  # 数组的形状被修改为: (2, 10), -1: 表示通过待计算</code></pre>
+<ul>
+<li>ndarray.resize(new_shape)<ul>
+<li>修改数组本身的形状（需要保持元素个数前后相同）</li>
+<li>行、列不进行互换</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">    stock_change.resize([5, 4])
+
+    # 查看修改后结果
+    stock_change.shape
+    (5, 4)</code></pre>
+<ul>
+<li><p>ndarray.T</p>
+<ul>
+<li><p>数组的转置</p>
+</li>
+<li><p>将数组的行、列进行互换</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">    stock_change.T.shape
+    (4, 5)</code></pre>
+<h4 id="类型修改"><a href="#类型修改" class="headerlink" title="类型修改"></a>类型修改</h4><ul>
+<li><p>ndarray.astype(type)</p>
+<ul>
+<li>返回修改了类型之后的数组</li>
+</ul>
+</li>
+</ul>
+<pre><code>stock_change.astype(np.int32)</code></pre><ul>
+<li>ndarray.tostring([order])或者 ndarray.tobytes([order])<ul>
+<li>构造包含数组中原始数据字节的 Python 字节</li>
+</ul>
+</li>
+</ul>
+<pre><code>arr = np.array([[[1, 2, 3], [4, 5, 6]], [[12, 3, 34], [5, 6, 7]]])
+arr.tostring()</code></pre><ul>
+<li>jupyter 输出太大可能导致崩溃问题<br>如果遇到</li>
+</ul>
+<pre><code>IOPub data rate exceeded.
+    The notebook server will temporarily stop sending output
+    to the client in order to avoid crashing it.
+    To change this limit, set the config variable
+    `--NotebookApp.iopub_data_rate_limit`.</code></pre><p>这个问题是在 jupyer 当中对输出的字节数有限制，需要去修改配置文件</p>
+<p>创建配置文件</p>
+<pre><code>jupyter notebook --generate-config
+vi ~/.jupyter/jupyter_notebook_config.py</code></pre><p>取消注释,多增加</p>
+<pre><code>## (bytes/sec) Maximum rate at which messages can be sent on iopub before they
+#  are limited.
+c.NotebookApp.iopub_data_rate_limit = 10000000</code></pre><p>但是不建议这样去修改，jupyter 输出太大会崩溃</p>
+<h4 id="数组的去重"><a href="#数组的去重" class="headerlink" title="数组的去重"></a>数组的去重</h4><pre><code class="python">np.unique()
+temp = np.array([[1, 2, 3, 4],[3, 4, 5, 6]])
+&gt;&gt;&gt; np.unique(temp)
+array([1, 2, 3, 4, 5, 6])</code></pre>
+<h3 id="ndarray-运算"><a href="#ndarray-运算" class="headerlink" title="ndarray 运算"></a>ndarray 运算</h3><h4 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h4><pre><code class="python"># 生成10名同学，5门功课的数据
+&gt;&gt;&gt; score = np.random.randint(40, 100, (10, 5))
+
+# 取出最后4名同学的成绩，用于逻辑判断
+&gt;&gt;&gt; test_score = score[6:, 0:5]
+
+# 逻辑判断, 如果成绩大于60就标记为True 否则为False
+&gt;&gt;&gt; test_score &gt; 60
+array([[ True,  True,  True, False,  True],
+       [ True,  True,  True, False,  True],
+       [ True,  True, False, False,  True],
+       [False,  True,  True,  True,  True]])
+
+# BOOL赋值, 将满足条件的设置为指定的值-布尔索引
+&gt;&gt;&gt; test_score[test_score &gt; 60] = 1
+&gt;&gt;&gt; test_score
+array([[ 1,  1,  1, 52,  1],
+       [ 1,  1,  1, 59,  1],
+       [ 1,  1, 44, 44,  1],
+       [59,  1,  1,  1,  1]])</code></pre>
+<h4 id="通用判断函数"><a href="#通用判断函数" class="headerlink" title="通用判断函数"></a>通用判断函数</h4><ul>
+<li>np.all()</li>
+</ul>
+<pre><code class="python"># 判断前两名同学的成绩[0:2, :]是否全及格
+&gt;&gt;&gt; np.all(score[0:2, :] &gt; 60)
+False</code></pre>
+<ul>
+<li>np.any()</li>
+</ul>
+<pre><code class="puthon"># 判断前两名同学的成绩[0:2, :]是否有大于90分的
+&gt;&gt;&gt; np.any(score[0:2, :] &gt; 80)
+True</code></pre>
+<h4 id="np-where（三元运算符）"><a href="#np-where（三元运算符）" class="headerlink" title="np.where（三元运算符）"></a>np.where（三元运算符）</h4><p>通过使用 np.where 能够进行更加复杂的运算</p>
+<ul>
+<li>np.where()</li>
+</ul>
+<pre><code class="python"># 判断前四名学生,前四门课程中，成绩中大于60的置为1，否则为0
+temp = score[:4, :4]
+np.where(temp &gt; 60, 1, 0)</code></pre>
+<ul>
+<li>复合逻辑需要结合 np.logical_and 和 np.logical_or 使用</li>
+</ul>
+<pre><code class="python"># 判断前四名学生,前四门课程中，成绩中大于60且小于90的换为1，否则为0
+np.where(np.logical_and(temp &gt; 60, temp &lt; 90), 1, 0)
+
+# 判断前四名学生,前四门课程中，成绩中大于90或小于60的换为1，否则为0
+np.where(np.logical_or(temp &gt; 90, temp &lt; 60), 1, 0)</code></pre>
+<h4 id="统计运算"><a href="#统计运算" class="headerlink" title="统计运算"></a>统计运算</h4><p>如果想要知道学生成绩最大的分数，或者做小分数应该怎么做？</p>
+<p><strong>统计指标</strong><br>在数据挖掘/机器学习领域，统计指标的值也是我们分析问题的一种方式。常用的指标如下：</p>
+<ul>
+<li>min(a, axis)<ul>
+<li>Return the minimum of an array or minimum along an axis.</li>
+</ul>
+</li>
+<li>max(a, axis])<ul>
+<li>Return the maximum of an array or maximum along an axis.</li>
+</ul>
+</li>
+<li>median(a, axis)<ul>
+<li>Compute the median along the specified axis.</li>
+</ul>
+</li>
+<li>mean(a, axis, dtype)<ul>
+<li>Compute the arithmetic mean along the specified axis.</li>
+</ul>
+</li>
+<li>std(a, axis, dtype)<ul>
+<li>Compute the standard deviation along the specified axis.</li>
+</ul>
+</li>
+<li>var(a, axis, dtype)<ul>
+<li>Compute the variance along the specified axis.</li>
+</ul>
+</li>
+</ul>
+<p><strong>案例：学生成绩统计运算</strong></p>
+<p>进行统计的时候，axis 轴的取值并不一定，Numpy 中不同的 API 轴的值都不一样，在这里，axis 0 代表列, axis 1 代表行去进行统计</p>
+<pre><code class="python"># 接下来对于前四名学生,进行一些统计运算
+# 指定列 去统计
+temp = score[:4, 0:5]
+print(&quot;前四名学生,各科成绩的最大分：{}&quot;.format(np.max(temp, axis=0)))
+print(&quot;前四名学生,各科成绩的最小分：{}&quot;.format(np.min(temp, axis=0)))
+print(&quot;前四名学生,各科成绩波动情况：{}&quot;.format(np.std(temp, axis=0)))
+print(&quot;前四名学生,各科成绩的平均分：{}&quot;.format(np.mean(temp, axis=0)))
+结果：
+
+前四名学生,各科成绩的最大分：[96 97 72 98 89]
+前四名学生,各科成绩的最小分：[55 57 45 76 77]
+前四名学生,各科成绩波动情况：[16.25576821 14.92271758 10.40432602  8.0311892   4.32290412]
+前四名学生,各科成绩的平均分：[78.5  75.75 62.5  85.   82.25]</code></pre>
+<p>如果需要统计出某科最高分对应的是哪个同学？</p>
+<ul>
+<li>np.argmax(temp, axis=)</li>
+<li>np.argmin(temp, axis=)</li>
+</ul>
+<pre><code class="python">print(&quot;前四名学生，各科成绩最高分对应的学生下标：{}&quot;.format(np.argmax(temp, axis=0)))
+结果：
+
+前四名学生，各科成绩最高分对应的学生下标：[0 2 0 0 1]</code></pre>
+<h3 id="数组间运算"><a href="#数组间运算" class="headerlink" title="数组间运算"></a>数组间运算</h3><h4 id="数组与数的运算"><a href="#数组与数的运算" class="headerlink" title="数组与数的运算"></a>数组与数的运算</h4><pre><code class="python">arr = np.array([[1, 2, 3, 2, 1, 4], [5, 6, 1, 2, 3, 1]])
+arr + 1
+
+Out[1]:
+array([[2, 3, 4, 3, 2, 5],
+       [6, 7, 2, 3, 4, 2]])
+
+arr / 2
+
+Out[2]:
+array([[0.5, 1. , 1.5, 1. , 0.5, 2. ],
+       [2.5, 3. , 0.5, 1. , 1.5, 0.5]])
+
+# 可以对比python列表的运算，看出区别
+a = [1, 2, 3, 4, 5]
+a * 3
+
+Out[3]:
+[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+</code></pre>
+<h4 id="数组与数组的运算"><a href="#数组与数组的运算" class="headerlink" title="数组与数组的运算"></a>数组与数组的运算</h4><p><strong>广播机制</strong></p>
+<p>数组在进行矢量化运算时，要求数组的形状是相等的。当形状不相等的数组执行算术运算的时候，就会出现广播机制，该机制会对数组进行扩展，使数组的 shape 属性值一样，这样，就可以进行矢量化运算了。下面通过一个例子进行说明：</p>
+<pre><code class="python">arr1 = np.array([[0],[1],[2],[3]])
+arr1.shape
+# (4, 1)
+
+arr2 = np.array([1,2,3])
+arr2.shape
+# (3,)
+
+arr1+arr2
+# 结果是：
+array([[1, 2, 3],
+       [2, 3, 4],
+       [3, 4, 5],
+       [4, 5, 6]])</code></pre>
+<p>上述代码中，数组 arr1 是 4 行 1 列，arr2 是 1 行 3 列。这两个数组要进行相加，按照广播机制会对数组 arr1 和 arr2 都进行扩展，使得数组 arr1 和 arr2 都变成 4 行 3 列。</p>
+<p>下面通过一张图来描述广播机制扩展数组的过程：</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/image-20190620005224076.png"/>
+
+<p>广播机制实现了时两个或两个以上数组的运算，即使这些数组的 shape 不是完全相同的，只需要满足如下任意一个条件即可。</p>
+<ul>
+<li>1.数组的某一维度等长。</li>
+<li>2.其中一个数组的某一维度为 1 。</li>
+</ul>
+<p>广播机制需要扩展维度小的数组，使得它与维度最大的数组的 shape 值相同，以便使用元素级函数或者运算符进行运算。</p>
+<p>如果是下面这样，则不匹配：</p>
+<pre><code>A  (1d array): 10
+B  (1d array): 12
+A  (2d array):      2 x 1
+B  (3d array):  8 x 4 x 3</code></pre><h4 id="矩阵乘法-api"><a href="#矩阵乘法-api" class="headerlink" title="矩阵乘法 api"></a>矩阵乘法 api</h4><ul>
+<li>np.matmul</li>
+<li>np.dot</li>
+</ul>
+<pre><code class="python">&gt;&gt;&gt; a = np.array([[80, 86],
+[82, 80],
+[85, 78],
+[90, 90],
+[86, 82],
+[82, 90],
+[78, 80],
+[92, 94]])
+&gt;&gt;&gt; b = np.array([[0.7], [0.3]])
+
+&gt;&gt;&gt; np.matmul(a, b)
+array([[81.8],
+       [81.4],
+       [82.9],
+       [90. ],
+       [84.8],
+       [84.4],
+       [78.6],
+       [92.6]])
+
+&gt;&gt;&gt; np.dot(a,b)
+array([[81.8],
+       [81.4],
+       [82.9],
+       [90. ],
+       [84.8],
+       [84.4],
+       [78.6],
+       [92.6]])</code></pre>
+<p><strong>np.matmul 和 np.dot 的区别:</strong></p>
+<p>二者都是矩阵乘法。 np.matmul 中禁止矩阵与标量的乘法。 在矢量乘矢量的內积运算中，np.matmul 与 np.dot 没有区别。</p>
 <hr>
-<p>学习中，先占坑</p>
 <h2 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h2><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/pandas.png"/>
 
 <ul>
@@ -1215,10 +1756,10 @@ plt.show()</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-09-21T17:21:50+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-07T15:22:09+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Sep 21, 2020</p>
+    <p>更新于：Oct 7, 2020</p>
   </a>
 </div>
 
@@ -1485,7 +2026,7 @@ plt.show()</code></pre>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matplotlib-使用"><span class="toc-number">3.1.</span> <span class="toc-text">Matplotlib 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础绘图功能"><span class="toc-number">3.2.</span> <span class="toc-text">基础绘图功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个坐标系中绘制多个图像"><span class="toc-number">3.3.</span> <span class="toc-text">在一个坐标系中绘制多个图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个坐标系显示"><span class="toc-number">3.4.</span> <span class="toc-text">多个坐标系显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图形绘制"><span class="toc-number">3.5.</span> <span class="toc-text">常见图形绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matplotlib-使用"><span class="toc-number">3.1.</span> <span class="toc-text">Matplotlib 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础绘图功能"><span class="toc-number">3.2.</span> <span class="toc-text">基础绘图功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个坐标系中绘制多个图像"><span class="toc-number">3.3.</span> <span class="toc-text">在一个坐标系中绘制多个图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个坐标系显示"><span class="toc-number">3.4.</span> <span class="toc-text">多个坐标系显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图形绘制"><span class="toc-number">3.5.</span> <span class="toc-text">常见图形绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-的优势"><span class="toc-number">4.1.</span> <span class="toc-text">ndarray 的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N-维数组-ndarray"><span class="toc-number">4.2.</span> <span class="toc-text">N 维数组-ndarray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本操作"><span class="toc-number">4.3.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成数组的方法"><span class="toc-number">4.3.1.</span> <span class="toc-text">生成数组的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的索引、切片"><span class="toc-number">4.3.2.</span> <span class="toc-text">数组的索引、切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#形状修改"><span class="toc-number">4.3.3.</span> <span class="toc-text">形状修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类型修改"><span class="toc-number">4.3.4.</span> <span class="toc-text">类型修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的去重"><span class="toc-number">4.3.5.</span> <span class="toc-text">数组的去重</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-运算"><span class="toc-number">4.4.</span> <span class="toc-text">ndarray 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑运算"><span class="toc-number">4.4.1.</span> <span class="toc-text">逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通用判断函数"><span class="toc-number">4.4.2.</span> <span class="toc-text">通用判断函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#np-where（三元运算符）"><span class="toc-number">4.4.3.</span> <span class="toc-text">np.where（三元运算符）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计运算"><span class="toc-number">4.4.4.</span> <span class="toc-text">统计运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组间运算"><span class="toc-number">4.5.</span> <span class="toc-text">数组间运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数的运算"><span class="toc-number">4.5.1.</span> <span class="toc-text">数组与数的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数组的运算"><span class="toc-number">4.5.2.</span> <span class="toc-text">数组与数组的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵乘法-api"><span class="toc-number">4.5.3.</span> <span class="toc-text">矩阵乘法 api</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
     </div>
   </section>
 
@@ -1562,19 +2103,19 @@ plt.show()</code></pre>
   
   
   
-  <!-- <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW" target="_blank" rel="noopener">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
+  <!-- <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
 </div>
   
   
   
-  本站使用
+  Use
   <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a> -->
-  <!-- 作為主題 -->
+  <!-- as theme -->
   
-  <!-- ， -->
-  總訪問量為
+  <!-- ,  -->
+  total visits
   <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-  次
+  times
   
   <!-- 
   
