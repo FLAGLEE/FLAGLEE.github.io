@@ -1670,7 +1670,422 @@ array([[81.8],
 <li><strong>基于 matplotlib，能够简便的画图</strong></li>
 <li><strong>独特的数据结构</strong></li>
 </ul>
-<hr>
+<h3 id="Pandas-简介"><a href="#Pandas-简介" class="headerlink" title="Pandas 简介"></a>Pandas 简介</h3><p>Numpy 已经能够帮助我们处理数据，能够结合 matplotlib 解决部分数据展示等问题，那么 pandas 学习的目的在什么地方呢？</p>
+<ul>
+<li><p>增强图表可读性</p>
+<ul>
+<li><p>回忆我们在 numpy 当中创建学生成绩表样式：</p>
+<pre><code>返回结果：
+
+array([[92, 55, 78, 50, 50],
+      [71, 76, 50, 48, 96],
+      [45, 84, 78, 51, 68],
+      [81, 91, 56, 54, 76],
+      [86, 66, 77, 67, 95],
+      [46, 86, 56, 61, 99],
+      [46, 95, 44, 46, 56],
+      [80, 50, 45, 65, 57],
+      [41, 93, 90, 41, 97],
+      [65, 83, 57, 57, 40]])</code></pre><p>如果数据展示为这样，可读性就会更友好：</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007152734.png"/>
+</li>
+</ul>
+</li>
+<li><p>便捷的数据处理能力</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153141.png"/>
+</li>
+<li><p>读取文件方便</p>
+</li>
+<li><p>封装了 Matplotlib、Numpy 的画图和计算</p>
+</li>
+</ul>
+<h3 id="Pandas-数据结构"><a href="#Pandas-数据结构" class="headerlink" title="Pandas 数据结构"></a>Pandas 数据结构</h3><p>Pandas 中一共有三种数据结构，分别为：Series、DataFrame 和 MultiIndex。</p>
+<p>其中 Series 是一维数据结构，DataFrame 是二维的表格型数据结构，MultiIndex 是三维的数据结构。</p>
+<h4 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h4><p>Series 是一个类似于一维数组的数据结构，它能够保存任何类型的数据，比如整数、字符串、浮点数等，主要由一组数据和与之相关的索引两部分构成。</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153308.png"/>
+
+<p><strong>series 的创建</strong></p>
+<pre><code class="python"># 导入pandas
+import pandas as pd
+
+pd.Series(data=None, index=None, dtype=None)</code></pre>
+<ul>
+<li>参数：<ul>
+<li>data：传入的数据，可以是 ndarray、list 等</li>
+<li>index：索引，必须是唯一的，且与数据的长度相等。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+<li>dtype：数据的类型</li>
+</ul>
+</li>
+</ul>
+<p>通过已有数据创建</p>
+<ul>
+<li>指定内容，默认索引</li>
+</ul>
+<pre><code class="python">pd.Series(np.arange(10))
+# 运行结果
+0    0
+1    1
+2    2
+3    3
+4    4
+5    5
+6    6
+7    7
+8    8
+9    9
+dtype: int64</code></pre>
+<ul>
+<li>指定索引</li>
+</ul>
+<pre><code class="python">pd.Series([6.7,5.6,3,10,2], index=[1,2,3,4,5])
+# 运行结果
+1     6.7
+2     5.6
+3     3.0
+4    10.0
+5     2.0
+dtype: float64</code></pre>
+<ul>
+<li>通过字典数据创建</li>
+</ul>
+<pre><code class="python">color_count = pd.Series({&#39;red&#39;:100, &#39;blue&#39;:200, &#39;green&#39;: 500, &#39;yellow&#39;:1000})
+color_count
+# 运行结果
+blue       200
+green      500
+red        100
+yellow    1000
+dtype: int64</code></pre>
+<p><strong>Series 的属性</strong></p>
+<p>为了更方便地操作 Series 对象中的索引和数据，Series 中提供了两个属性 index 和 values</p>
+<ul>
+<li>index</li>
+</ul>
+<pre><code class="python">color_count.index
+
+# 结果
+
+Index([&#39;blue&#39;, &#39;green&#39;, &#39;red&#39;, &#39;yellow&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>values</li>
+</ul>
+<pre><code class="python">color_count.values
+
+# 结果
+
+array([ 200, 500, 100, 1000])</code></pre>
+<p>也可以使用索引来获取数据：</p>
+<pre><code class="python">color_count[2]
+
+# 结果
+
+100</code></pre>
+<h4 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h4><p>DataFrame 是一个类似于二维数组或表格(如 excel)的对象，既有行索引，又有列索引</p>
+<ul>
+<li>行索引，表明不同行，横向索引，叫 index，0 轴，axis=0</li>
+<li>列索引，表名不同列，纵向索引，叫 columns，1 轴，axis=1</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153651.png"/>
+
+<p><strong>DataFrame 的创建</strong></p>
+<pre><code class="python"># 导入pandas
+import pandas as pd
+
+pd.DataFrame(data=None, index=None, columns=None)</code></pre>
+<ul>
+<li><p>参数：</p>
+<ul>
+<li>index：行标签。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+<li>columns：列标签。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+</ul>
+</li>
+<li><p>通过已有数据创建</p>
+</li>
+</ul>
+<p>举例一：<br>python</p>
+<pre><code>pd.DataFrame(np.random.randn(2,3))</code></pre><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153855.png"/>
+
+<p>回忆在前面直接使用 np 创建的数组显示方式，比较两者的区别。</p>
+<p>举例二：创建学生成绩表</p>
+<pre><code class="python"># 生成10名同学，5门功课的数据
+score = np.random.randint(40, 100, (10, 5))
+
+# 结果
+array([[92, 55, 78, 50, 50],
+       [71, 76, 50, 48, 96],
+       [45, 84, 78, 51, 68],
+       [81, 91, 56, 54, 76],
+       [86, 66, 77, 67, 95],
+       [46, 86, 56, 61, 99],
+       [46, 95, 44, 46, 56],
+       [80, 50, 45, 65, 57],
+       [41, 93, 90, 41, 97],
+       [65, 83, 57, 57, 40]])</code></pre>
+<p>但是这样的数据形式很难看到存储的是什么的样的数据，可读性比较差！！</p>
+<p>问题：<strong>如何让数据更有意义的显示？</strong></p>
+<pre><code class="python"># 使用Pandas中的数据结构
+score_df = pd.DataFrame(score)</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154003.png"/>
+
+<p>给分数数据增加行列索引,显示效果更佳</p>
+<ul>
+<li>增加行、列索引</li>
+</ul>
+<pre><code class="python"># 构造行索引序列
+subjects = [&quot;语文&quot;, &quot;数学&quot;, &quot;英语&quot;, &quot;政治&quot;, &quot;体育&quot;]
+
+# 构造列索引序列
+stu = [&#39;同学&#39; + str(i) for i in range(score_df.shape[0])]
+
+# 添加行索引
+data = pd.DataFrame(score, columns=subjects, index=stu)</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154044.png"/>
+
+<p><strong>DataFrame 的属性</strong></p>
+<ul>
+<li>shape</li>
+</ul>
+<pre><code class="python">data.shape
+
+# 结果
+(10, 5)</code></pre>
+<ul>
+<li>index</li>
+</ul>
+<p>DataFrame 的行索引列表</p>
+<pre><code class="python">data.index
+
+# 结果
+Index([&#39;同学0&#39;, &#39;同学1&#39;, &#39;同学2&#39;, &#39;同学3&#39;, &#39;同学4&#39;, &#39;同学5&#39;, &#39;同学6&#39;, &#39;同学7&#39;, &#39;同学8&#39;, &#39;同学9&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>columns<br>DataFrame 的列索引列表</li>
+</ul>
+<pre><code class="python">data.columns
+
+# 结果
+Index([&#39;语文&#39;, &#39;数学&#39;, &#39;英语&#39;, &#39;政治&#39;, &#39;体育&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>values</li>
+</ul>
+<pre><code class="python">直接获取其中array的值
+
+data.values
+
+array([[92, 55, 78, 50, 50],
+       [71, 76, 50, 48, 96],
+       [45, 84, 78, 51, 68],
+       [81, 91, 56, 54, 76],
+       [86, 66, 77, 67, 95],
+       [46, 86, 56, 61, 99],
+       [46, 95, 44, 46, 56],
+       [80, 50, 45, 65, 57],
+       [41, 93, 90, 41, 97],
+       [65, 83, 57, 57, 40]])</code></pre>
+<ul>
+<li>T<br>转置</li>
+</ul>
+<pre><code class="python">data.T</code></pre>
+<p>结果</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154327.png"/>
+
+<ul>
+<li>head(5)：显示前 5 行内容</li>
+</ul>
+<p>如果不补充参数，默认 5 行。填入参数 N 则显示前 N 行</p>
+<pre><code class="python">data.head(5)</code></pre>
+<ul>
+<li>tail(5):显示后 5 行内容</li>
+</ul>
+<p>如果不补充参数，默认 5 行。填入参数 N 则显示后 N 行</p>
+<pre><code class="python">data.tail(5)</code></pre>
+<p><strong>DatatFrame 索引的设置</strong></p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154647.png"/>
+
+<p><strong>修改行列索引值</strong></p>
+<pre><code class="python">stu = [&quot;学生_&quot; + str(i) for i in range(score_df.shape[0])]
+
+# 必须整体全部修改
+data.index = stu</code></pre>
+<p>注意：以下修改方式是错误的</p>
+<pre><code class="python"># 错误修改方式
+data.index[3] = &#39;学生_3&#39;</code></pre>
+<p><strong>重设索引</strong></p>
+<ul>
+<li><p>reset_index(drop=False)</p>
+<ul>
+<li>设置新的下标索引</li>
+<li>drop:默认为 False，不删除原来索引，如果为 True,删除原来的索引值</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 重置索引,drop=False
+data.reset_index()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154917.png"/>
+
+<pre><code class="python"># 重置索引,drop=True
+data.reset_index(drop=True)</code></pre>
+<p><strong>以某列值设置为新的索引</strong></p>
+<ul>
+<li>set_index(keys, drop=True)<ul>
+<li>keys : 列索引名成或者列索引名称的列表</li>
+<li>drop : boolean, default True.当做新的索引，删除原来的列</li>
+</ul>
+</li>
+</ul>
+<p>设置新索引案例</p>
+<p>1、创建</p>
+<pre><code class="python">df = pd.DataFrame({&#39;month&#39;: [1, 4, 7, 10],
+                    &#39;year&#39;: [2012, 2014, 2013, 2014],
+                    &#39;sale&#39;:[55, 40, 84, 31]})
+
+   month  sale  year
+0  1      55    2012
+1  4      40    2014
+2  7      84    2013
+3  10     31    2014</code></pre>
+<p>2、以月份设置新的索引</p>
+<pre><code class="python">df.set_index(&#39;month&#39;)
+       sale  year
+month
+1      55    2012
+4      40    2014
+7      84    2013
+10     31    2014</code></pre>
+<p>3、设置多个索引，以年和月份</p>
+<pre><code class="python">df = df.set_index([&#39;year&#39;, &#39;month&#39;])
+df
+            sale
+year  month
+2012  1     55
+2014  4     40
+2013  7     84
+2014  10    31</code></pre>
+<p>注：通过刚才的设置，这样 DataFrame 就变成了一个具有 MultiIndex 的 DataFrame。</p>
+<h4 id="MultiIndex"><a href="#MultiIndex" class="headerlink" title="MultiIndex"></a>MultiIndex</h4><p>MultiIndex 是三维的数据结构;</p>
+<p>多级索引（也称层次化索引）是 pandas 的重要功能，可以在 Series、DataFrame 对象上拥有 2 个以及 2 个以上的索引。</p>
+<p><strong>multiIndex 的特性</strong></p>
+<p>打印刚才的 df 的行索引结果</p>
+<pre><code class="python">df.index
+
+MultiIndex(levels=[[2012, 2013, 2014], [1, 4, 7, 10]],
+           labels=[[0, 2, 1, 2], [0, 1, 2, 3]],
+           names=[&#39;year&#39;, &#39;month&#39;])</code></pre>
+<p>多级或分层索引对象。</p>
+<ul>
+<li>index 属性<ul>
+<li>names:levels 的名称</li>
+<li>levels：每个 level 的元组值</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">df.index.names
+# FrozenList([&#39;year&#39;, &#39;month&#39;])
+
+df.index.levels
+# FrozenList([[1, 2], [1, 4, 7, 10]])</code></pre>
+<p><strong>multiIndex 的创建</strong></p>
+<pre><code class="python">arrays = [[1, 1, 2, 2], [&#39;red&#39;, &#39;blue&#39;, &#39;red&#39;, &#39;blue&#39;]]
+pd.MultiIndex.from_arrays(arrays, names=(&#39;number&#39;, &#39;color&#39;))
+
+# 结果
+MultiIndex(levels=[[1, 2], [&#39;blue&#39;, &#39;red&#39;]],
+           codes=[[0, 0, 1, 1], [1, 0, 1, 0]],
+           names=[&#39;number&#39;, &#39;color&#39;])</code></pre>
+<h3 id="基本数据操作"><a href="#基本数据操作" class="headerlink" title="基本数据操作"></a>基本数据操作</h3><h4 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h4><p>Numpy 当中我们已经讲过使用索引选取序列和切片选择，pandas 也支持类似的操作，也可以直接使用列名、行名称，甚至组合使用。</p>
+<p><strong>直接使用行列索引(先列后行)</strong></p>
+<p>获取’2018-02-27’这天的’close’的结果</p>
+<pre><code class="python"># 直接使用行列索引名字的方式（先列后行）
+data[&#39;open&#39;][&#39;2018-02-27&#39;]
+23.53
+
+# 不支持的操作
+# 错误
+data[&#39;2018-02-27&#39;][&#39;open&#39;]
+# 错误
+data[:1, :2]</code></pre>
+<p><strong>结合 loc 或者 iloc 使用索引</strong></p>
+<p>获取从’2018-02-27’:’2018-02-22’，’open’的结果</p>
+<pre><code class="python"># 使用loc:只能指定行列索引的名字
+data.loc[&#39;2018-02-27&#39;:&#39;2018-02-22&#39;, &#39;open&#39;]
+
+2018-02-27    23.53
+2018-02-26    22.80
+2018-02-23    22.88
+Name: open, dtype: float64
+
+# 使用iloc可以通过索引的下标去获取
+# 获取前3天数据,前5列的结果
+data.iloc[:3, :5]
+
+            open    high    close    low
+2018-02-27    23.53    25.88    24.16    23.53
+2018-02-26    22.80    23.78    23.53    22.80
+2018-02-23    22.88    23.37    22.82    22.71</code></pre>
+<h4 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h4><p>对 DataFrame 当中的 close 列进行重新赋值为 1</p>
+<pre><code class="python"># 直接修改原来的值
+data[&#39;close&#39;] = 1
+# 或者
+data.close = 1</code></pre>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>排序有两种形式，一种对于索引进行排序，一种对于内容进行排序</p>
+<p><strong>DataFrame 排序</strong></p>
+<ul>
+<li>使用 df.sort_values(by=, ascending=)<ul>
+<li>单个键或者多个键进行排序,</li>
+<li>参数：<ul>
+<li>by：指定排序参考的键</li>
+<li>ascending:默认升序<ul>
+<li>ascending=False:降序</li>
+<li>ascending=True:升序</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 按照开盘价大小进行排序 , 使用ascending指定按照大小排序
+data.sort_values(by=&quot;open&quot;, ascending=True).head()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160704.png"/>
+
+<pre><code class="python"># 按照多个键进行排序
+data.sort_values(by=[&#39;open&#39;, &#39;high&#39;])</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160741.png"/>
+
+<ul>
+<li>使用 df.sort_index 给索引进行排序<br>这个股票的日期索引原来是从大到小，现在重新排序，从小到大</li>
+</ul>
+<pre><code class="python"># 对索引进行排序
+data.sort_index()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160817.png"/>
+
+<p><strong>Series 排序</strong></p>
+<ul>
+<li>使用 series.sort_values(ascending=True)进行排序</li>
+</ul>
+<p>series 排序时，只有一列，不需要参数</p>
+<pre><code class="python">data[&#39;p_change&#39;].sort_values(ascending=True).head()
+
+2015-09-01   -10.03
+2015-09-14   -10.02
+2016-01-11   -10.02
+2015-07-15   -10.02
+2015-08-26   -10.01
+Name: p_change, dtype: float64</code></pre>
+<ul>
+<li>使用 series.sort_index()进行排序</li>
+</ul>
+<p>与 df 一致</p>
+<pre><code class="python"># 对索引进行排序
+data[&#39;p_change&#39;].sort_index().head()
+
+2015-03-02    2.62
+2015-03-03    1.44
+2015-03-04    1.57
+2015-03-05    2.02
+2015-03-06    8.51
+Name: p_change, dtype: float64
+</code></pre>
+<h3 id="DataFrame-运算"><a href="#DataFrame-运算" class="headerlink" title="DataFrame 运算"></a>DataFrame 运算</h3><h3 id="Pandas-画图"><a href="#Pandas-画图" class="headerlink" title="Pandas 画图"></a>Pandas 画图</h3><h3 id="文件读取与存储"><a href="#文件读取与存储" class="headerlink" title="文件读取与存储"></a>文件读取与存储</h3><hr>
 <p>学习中，先占坑</p>
 
           
@@ -1756,7 +2171,7 @@ array([[81.8],
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-07T15:22:09+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-07T16:11:21+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Oct 7, 2020</p>
@@ -2026,7 +2441,7 @@ array([[81.8],
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matplotlib-使用"><span class="toc-number">3.1.</span> <span class="toc-text">Matplotlib 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础绘图功能"><span class="toc-number">3.2.</span> <span class="toc-text">基础绘图功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个坐标系中绘制多个图像"><span class="toc-number">3.3.</span> <span class="toc-text">在一个坐标系中绘制多个图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个坐标系显示"><span class="toc-number">3.4.</span> <span class="toc-text">多个坐标系显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图形绘制"><span class="toc-number">3.5.</span> <span class="toc-text">常见图形绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-的优势"><span class="toc-number">4.1.</span> <span class="toc-text">ndarray 的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N-维数组-ndarray"><span class="toc-number">4.2.</span> <span class="toc-text">N 维数组-ndarray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本操作"><span class="toc-number">4.3.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成数组的方法"><span class="toc-number">4.3.1.</span> <span class="toc-text">生成数组的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的索引、切片"><span class="toc-number">4.3.2.</span> <span class="toc-text">数组的索引、切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#形状修改"><span class="toc-number">4.3.3.</span> <span class="toc-text">形状修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类型修改"><span class="toc-number">4.3.4.</span> <span class="toc-text">类型修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的去重"><span class="toc-number">4.3.5.</span> <span class="toc-text">数组的去重</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-运算"><span class="toc-number">4.4.</span> <span class="toc-text">ndarray 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑运算"><span class="toc-number">4.4.1.</span> <span class="toc-text">逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通用判断函数"><span class="toc-number">4.4.2.</span> <span class="toc-text">通用判断函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#np-where（三元运算符）"><span class="toc-number">4.4.3.</span> <span class="toc-text">np.where（三元运算符）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计运算"><span class="toc-number">4.4.4.</span> <span class="toc-text">统计运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组间运算"><span class="toc-number">4.5.</span> <span class="toc-text">数组间运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数的运算"><span class="toc-number">4.5.1.</span> <span class="toc-text">数组与数的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数组的运算"><span class="toc-number">4.5.2.</span> <span class="toc-text">数组与数组的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵乘法-api"><span class="toc-number">4.5.3.</span> <span class="toc-text">矩阵乘法 api</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习概念"><span class="toc-number">1.</span> <span class="toc-text">机器学习概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习定义"><span class="toc-number">1.1.</span> <span class="toc-text">机器学习定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习基本思路"><span class="toc-number">1.2.</span> <span class="toc-text">机器学习基本思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习分类"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#机器学习常见算法"><span class="toc-number">1.4.</span> <span class="toc-text">机器学习常见算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能、机器学习、深度学习关系"><span class="toc-number">1.5.</span> <span class="toc-text">人工智能、机器学习、深度学习关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jupyter-Notebook"><span class="toc-number">2.</span> <span class="toc-text">Jupyter Notebook</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-简介"><span class="toc-number">2.1.</span> <span class="toc-text">Jupyter Notebook 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-使用"><span class="toc-number">2.2.</span> <span class="toc-text">Jupyter Notebook 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jupyter-Notebook-操作"><span class="toc-number">2.3.</span> <span class="toc-text">Jupyter Notebook 操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matplotlib"><span class="toc-number">3.</span> <span class="toc-text">Matplotlib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Matplotlib-使用"><span class="toc-number">3.1.</span> <span class="toc-text">Matplotlib 使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础绘图功能"><span class="toc-number">3.2.</span> <span class="toc-text">基础绘图功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个坐标系中绘制多个图像"><span class="toc-number">3.3.</span> <span class="toc-text">在一个坐标系中绘制多个图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多个坐标系显示"><span class="toc-number">3.4.</span> <span class="toc-text">多个坐标系显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见图形绘制"><span class="toc-number">3.5.</span> <span class="toc-text">常见图形绘制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy"><span class="toc-number">4.</span> <span class="toc-text">Numpy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-的优势"><span class="toc-number">4.1.</span> <span class="toc-text">ndarray 的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N-维数组-ndarray"><span class="toc-number">4.2.</span> <span class="toc-text">N 维数组-ndarray</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本操作"><span class="toc-number">4.3.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成数组的方法"><span class="toc-number">4.3.1.</span> <span class="toc-text">生成数组的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的索引、切片"><span class="toc-number">4.3.2.</span> <span class="toc-text">数组的索引、切片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#形状修改"><span class="toc-number">4.3.3.</span> <span class="toc-text">形状修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类型修改"><span class="toc-number">4.3.4.</span> <span class="toc-text">类型修改</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组的去重"><span class="toc-number">4.3.5.</span> <span class="toc-text">数组的去重</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ndarray-运算"><span class="toc-number">4.4.</span> <span class="toc-text">ndarray 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑运算"><span class="toc-number">4.4.1.</span> <span class="toc-text">逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通用判断函数"><span class="toc-number">4.4.2.</span> <span class="toc-text">通用判断函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#np-where（三元运算符）"><span class="toc-number">4.4.3.</span> <span class="toc-text">np.where（三元运算符）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计运算"><span class="toc-number">4.4.4.</span> <span class="toc-text">统计运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组间运算"><span class="toc-number">4.5.</span> <span class="toc-text">数组间运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数的运算"><span class="toc-number">4.5.1.</span> <span class="toc-text">数组与数的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组与数组的运算"><span class="toc-number">4.5.2.</span> <span class="toc-text">数组与数组的运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#矩阵乘法-api"><span class="toc-number">4.5.3.</span> <span class="toc-text">矩阵乘法 api</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas"><span class="toc-number">5.</span> <span class="toc-text">Pandas</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-简介"><span class="toc-number">5.1.</span> <span class="toc-text">Pandas 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-数据结构"><span class="toc-number">5.2.</span> <span class="toc-text">Pandas 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Series"><span class="toc-number">5.2.1.</span> <span class="toc-text">Series</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DataFrame"><span class="toc-number">5.2.2.</span> <span class="toc-text">DataFrame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MultiIndex"><span class="toc-number">5.2.3.</span> <span class="toc-text">MultiIndex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本数据操作"><span class="toc-number">5.3.</span> <span class="toc-text">基本数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引操作"><span class="toc-number">5.3.1.</span> <span class="toc-text">索引操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#赋值操作"><span class="toc-number">5.3.2.</span> <span class="toc-text">赋值操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序"><span class="toc-number">5.3.3.</span> <span class="toc-text">排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-运算"><span class="toc-number">5.4.</span> <span class="toc-text">DataFrame 运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-画图"><span class="toc-number">5.5.</span> <span class="toc-text">Pandas 画图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读取与存储"><span class="toc-number">5.6.</span> <span class="toc-text">文件读取与存储</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -2103,19 +2518,19 @@ array([[81.8],
   
   
   
-  <!-- <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <!-- <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW" target="_blank" rel="noopener">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
 </div>
   
   
   
-  Use
+  本站使用
   <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a> -->
-  <!-- as theme -->
+  <!-- 作為主題 -->
   
-  <!-- ,  -->
-  total visits
+  <!-- ， -->
+  總訪問量為
   <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-  times
+  次
   
   <!-- 
   
