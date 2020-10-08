@@ -1164,7 +1164,7 @@ data[&#39;p_change&#39;].sort_index().head()
 2015-03-06    8.51
 Name: p_change, dtype: float64
 </code></pre>
-<h3 id="DataFrame-运算"><a href="#DataFrame-运算" class="headerlink" title="DataFrame 运算"></a>DataFrame 运算</h3><h4 id="1-算术运算"><a href="#1-算术运算" class="headerlink" title="1 算术运算"></a>1 算术运算</h4><ul>
+<h3 id="DataFrame-运算"><a href="#DataFrame-运算" class="headerlink" title="DataFrame 运算"></a>DataFrame 运算</h3><h4 id="算术运算"><a href="#算术运算" class="headerlink" title="算术运算"></a>算术运算</h4><ul>
 <li>add(other)</li>
 </ul>
 <p>比如进行数学运算加上具体的一个数字</p>
@@ -1178,7 +1178,7 @@ Name: p_change, dtype: float64
 <ul>
 <li>sub(other)</li>
 </ul>
-<h4 id="2-逻辑运算"><a href="#2-逻辑运算" class="headerlink" title="2 逻辑运算"></a>2 逻辑运算</h4><p><strong>2.1 逻辑运算符号</strong></p>
+<h4 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h4><p><strong>2.1 逻辑运算符号</strong></p>
 <ul>
 <li><p>例如筛选 data[“open”] &gt; 23 的日期数据</p>
 <ul>
@@ -1221,7 +1221,7 @@ data[data[&quot;open&quot;] &gt; 23].head()</code></pre>
 data[data[&quot;open&quot;].isin([23.53, 23.85])]</code></pre>
 <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008102755.png"/>
 
-<h4 id="3-统计运算"><a href="#3-统计运算" class="headerlink" title="3 统计运算"></a>3 统计运算</h4><p><strong>3.1 describe</strong></p>
+<h4 id="统计运算"><a href="#统计运算" class="headerlink" title="统计运算"></a>统计运算</h4><p><strong>3.1 describe</strong></p>
 <p>综合分析: 能够直接得出很多统计结果,count, mean, std, min, max 等</p>
 <pre><code># 计算平均值、标准差、最大值、最小值
 data.describe()</code></pre><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008103324.png"/>
@@ -1324,9 +1324,250 @@ turnover 2016-07-06
 my_price_change 2015-06-15
 dtype: object</code></pre>
 <p><strong>3.3 累计统计函数</strong></p>
-<h3 id="Pandas-画图"><a href="#Pandas-画图" class="headerlink" title="Pandas 画图"></a>Pandas 画图</h3><h3 id="文件读取与存储"><a href="#文件读取与存储" class="headerlink" title="文件读取与存储"></a>文件读取与存储</h3><hr>
-<p>学习中，先占坑</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008110812.png"/>
 
+<p>以上这些函数可以对 series 和 dataframe 操作</p>
+<p>这里我们按照时间的从前往后来进行累计</p>
+<ul>
+<li>排序</li>
+</ul>
+<pre><code class="python"># 排序之后，进行累计求和
+data = data.sort_index()</code></pre>
+<ul>
+<li>对 p_change 进行求和</li>
+</ul>
+<pre><code class="python">stock_rise = data[&#39;p_change&#39;]
+# plot方法集成了前面直方图、条形图、饼图、折线图
+stock_rise.cumsum()
+
+2015-03-02      2.62
+2015-03-03      4.06
+2015-03-04      5.63
+2015-03-05      7.65
+2015-03-06     16.16
+2015-03-09     16.37
+2015-03-10     18.75
+2015-03-11     16.36
+2015-03-12     15.03
+2015-03-13     17.58
+2015-03-16     20.34
+2015-03-17     22.42
+2015-03-18     23.28
+2015-03-19     23.74
+2015-03-20     23.48
+2015-03-23     23.74</code></pre>
+<p>如果要使用 plot 函数，需要导入 matplotlib.</p>
+<pre><code class="python">import matplotlib.pyplot as plt
+# plot显示图形
+stock_rise.cumsum().plot()
+# 需要调用show，才能显示出结果
+plt.show()</code></pre>
+<h4 id="自定义运算"><a href="#自定义运算" class="headerlink" title="自定义运算"></a>自定义运算</h4><ul>
+<li>apply(func, axis=0)<ul>
+<li>func:自定义函数</li>
+<li>axis=0:默认是列，axis=1 为行进行运算</li>
+</ul>
+</li>
+<li>定义一个对列，最大值-最小值的函数</li>
+</ul>
+<pre><code class="python">data[[&#39;open&#39;, &#39;close&#39;]].apply(lambda x: x.max() - x.min(), axis=0)
+
+open     22.74
+close    22.85
+dtype: float64</code></pre>
+<h3 id="Pandas-画图"><a href="#Pandas-画图" class="headerlink" title="Pandas 画图"></a>Pandas 画图</h3><h4 id="pandas-DataFrame-plot"><a href="#pandas-DataFrame-plot" class="headerlink" title="pandas.DataFrame.plot"></a>pandas.DataFrame.plot</h4><ul>
+<li>DataFrame.plot(kind=’line’)</li>
+<li>kind : str，需要绘制图形的种类<ul>
+<li>‘line’ : line plot (default)</li>
+<li>‘bar’ : vertical bar plot</li>
+<li>‘barh’ : horizontal bar plot<ul>
+<li>关于“barh”的解释：</li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.barh.html" target="_blank" rel="noopener">http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.barh.html</a></li>
+</ul>
+</li>
+<li>‘hist’ : histogram</li>
+<li>‘pie’ : pie plot</li>
+<li>‘scatter’ : scatter plot</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>更多细节：<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html" target="_blank" rel="noopener">pandas.DataFrame.plot</a></p>
+</blockquote>
+<h4 id="pandas-Series-plot"><a href="#pandas-Series-plot" class="headerlink" title="pandas.Series.plot"></a>pandas.Series.plot</h4><blockquote>
+<p>更多细节：<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.plot.html" target="_blank" rel="noopener">pandas.Series.plot</a></p>
+</blockquote>
+<h3 id="文件读取与存储"><a href="#文件读取与存储" class="headerlink" title="文件读取与存储"></a>文件读取与存储</h3><p>我们的数据大部分存在于文件当中，所以 pandas 会支持复杂的 IO 操作，pandas 的 API 支持众多的文件格式，如 CSV、SQL、XLS、JSON、HDF5。</p>
+<p>注：最常用的 HDF5 和 CSV 文件</p>
+<h4 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h4><p><strong>1.1 read_csv</strong></p>
+<ul>
+<li><p>pandas.read_csv(filepath_or_buffer, sep =’,’, usecols )</p>
+<ul>
+<li>filepath_or_buffer:文件路径</li>
+<li>sep :分隔符，默认用”,”隔开</li>
+<li>usecols:指定读取的列名，列表形式</li>
+</ul>
+</li>
+<li><p>举例：读取之前的股票的数据</p>
+</li>
+</ul>
+<pre><code class="python"># 读取文件,并且指定只获取&#39;open&#39;, &#39;close&#39;指标
+data = pd.read_csv(&quot;./data/stock_day.csv&quot;, usecols=[&#39;open&#39;, &#39;close&#39;])
+
+            open    close
+2018-02-27    23.53    24.16
+2018-02-26    22.80    23.53
+2018-02-23    22.88    22.82
+2018-02-22    22.25    22.28
+2018-02-14    21.49    21.92</code></pre>
+<p><strong>1.2 to_csv</strong></p>
+<ul>
+<li><p>DataFrame.to_csv(path_or_buf=None, sep=’, ’, columns=None, header=True, index=True, mode=’w’, encoding=None)</p>
+<ul>
+<li>path_or_buf :文件路径</li>
+<li>sep :分隔符，默认用”,”隔开</li>
+<li>columns :选择需要的列索引</li>
+<li>header :boolean or list of string, default True,是否写进列索引值</li>
+<li>index:是否写进行索引</li>
+<li>mode:’w’：重写, ‘a’ 追加</li>
+</ul>
+</li>
+<li><p>举例：保存读取出来的股票数据</p>
+</li>
+</ul>
+<pre><code class="python">保存&#39;open&#39;列的数据，然后读取查看结果
+
+# 选取 10 行数据保存,便于观察数据
+
+data[:10].to_csv(&quot;./data/test.csv&quot;, columns=[&#39;open&#39;])
+
+# 读取，查看结果
+
+pd.read_csv(&quot;./data/test.csv&quot;)
+
+     Unnamed: 0    open
+
+0 2018-02-27 23.53
+1 2018-02-26 22.80
+2 2018-02-23 22.88
+3 2018-02-22 22.25
+4 2018-02-14 21.49
+5 2018-02-13 21.40
+6 2018-02-12 20.70
+7 2018-02-09 21.20
+8 2018-02-08 21.79
+9 2018-02-07 22.69</code></pre>
+<p>会发现将索引存入到文件当中，变成单独的一列数据。如果需要删除，可以指定 index 参数,删除原来的文件，重新保存一次。</p>
+<pre><code class="python"># index:存储不会讲索引值变成一列数据
+
+data[:10].to_csv(&quot;./data/test.csv&quot;, columns=[&#39;open&#39;], index=False)</code></pre>
+<h4 id="HDF5"><a href="#HDF5" class="headerlink" title="HDF5"></a>HDF5</h4><p><strong>2.1 read_hdf 与 to_hdf</strong></p>
+<p>HDF5 文件的读取和存储需要指定一个键，值为要存储的 DataFrame</p>
+<ul>
+<li>pandas.read_hdf(path_or_buf，key =None，** kwargs)</li>
+</ul>
+<p>从 h5 文件当中读取数据</p>
+<ul>
+<li>path_or_buffer:文件路径</li>
+<li>key:读取的键</li>
+<li>return:Theselected object</li>
+<li>DataFrame.to*hdf(path_or_buf, key, *\kwargs_)</li>
+</ul>
+<p><strong>2.2 案例</strong></p>
+<ul>
+<li>读取文件</li>
+</ul>
+<pre><code class="python">day_close = pd.read_hdf(&quot;./data/day_close.h5&quot;)</code></pre>
+<p>如果读取的时候出现以下错误</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008112355.png"/>
+
+<p>需要安装安装 tables 模块避免不能读取 HDF5 文件</p>
+<pre><code class="cmd">pip install tables</code></pre>
+<ul>
+<li>存储文件</li>
+</ul>
+<pre><code class="python">day_close.to_hdf(&quot;./data/test.h5&quot;, key=&quot;day_close&quot;)</code></pre>
+<p>再次读取的时候, 需要指定键的名字</p>
+<pre><code class="python">new_close = pd.read_hdf(&quot;./data/test.h5&quot;, key=&quot;day_close&quot;)</code></pre>
+<p><strong>注意：优先选择使用 HDF5 文件存储</strong></p>
+<ul>
+<li>HDF5 在存储的时候支持压缩，<strong>使用的方式是 blosc，这个是速度最快</strong>的也是 pandas 默认支持的</li>
+<li>使用压缩可以<strong>提高磁盘利用率，节省空间</strong></li>
+<li>HDF5 还是跨平台的，可以轻松迁移到 hadoop 上面</li>
+</ul>
+<h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4><p>JSON 是我们常用的一种数据交换格式，前面在前后端的交互经常用到，也会在存储的时候选择这种格式。所以我们需要知道 Pandas 如何进行读取和存储 JSON 格式。</p>
+<p><strong>3.1 read_json</strong></p>
+<ul>
+<li><p>pandas.read_json(path_or_buf=None, orient=None, typ=’frame’, lines=False)</p>
+<ul>
+<li>将 JSON 格式准换成默认的 Pandas DataFrame 格式</li>
+<li>orient : string,Indication of expected JSON string format.<ul>
+<li>‘split’ : dict like {index -&gt; [index], columns -&gt; [columns], data -&gt; [values]}<ul>
+<li>split 将索引总结到索引，列名到列名，数据到数据。将三部分都分开了</li>
+</ul>
+</li>
+<li>‘records’ : list like [{column -&gt; value}, … , {column -&gt; value}]<ul>
+<li>records 以 columns：values 的形式输出</li>
+</ul>
+</li>
+<li>‘index’ : dict like {index -&gt; {column -&gt; value}}<ul>
+<li>index 以 index：{columns：values}…的形式输出</li>
+</ul>
+</li>
+<li>‘columns’ : dict like {column -&gt; {index -&gt; value}},默认该格式<ul>
+<li>colums 以 columns:{index:values}的形式输出</li>
+</ul>
+</li>
+<li>‘values’ : just the values array<ul>
+<li>values 直接输出值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>lines : boolean, default False<ul>
+<li>按照每行读取 json 对象</li>
+</ul>
+</li>
+<li>typ : default ‘frame’， 指定转换成的对象类型 series 或者 dataframe</li>
+</ul>
+</li>
+</ul>
+<p><strong>3.2 read_josn 案例</strong></p>
+<ul>
+<li>数据介绍</li>
+</ul>
+<p>这里使用一个新闻标题讽刺数据集，格式为 json。is_sarcastic：1 讽刺的，否则为 0；headline：新闻报道的标题；article_link：链接到原始新闻文章。存储格式为：</p>
+<pre><code>{&quot;article_link&quot;: &quot;https://www.huffingtonpost.com/entry/versace-black-code_us_5861fbefe4b0de3a08f600d5&quot;, &quot;headline&quot;: &quot;former versace store clerk sues over secret &#39;black code&#39; for minority shoppers&quot;, &quot;is_sarcastic&quot;: 0}
+{&quot;article_link&quot;: &quot;https://www.huffingtonpost.com/entry/roseanne-revival-review_us_5ab3a497e4b054d118e04365&quot;, &quot;headline&quot;: &quot;the &#39;roseanne&#39; revival catches up to our thorny political mood, for better and worse&quot;, &quot;is_sarcastic&quot;: 0}</code></pre><ul>
+<li>读取<br>orient 指定存储的 json 格式，lines 指定按照行去变成一个样本</li>
+</ul>
+<pre><code>json_read = pd.read_json(&quot;./data/Sarcasm_Headlines_Dataset.json&quot;, orient=&quot;records&quot;, lines=True)</code></pre><p>结果为：</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/新闻标题讽刺读取.png"/>
+
+<p><strong>3.3 to_json</strong></p>
+<ul>
+<li>DataFrame.to_json(path_or_buf=None, orient=None, lines=False)<ul>
+<li>将 Pandas 对象存储为 json 格式</li>
+<li>path_or_buf=None：文件地址</li>
+<li>orient:存储的 json 形式，{‘split’,’records’,’index’,’columns’,’values’}</li>
+<li>lines:一个对象存储为一行</li>
+</ul>
+</li>
+</ul>
+<p><strong>3.4 案例</strong></p>
+<ul>
+<li>存储文件</li>
+</ul>
+<pre><code>json_read.to_json(&quot;./data/test.json&quot;, orient=&#39;records&#39;)</code></pre><p>结果</p>
+<pre><code>[{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/versace-black-code_us_5861fbefe4b0de3a08f600d5&quot;,&quot;headline&quot;:&quot;former versace store clerk sues over secret &#39;black code&#39; for minority shoppers&quot;,&quot;is_sarcastic&quot;:0},{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/roseanne-revival-review_us_5ab3a497e4b054d118e04365&quot;,&quot;headline&quot;:&quot;the &#39;roseanne&#39; revival catches up to our thorny political mood, for better and worse&quot;,&quot;is_sarcastic&quot;:0},{&quot;article_link&quot;:&quot;https:\/\/local.theonion.com\/mom-starting-to-fear-son-s-web-series-closest-thing-she-1819576697&quot;,&quot;headline&quot;:&quot;mom starting to fear son&#39;s web series closest thing she will have to grandchild&quot;,&quot;is_sarcastic&quot;:1},{&quot;article_link&quot;:&quot;https:\/\/politics.theonion.com\/boehner-just-wants-wife-to-listen-not-come-up-with-alt-1819574302&quot;,&quot;headline&quot;:&quot;boehner just wants wife to listen, not come up with alternative debt-reduction ideas&quot;,&quot;is_sarcastic&quot;:1},{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/jk-rowling-wishes-snape-happy-birthday_us_569117c4e4b0cad15e64fdcb&quot;,&quot;headline&quot;:&quot;j.k. rowling wishes snape happy birthday in the most magical way&quot;,&quot;is_sarcastic&quot;:0},{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/advancing-the-worlds-women_b_6810038.html&quot;,&quot;headline&quot;:&quot;advancing the world&#39;s women&quot;,&quot;is_sarcastic&quot;:0},....]</code></pre><ul>
+<li>修改 lines 参数为 True</li>
+</ul>
+<pre><code>json_read.to_json(&quot;./data/test.json&quot;, orient=&#39;records&#39;, lines=True)</code></pre><p>结果</p>
+<pre><code>{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/versace-black-code_us_5861fbefe4b0de3a08f600d5&quot;,&quot;headline&quot;:&quot;former versace store clerk sues over secret &#39;black code&#39; for minority shoppers&quot;,&quot;is_sarcastic&quot;:0}
+{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/roseanne-revival-review_us_5ab3a497e4b054d118e04365&quot;,&quot;headline&quot;:&quot;the &#39;roseanne&#39; revival catches up to our thorny political mood, for better and worse&quot;,&quot;is_sarcastic&quot;:0}
+{&quot;article_link&quot;:&quot;https:\/\/local.theonion.com\/mom-starting-to-fear-son-s-web-series-closest-thing-she-1819576697&quot;,&quot;headline&quot;:&quot;mom starting to fear son&#39;s web series closest thing she will have to grandchild&quot;,&quot;is_sarcastic&quot;:1}
+{&quot;article_link&quot;:&quot;https:\/\/politics.theonion.com\/boehner-just-wants-wife-to-listen-not-come-up-with-alt-1819574302&quot;,&quot;headline&quot;:&quot;boehner just wants wife to listen, not come up with alternative debt-reduction ideas&quot;,&quot;is_sarcastic&quot;:1}
+{&quot;article_link&quot;:&quot;https:\/\/www.huffingtonpost.com\/entry\/jk-rowling-wishes-snape-happy-birthday_us_569117c</code></pre>
           
             <div class='article_footer'>
               
@@ -1410,7 +1651,7 @@ dtype: object</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-08T10:59:34+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-08T12:17:35+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
     <p>更新于：Oct 8, 2020</p>
@@ -1511,6 +1752,11 @@ dtype: object</code></pre>
         
         
           <div class="prev-next">
+            
+              <a class='prev' href='/2020/10/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%9B%9B-%EF%BC%9APandas%E9%AB%98%E7%BA%A7%E5%A4%84%E7%90%86/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>机器学习基础知识(四)：Pandas高级处理</p>
+                <p class='content'></p>
+              </a>
             
             
               <a class='next' href='/2020/09/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%BA%8C-%EF%BC%9ANumpy%E7%9A%84%E4%BD%BF%E7%94%A8/'>
@@ -1690,7 +1936,7 @@ Numpy 支持常见的数组和矩阵操作。对于同样的数值计算任务�
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-简介"><span class="toc-number">1.</span> <span class="toc-text">Pandas 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-数据结构"><span class="toc-number">2.</span> <span class="toc-text">Pandas 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Series"><span class="toc-number">2.1.</span> <span class="toc-text">Series</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DataFrame"><span class="toc-number">2.2.</span> <span class="toc-text">DataFrame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MultiIndex"><span class="toc-number">2.3.</span> <span class="toc-text">MultiIndex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本数据操作"><span class="toc-number">3.</span> <span class="toc-text">基本数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引操作"><span class="toc-number">3.1.</span> <span class="toc-text">索引操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#赋值操作"><span class="toc-number">3.2.</span> <span class="toc-text">赋值操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序"><span class="toc-number">3.3.</span> <span class="toc-text">排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-运算"><span class="toc-number">4.</span> <span class="toc-text">DataFrame 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-算术运算"><span class="toc-number">4.1.</span> <span class="toc-text">1 算术运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-逻辑运算"><span class="toc-number">4.2.</span> <span class="toc-text">2 逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-统计运算"><span class="toc-number">4.3.</span> <span class="toc-text">3 统计运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-画图"><span class="toc-number">5.</span> <span class="toc-text">Pandas 画图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读取与存储"><span class="toc-number">6.</span> <span class="toc-text">文件读取与存储</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-简介"><span class="toc-number">1.</span> <span class="toc-text">Pandas 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-数据结构"><span class="toc-number">2.</span> <span class="toc-text">Pandas 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Series"><span class="toc-number">2.1.</span> <span class="toc-text">Series</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DataFrame"><span class="toc-number">2.2.</span> <span class="toc-text">DataFrame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MultiIndex"><span class="toc-number">2.3.</span> <span class="toc-text">MultiIndex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本数据操作"><span class="toc-number">3.</span> <span class="toc-text">基本数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引操作"><span class="toc-number">3.1.</span> <span class="toc-text">索引操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#赋值操作"><span class="toc-number">3.2.</span> <span class="toc-text">赋值操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序"><span class="toc-number">3.3.</span> <span class="toc-text">排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-运算"><span class="toc-number">4.</span> <span class="toc-text">DataFrame 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#算术运算"><span class="toc-number">4.1.</span> <span class="toc-text">算术运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#逻辑运算"><span class="toc-number">4.2.</span> <span class="toc-text">逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#统计运算"><span class="toc-number">4.3.</span> <span class="toc-text">统计运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义运算"><span class="toc-number">4.4.</span> <span class="toc-text">自定义运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-画图"><span class="toc-number">5.</span> <span class="toc-text">Pandas 画图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#pandas-DataFrame-plot"><span class="toc-number">5.1.</span> <span class="toc-text">pandas.DataFrame.plot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pandas-Series-plot"><span class="toc-number">5.2.</span> <span class="toc-text">pandas.Series.plot</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读取与存储"><span class="toc-number">6.</span> <span class="toc-text">文件读取与存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CSV"><span class="toc-number">6.1.</span> <span class="toc-text">CSV</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HDF5"><span class="toc-number">6.2.</span> <span class="toc-text">HDF5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON"><span class="toc-number">6.3.</span> <span class="toc-text">JSON</span></a></li></ol></li></ol>
     </div>
   </section>
 
@@ -1767,19 +2013,19 @@ Numpy 支持常见的数组和矩阵操作。对于同样的数值计算任务�
   
   
   
-  <!-- <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <!-- <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW" target="_blank" rel="noopener">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
 </div>
   
   
   
-  Use
+  本站使用
   <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a> -->
-  <!-- as theme -->
+  <!-- 作為主題 -->
   
-  <!-- ,  -->
-  total visits
+  <!-- ， -->
+  總訪問量為
   <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-  times
+  次
   
   <!-- 
   
