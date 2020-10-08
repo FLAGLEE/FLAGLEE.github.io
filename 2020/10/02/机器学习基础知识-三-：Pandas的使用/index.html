@@ -16,13 +16,12 @@
 
   <!-- 页面元数据 -->
   
-    <title>Markdown语法汇总 - 闲情记趣|FLAG&#39;s blog</title>
+    <title>机器学习基础知识及机器学习常用科学计算库的使用 - 闲情记趣|FLAG&#39;s blog</title>
   
-    <meta name="keywords" content="blog,Markdown">
+    <meta name="keywords" content="Python,机器学习,深度学习,Numpy,Pandas,Jupyter Notebook">
   
   
-    <meta name="description" content="Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。当前许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息，例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge 等。
-">
+    <meta name="description" content="机器学习常用科学计算库(Numpy, Pandas)的使用">
   
 
   <!-- feed -->
@@ -672,14 +671,12 @@
     
       
       
-        <a title='Markdown语法汇总' href='/2020/05/26/Markdown%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/'><img class='thumbnail' src='https://img.vim-cn.com/17/0c7b02722686d1527a1df807dae0794d995860.png'></a>
-      
       <div class="meta" id="header-meta">
         
           
   <h1 class="title">
-    <a href="/2020/05/26/Markdown%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/">
-      Markdown语法汇总
+    <a href="/2020/10/02/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%B8%89-%EF%BC%9APandas%E7%9A%84%E4%BD%BF%E7%94%A8/">
+      机器学习基础知识(三)：Pandas的使用
     </a>
   </h1>
 
@@ -704,9 +701,9 @@
               
   
   <div class='new-meta-item category'>
-    <a href='/categories/Markdown/' rel="nofollow">
+    <a href='/categories/Machine-Learning/' rel="nofollow">
       <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
-      <p>Markdown</p>
+      <p>Machine Learning</p>
     </a>
   </div>
 
@@ -717,7 +714,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：May 26, 2020</p>
+    <p>发布于：Oct 2, 2020</p>
   </a>
 </div>
 
@@ -741,165 +738,594 @@
         <div class="article-entry" itemprop="articleBody">
           
           
-          <p><strong>Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。当前许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息，例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge 等。</strong></p>
-<p><img src="https://www.runoob.com/wp-content/uploads/2019/03/iconfinder_markdown_298823.png" alt="Markdown"></p>
+          <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/pandas.png" width="600"  align="center"/>
+
+<ul>
+<li>2008 年 WesMcKinney 开发出的库</li>
+<li>专门用于数据挖掘的开源 python 库</li>
+<li><strong>以 Numpy 为基础，借力 Numpy 模块在计算方面性能高的优势</strong></li>
+<li><strong>基于 matplotlib，能够简便的画图</strong></li>
+<li><strong>独特的数据结构</strong></li>
+</ul>
 <a id="more"></a>
 
-<h3 id="Markdown-标题"><a href="#Markdown-标题" class="headerlink" title="Markdown 标题"></a>Markdown 标题</h3><p>标题是每篇文章都需要也是最常用的格式，在 Markdown 中，如果一段文字被定义为标题，只要在这段文字前加<kbd>#+space</kbd>号即可。<br>使用 <kbd>#</kbd> 号可表示 1-6 级标题，一级标题对应一个 <kbd>#</kbd> 号，二级标题对应两个 <kbd>#</kbd> 号，以此类推。</p>
-<pre><code class="markdown"># 这是一级标题
-
-## 这是二级标题
-
-### 这是三级标题
-
-#### 这是四级标题
-
-##### 这是五级标题
-
-###### 这是六级标题</code></pre>
-<h3 id="Markdown-段落"><a href="#Markdown-段落" class="headerlink" title="Markdown 段落"></a>Markdown 段落</h3><h4 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h4><p>Markdown 段落没有特殊的格式，直接编写文字就好，段落的换行是使用两个以上空格加上回车。</p>
-<h4 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h4><p>Markdown 可以使用以下几种字体：</p>
-<pre><code class="markdown">_斜体文本_
-_斜体文本_
-**粗体文本**
-**粗体文本**
-**_粗斜体文本_**
-**_粗斜体文本_**</code></pre>
-<p><em>斜体文本</em><br><em>斜体文本</em><br><strong>粗体文本</strong><br><strong>粗体文本</strong><br><strong><em>粗斜体文本</em></strong><br><strong><em>粗斜体文本</em></strong></p>
-<h4 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h4><p>可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
-<pre><code class="markdown">---
----
----
-
----
-
----</code></pre>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<h4 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h4><p>如果段落上的文字要添加删除线，只需要在文字的两端加上两个波浪线 <kbd>~~</kbd> 即可，实例如下：</p>
-<pre><code class="markdown">GOOGLE.COM
-~~BAIDU.COM~~</code></pre>
-<p>GOOGLE.COM<br><del>BAIDU.COM</del></p>
-<h4 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h4><p>下划线可以通过 HTML 标签来实现：</p>
-<pre><code class="markdown">&lt;u&gt;带下划线文本&lt;/u&gt;</code></pre>
-<p><u>带下划线文本</u></p>
-<h3 id="Markdown-列表"><a href="#Markdown-列表" class="headerlink" title="Markdown 列表"></a>Markdown 列表</h3><p>Markdown 支持有序列表和无序列表。</p>
-<h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>无序列表使用星号<kbd>*</kbd>、加号<kbd>+</kbd>或是减号<kbd>-</kbd>作为列表标记，这些标记后面要添加一个<kbd>space</kbd>，然后再填写内容：</p>
-<pre><code class="markdown">- 第一项
-- 第二项
-- 第三项
-
-* 第一项
-* 第二项
-* 第三项
-
-- 第一项
-- 第二项
-- 第三项</code></pre>
+<h3 id="Pandas-简介"><a href="#Pandas-简介" class="headerlink" title="Pandas 简介"></a>Pandas 简介</h3><p>Numpy 已经能够帮助我们处理数据，能够结合 matplotlib 解决部分数据展示等问题，那么 pandas 学习的目的在什么地方呢？</p>
 <ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
+<li><p>增强图表可读性</p>
+<ul>
+<li><p>回忆我们在 numpy 当中创建学生成绩表样式：</p>
+<pre><code>返回结果：
+
+array([[92, 55, 78, 50, 50],
+      [71, 76, 50, 48, 96],
+      [45, 84, 78, 51, 68],
+      [81, 91, 56, 54, 76],
+      [86, 66, 77, 67, 95],
+      [46, 86, 56, 61, 99],
+      [46, 95, 44, 46, 56],
+      [80, 50, 45, 65, 57],
+      [41, 93, 90, 41, 97],
+      [65, 83, 57, 57, 40]])</code></pre><p>如果数据展示为这样，可读性就会更友好：</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007152734.png"/>
+</li>
 </ul>
-<h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>有序列表使用数字并加上<kbd>space</kbd>. 号来表示，如：</p>
-<pre><code class="markdown">1. 第一项
-2. 第二项
-3. 第三项</code></pre>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ol>
-<h3 id="Markdown-区块"><a href="#Markdown-区块" class="headerlink" title="Markdown 区块"></a>Markdown 区块</h3><p>Markdown 区块引用是在段落开头使用 <kbd>></kbd>符号 ，然后后面紧跟一个<kbd>space</kbd>符号：</p>
-<pre><code class="markdown">&gt; 区块引用</code></pre>
-<blockquote>
-<p>区块引用</p>
-</blockquote>
-<h3 id="Markdown-代码"><a href="#Markdown-代码" class="headerlink" title="Markdown 代码"></a>Markdown 代码</h3><p>如果是段落上的一个函数或片段的代码可以用反引号把它包起来<kbd>`</kbd>，例如：</p>
-<pre><code class="markdown">`printf()` 函数</code></pre>
-<p><code>printf()</code> 函数<br>代码区块使用 4 个空格或者一个制表符<kbd>Tab</kbd>。<br>也可以用 ``` 包裹一段代码，并指定一种语言（也可以不指定）</p>
-<h3 id="Markdown-链接"><a href="#Markdown-链接" class="headerlink" title="Markdown 链接"></a>Markdown 链接</h3><p>链接使用方法如下：</p>
-<pre><code class="markdown">[链接名称](链接地址)
+</li>
+<li><p>便捷的数据处理能力</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153141.png"/>
+</li>
+<li><p>读取文件方便</p>
+</li>
+<li><p>封装了 Matplotlib、Numpy 的画图和计算</p>
+</li>
+</ul>
+<h3 id="Pandas-数据结构"><a href="#Pandas-数据结构" class="headerlink" title="Pandas 数据结构"></a>Pandas 数据结构</h3><p>Pandas 中一共有三种数据结构，分别为：Series、DataFrame 和 MultiIndex。</p>
+<p>其中 Series 是一维数据结构，DataFrame 是二维的表格型数据结构，MultiIndex 是三维的数据结构。</p>
+<h4 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h4><p>Series 是一个类似于一维数组的数据结构，它能够保存任何类型的数据，比如整数、字符串、浮点数等，主要由一组数据和与之相关的索引两部分构成。</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153308.png"/>
 
-或者
+<p><strong>series 的创建</strong></p>
+<pre><code class="python"># 导入pandas
+import pandas as pd
 
-&lt;链接地址&gt;
+pd.Series(data=None, index=None, dtype=None)</code></pre>
+<ul>
+<li>参数：<ul>
+<li>data：传入的数据，可以是 ndarray、list 等</li>
+<li>index：索引，必须是唯一的，且与数据的长度相等。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+<li>dtype：数据的类型</li>
+</ul>
+</li>
+</ul>
+<p>通过已有数据创建</p>
+<ul>
+<li>指定内容，默认索引</li>
+</ul>
+<pre><code class="python">pd.Series(np.arange(10))
+# 运行结果
+0    0
+1    1
+2    2
+3    3
+4    4
+5    5
+6    6
+7    7
+8    8
+9    9
+dtype: int64</code></pre>
+<ul>
+<li>指定索引</li>
+</ul>
+<pre><code class="python">pd.Series([6.7,5.6,3,10,2], index=[1,2,3,4,5])
+# 运行结果
+1     6.7
+2     5.6
+3     3.0
+4    10.0
+5     2.0
+dtype: float64</code></pre>
+<ul>
+<li>通过字典数据创建</li>
+</ul>
+<pre><code class="python">color_count = pd.Series({&#39;red&#39;:100, &#39;blue&#39;:200, &#39;green&#39;: 500, &#39;yellow&#39;:1000})
+color_count
+# 运行结果
+blue       200
+green      500
+red        100
+yellow    1000
+dtype: int64</code></pre>
+<p><strong>Series 的属性</strong></p>
+<p>为了更方便地操作 Series 对象中的索引和数据，Series 中提供了两个属性 index 和 values</p>
+<ul>
+<li>index</li>
+</ul>
+<pre><code class="python">color_count.index
 
-[FLAG&#39;s blog](www.flaglee.cn)</code></pre>
-<p><a href="www.flaglee.cn">FLAG’s blog</a></p>
-<p>高级链接<br>可以通过变量来设置一个链接，变量赋值在文档末尾进行：</p>
-<pre><code class="markdown">这个链接用 1 作为网址变量 [Google][1]
-然后在文档的结尾为变量赋值（网址）
+# 结果
 
-[1]: http://www.google.com/</code></pre>
-<h3 id="Markdown-图片"><a href="#Markdown-图片" class="headerlink" title="Markdown 图片"></a>Markdown 图片</h3><p>Markdown 图片语法格式如下：</p>
-<pre><code class="markdown">![alt 属性文本](图片地址)
+Index([&#39;blue&#39;, &#39;green&#39;, &#39;red&#39;, &#39;yellow&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>values</li>
+</ul>
+<pre><code class="python">color_count.values
 
-![alt 属性文本](图片地址 &quot;可选标题&quot;)
+# 结果
 
-![Markdown](https://www.runoob.com/wp-content/uploads/2019/03/iconfinder_markdown_298823.png &quot;markdown图标&quot;)</code></pre>
-<p><img src="https://www.runoob.com/wp-content/uploads/2019/03/iconfinder_markdown_298823.png" alt="Markdown" title="markdown图标"></p>
-<h3 id="Markdown-表格"><a href="#Markdown-表格" class="headerlink" title="Markdown 表格"></a>Markdown 表格</h3><p>Markdown 制作表格使用 <kbd>|</kbd> 来分隔不同的单元格，使用 <kbd>-</kbd> 来分隔表头和其他行。</p>
-<p>语法格式如下：</p>
-<pre><code class="markdown">| 表头   | 表头   |
-| ------ | ------ |
-| 单元格 | 单元格 |
-| 单元格 | 单元格 |</code></pre>
-<table>
-<thead>
-<tr>
-<th>表头</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-<tr>
-<td>单元格</td>
-<td>单元格</td>
-</tr>
-</tbody></table>
-<p>对齐方式</p>
-<p>可以设置表格的对齐方式：</p>
-<p>-: 设置内容和标题栏居右对齐。<br>:- 设置内容和标题栏居左对齐。<br>:-: 设置内容和标题栏居中对齐。</p>
-<pre><code class="markdown">| 左对齐 | 右对齐 | 居中对齐 |
-| :----- | -----: | :------: |
-| 单元格 | 单元格 |  单元格  |
-| 单元格 | 单元格 |  单元格  |</code></pre>
-<table>
-<thead>
-<tr>
-<th align="left">左对齐</th>
-<th align="right">右对齐</th>
-<th align="center">居中对齐</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-<tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
-</tr>
-</tbody></table>
-<h3 id="Markdown-高级技巧"><a href="#Markdown-高级技巧" class="headerlink" title="Markdown 高级技巧"></a>Markdown 高级技巧</h3><h4 id="支持的-HTML-元素"><a href="#支持的-HTML-元素" class="headerlink" title="支持的 HTML 元素"></a>支持的 HTML 元素</h4><p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。</p>
-<pre><code class="markdown">目前支持的 HTML 元素有：&lt;kbd&gt; &lt;b&gt; &lt;i&gt; &lt;em&gt; &lt;sup&gt; &lt;sub&gt; &lt;br&gt;等，如：
+array([ 200, 500, 100, 1000])</code></pre>
+<p>也可以使用索引来获取数据：</p>
+<pre><code class="python">color_count[2]
 
-使用 &lt;kbd&gt;Ctrl&lt;/kbd&gt;+&lt;kbd&gt;Alt&lt;/kbd&gt;+&lt;kbd&gt;Del&lt;/kbd&gt; 重启电脑</code></pre>
-<p>使用 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd> 重启电脑</p>
-<h4 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h4><p>Markdown 使用了很多特殊符号来表示特定的意义，如果需要显示特定的符号则需要使用转义字符，Markdown 使用反斜杠转义特殊字符：</p>
-<pre><code class="markdown">**文本加粗**
-\*\* 正常显示星号 \*\*</code></pre>
-<p><strong>文本加粗</strong><br>** 正常显示星号 **</p>
-<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><p>当需要在编辑器中插入数学公式时，可以使用两个美元符 $$ 包裹 TeX 或 LaTeX 格式的数学公式来实现。提交后，问答和文章页会根据需要加载 Mathjax 对数学公式进行渲染。</p>
+# 结果
+
+100</code></pre>
+<h4 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h4><p>DataFrame 是一个类似于二维数组或表格(如 excel)的对象，既有行索引，又有列索引</p>
+<ul>
+<li>行索引，表明不同行，横向索引，叫 index，0 轴，axis=0</li>
+<li>列索引，表名不同列，纵向索引，叫 columns，1 轴，axis=1</li>
+</ul>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153651.png"/>
+
+<p><strong>DataFrame 的创建</strong></p>
+<pre><code class="python"># 导入pandas
+import pandas as pd
+
+pd.DataFrame(data=None, index=None, columns=None)</code></pre>
+<ul>
+<li><p>参数：</p>
+<ul>
+<li>index：行标签。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+<li>columns：列标签。如果没有传入索引参数，则默认会自动创建一个从 0-N 的整数索引。</li>
+</ul>
+</li>
+<li><p>通过已有数据创建</p>
+</li>
+</ul>
+<p>举例一：<br>python</p>
+<pre><code>pd.DataFrame(np.random.randn(2,3))</code></pre><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007153855.png"/>
+
+<p>回忆在前面直接使用 np 创建的数组显示方式，比较两者的区别。</p>
+<p>举例二：创建学生成绩表</p>
+<pre><code class="python"># 生成10名同学，5门功课的数据
+score = np.random.randint(40, 100, (10, 5))
+
+# 结果
+array([[92, 55, 78, 50, 50],
+       [71, 76, 50, 48, 96],
+       [45, 84, 78, 51, 68],
+       [81, 91, 56, 54, 76],
+       [86, 66, 77, 67, 95],
+       [46, 86, 56, 61, 99],
+       [46, 95, 44, 46, 56],
+       [80, 50, 45, 65, 57],
+       [41, 93, 90, 41, 97],
+       [65, 83, 57, 57, 40]])</code></pre>
+<p>但是这样的数据形式很难看到存储的是什么的样的数据，可读性比较差！！</p>
+<p>问题：<strong>如何让数据更有意义的显示？</strong></p>
+<pre><code class="python"># 使用Pandas中的数据结构
+score_df = pd.DataFrame(score)</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154003.png"/>
+
+<p>给分数数据增加行列索引,显示效果更佳</p>
+<ul>
+<li>增加行、列索引</li>
+</ul>
+<pre><code class="python"># 构造行索引序列
+subjects = [&quot;语文&quot;, &quot;数学&quot;, &quot;英语&quot;, &quot;政治&quot;, &quot;体育&quot;]
+
+# 构造列索引序列
+stu = [&#39;同学&#39; + str(i) for i in range(score_df.shape[0])]
+
+# 添加行索引
+data = pd.DataFrame(score, columns=subjects, index=stu)</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154044.png"/>
+
+<p><strong>DataFrame 的属性</strong></p>
+<ul>
+<li>shape</li>
+</ul>
+<pre><code class="python">data.shape
+
+# 结果
+(10, 5)</code></pre>
+<ul>
+<li>index</li>
+</ul>
+<p>DataFrame 的行索引列表</p>
+<pre><code class="python">data.index
+
+# 结果
+Index([&#39;同学0&#39;, &#39;同学1&#39;, &#39;同学2&#39;, &#39;同学3&#39;, &#39;同学4&#39;, &#39;同学5&#39;, &#39;同学6&#39;, &#39;同学7&#39;, &#39;同学8&#39;, &#39;同学9&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>columns<br>DataFrame 的列索引列表</li>
+</ul>
+<pre><code class="python">data.columns
+
+# 结果
+Index([&#39;语文&#39;, &#39;数学&#39;, &#39;英语&#39;, &#39;政治&#39;, &#39;体育&#39;], dtype=&#39;object&#39;)</code></pre>
+<ul>
+<li>values</li>
+</ul>
+<pre><code class="python">直接获取其中array的值
+
+data.values
+
+array([[92, 55, 78, 50, 50],
+       [71, 76, 50, 48, 96],
+       [45, 84, 78, 51, 68],
+       [81, 91, 56, 54, 76],
+       [86, 66, 77, 67, 95],
+       [46, 86, 56, 61, 99],
+       [46, 95, 44, 46, 56],
+       [80, 50, 45, 65, 57],
+       [41, 93, 90, 41, 97],
+       [65, 83, 57, 57, 40]])</code></pre>
+<ul>
+<li>T<br>转置</li>
+</ul>
+<pre><code class="python">data.T</code></pre>
+<p>结果</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154327.png"/>
+
+<ul>
+<li>head(5)：显示前 5 行内容</li>
+</ul>
+<p>如果不补充参数，默认 5 行。填入参数 N 则显示前 N 行</p>
+<pre><code class="python">data.head(5)</code></pre>
+<ul>
+<li>tail(5):显示后 5 行内容</li>
+</ul>
+<p>如果不补充参数，默认 5 行。填入参数 N 则显示后 N 行</p>
+<pre><code class="python">data.tail(5)</code></pre>
+<p><strong>DatatFrame 索引的设置</strong></p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154647.png"/>
+
+<p><strong>修改行列索引值</strong></p>
+<pre><code class="python">stu = [&quot;学生_&quot; + str(i) for i in range(score_df.shape[0])]
+
+# 必须整体全部修改
+data.index = stu</code></pre>
+<p>注意：以下修改方式是错误的</p>
+<pre><code class="python"># 错误修改方式
+data.index[3] = &#39;学生_3&#39;</code></pre>
+<p><strong>重设索引</strong></p>
+<ul>
+<li><p>reset_index(drop=False)</p>
+<ul>
+<li>设置新的下标索引</li>
+<li>drop:默认为 False，不删除原来索引，如果为 True,删除原来的索引值</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 重置索引,drop=False
+data.reset_index()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007154917.png"/>
+
+<pre><code class="python"># 重置索引,drop=True
+data.reset_index(drop=True)</code></pre>
+<p><strong>以某列值设置为新的索引</strong></p>
+<ul>
+<li>set_index(keys, drop=True)<ul>
+<li>keys : 列索引名成或者列索引名称的列表</li>
+<li>drop : boolean, default True.当做新的索引，删除原来的列</li>
+</ul>
+</li>
+</ul>
+<p>设置新索引案例</p>
+<p>1、创建</p>
+<pre><code class="python">df = pd.DataFrame({&#39;month&#39;: [1, 4, 7, 10],
+                    &#39;year&#39;: [2012, 2014, 2013, 2014],
+                    &#39;sale&#39;:[55, 40, 84, 31]})
+
+   month  sale  year
+0  1      55    2012
+1  4      40    2014
+2  7      84    2013
+3  10     31    2014</code></pre>
+<p>2、以月份设置新的索引</p>
+<pre><code class="python">df.set_index(&#39;month&#39;)
+       sale  year
+month
+1      55    2012
+4      40    2014
+7      84    2013
+10     31    2014</code></pre>
+<p>3、设置多个索引，以年和月份</p>
+<pre><code class="python">df = df.set_index([&#39;year&#39;, &#39;month&#39;])
+df
+            sale
+year  month
+2012  1     55
+2014  4     40
+2013  7     84
+2014  10    31</code></pre>
+<p>注：通过刚才的设置，这样 DataFrame 就变成了一个具有 MultiIndex 的 DataFrame。</p>
+<h4 id="MultiIndex"><a href="#MultiIndex" class="headerlink" title="MultiIndex"></a>MultiIndex</h4><p>MultiIndex 是三维的数据结构;</p>
+<p>多级索引（也称层次化索引）是 pandas 的重要功能，可以在 Series、DataFrame 对象上拥有 2 个以及 2 个以上的索引。</p>
+<p><strong>multiIndex 的特性</strong></p>
+<p>打印刚才的 df 的行索引结果</p>
+<pre><code class="python">df.index
+
+MultiIndex(levels=[[2012, 2013, 2014], [1, 4, 7, 10]],
+           labels=[[0, 2, 1, 2], [0, 1, 2, 3]],
+           names=[&#39;year&#39;, &#39;month&#39;])</code></pre>
+<p>多级或分层索引对象。</p>
+<ul>
+<li>index 属性<ul>
+<li>names:levels 的名称</li>
+<li>levels：每个 level 的元组值</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">df.index.names
+# FrozenList([&#39;year&#39;, &#39;month&#39;])
+
+df.index.levels
+# FrozenList([[1, 2], [1, 4, 7, 10]])</code></pre>
+<p><strong>multiIndex 的创建</strong></p>
+<pre><code class="python">arrays = [[1, 1, 2, 2], [&#39;red&#39;, &#39;blue&#39;, &#39;red&#39;, &#39;blue&#39;]]
+pd.MultiIndex.from_arrays(arrays, names=(&#39;number&#39;, &#39;color&#39;))
+
+# 结果
+MultiIndex(levels=[[1, 2], [&#39;blue&#39;, &#39;red&#39;]],
+           codes=[[0, 0, 1, 1], [1, 0, 1, 0]],
+           names=[&#39;number&#39;, &#39;color&#39;])</code></pre>
+<h3 id="基本数据操作"><a href="#基本数据操作" class="headerlink" title="基本数据操作"></a>基本数据操作</h3><h4 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h4><p>Numpy 当中我们已经讲过使用索引选取序列和切片选择，pandas 也支持类似的操作，也可以直接使用列名、行名称，甚至组合使用。</p>
+<p><strong>直接使用行列索引(先列后行)</strong></p>
+<p>获取’2018-02-27’这天的’close’的结果</p>
+<pre><code class="python"># 直接使用行列索引名字的方式（先列后行）
+data[&#39;open&#39;][&#39;2018-02-27&#39;]
+23.53
+
+# 不支持的操作
+# 错误
+data[&#39;2018-02-27&#39;][&#39;open&#39;]
+# 错误
+data[:1, :2]</code></pre>
+<p><strong>结合 loc 或者 iloc 使用索引</strong></p>
+<p>获取从’2018-02-27’:’2018-02-22’，’open’的结果</p>
+<pre><code class="python"># 使用loc:只能指定行列索引的名字
+data.loc[&#39;2018-02-27&#39;:&#39;2018-02-22&#39;, &#39;open&#39;]
+
+2018-02-27    23.53
+2018-02-26    22.80
+2018-02-23    22.88
+Name: open, dtype: float64
+
+# 使用iloc可以通过索引的下标去获取
+# 获取前3天数据,前5列的结果
+data.iloc[:3, :5]
+
+            open    high    close    low
+2018-02-27    23.53    25.88    24.16    23.53
+2018-02-26    22.80    23.78    23.53    22.80
+2018-02-23    22.88    23.37    22.82    22.71</code></pre>
+<h4 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h4><p>对 DataFrame 当中的 close 列进行重新赋值为 1</p>
+<pre><code class="python"># 直接修改原来的值
+data[&#39;close&#39;] = 1
+# 或者
+data.close = 1</code></pre>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><p>排序有两种形式，一种对于索引进行排序，一种对于内容进行排序</p>
+<p><strong>DataFrame 排序</strong></p>
+<ul>
+<li>使用 df.sort_values(by=, ascending=)<ul>
+<li>单个键或者多个键进行排序,</li>
+<li>参数：<ul>
+<li>by：指定排序参考的键</li>
+<li>ascending:默认升序<ul>
+<li>ascending=False:降序</li>
+<li>ascending=True:升序</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># 按照开盘价大小进行排序 , 使用ascending指定按照大小排序
+data.sort_values(by=&quot;open&quot;, ascending=True).head()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160704.png"/>
+
+<pre><code class="python"># 按照多个键进行排序
+data.sort_values(by=[&#39;open&#39;, &#39;high&#39;])</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160741.png"/>
+
+<ul>
+<li>使用 df.sort_index 给索引进行排序<br>这个股票的日期索引原来是从大到小，现在重新排序，从小到大</li>
+</ul>
+<pre><code class="python"># 对索引进行排序
+data.sort_index()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201007160817.png"/>
+
+<p><strong>Series 排序</strong></p>
+<ul>
+<li>使用 series.sort_values(ascending=True)进行排序</li>
+</ul>
+<p>series 排序时，只有一列，不需要参数</p>
+<pre><code class="python">data[&#39;p_change&#39;].sort_values(ascending=True).head()
+
+2015-09-01   -10.03
+2015-09-14   -10.02
+2016-01-11   -10.02
+2015-07-15   -10.02
+2015-08-26   -10.01
+Name: p_change, dtype: float64</code></pre>
+<ul>
+<li>使用 series.sort_index()进行排序</li>
+</ul>
+<p>与 df 一致</p>
+<pre><code class="python"># 对索引进行排序
+data[&#39;p_change&#39;].sort_index().head()
+
+2015-03-02    2.62
+2015-03-03    1.44
+2015-03-04    1.57
+2015-03-05    2.02
+2015-03-06    8.51
+Name: p_change, dtype: float64
+</code></pre>
+<h3 id="DataFrame-运算"><a href="#DataFrame-运算" class="headerlink" title="DataFrame 运算"></a>DataFrame 运算</h3><h4 id="1-算术运算"><a href="#1-算术运算" class="headerlink" title="1 算术运算"></a>1 算术运算</h4><ul>
+<li>add(other)</li>
+</ul>
+<p>比如进行数学运算加上具体的一个数字</p>
+<pre><code class="python">data[&#39;open&#39;].add(1)
+
+2018-02-27    24.53
+2018-02-26    23.80
+2018-02-23    23.88
+2018-02-22    23.25
+2018-02-14    22.49</code></pre>
+<ul>
+<li>sub(other)</li>
+</ul>
+<h4 id="2-逻辑运算"><a href="#2-逻辑运算" class="headerlink" title="2 逻辑运算"></a>2 逻辑运算</h4><p><strong>2.1 逻辑运算符号</strong></p>
+<ul>
+<li><p>例如筛选 data[“open”] &gt; 23 的日期数据</p>
+<ul>
+<li>data[“open”] &gt; 23 返回逻辑结果</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python">data[&quot;open&quot;] &gt; 23
+
+2018-02-27     True
+2018-02-26    False
+2018-02-23    False
+2018-02-22    False
+2018-02-14    False
+
+# 逻辑判断的结果可以作为筛选的依据
+data[data[&quot;open&quot;] &gt; 23].head()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008102537.png"/>
+
+<ul>
+<li>完成多个逻辑判断</li>
+</ul>
+<pre><code class="python">data[(data[&quot;open&quot;] &gt; 23) &amp; (data[&quot;open&quot;] &lt; 24)].head()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008102618.png"/>
+
+<p><strong>2.2 逻辑运算函数</strong></p>
+<ul>
+<li>query(expr)<ul>
+<li>expr:查询字符串</li>
+</ul>
+</li>
+</ul>
+<p>通过 query 使得刚才的过程更加方便简单</p>
+<pre><code class="python">data.query(&quot;open&lt;24 &amp; open&gt;23&quot;).head()</code></pre>
+<ul>
+<li>isin(values)</li>
+</ul>
+<p>例如判断’open’是否为 23.53 和 23.85</p>
+<pre><code class="python"># 可以指定值进行一个判断，从而进行筛选操作
+data[data[&quot;open&quot;].isin([23.53, 23.85])]</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008102755.png"/>
+
+<h4 id="3-统计运算"><a href="#3-统计运算" class="headerlink" title="3 统计运算"></a>3 统计运算</h4><p><strong>3.1 describe</strong></p>
+<p>综合分析: 能够直接得出很多统计结果,count, mean, std, min, max 等</p>
+<pre><code># 计算平均值、标准差、最大值、最小值
+data.describe()</code></pre><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008103324.png"/>
+
+<p><strong>3.2 统计函数</strong></p>
+<p>Numpy 当中已经详细介绍，在这里我们演示 min(最小值), max(最大值), mean(平均值), median(中位数), var(方差), std(标准差),mode(众数)结果:</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008103410.png"/>
+
+<p>对于单个函数去进行统计的时候，坐标轴还是按照默认列“columns” (axis=0, default)，如果要对行“index” 需要指定(axis=1)</p>
+<ul>
+<li>max()、min()</li>
+</ul>
+<pre><code class="python"># 使用统计函数：0 代表列求结果， 1 代表行求统计结果
+
+data.max(0)
+
+open 34.99
+high 36.35
+close 35.21
+low 34.01
+volume 501915.41
+price_change 3.03
+p_change 10.03
+turnover 12.56
+my_price_change 3.41
+dtype: float64</code></pre>
+<ul>
+<li>std()、var()</li>
+</ul>
+<pre><code class="python"># 方差
+
+data.var(0)
+
+open 1.545255e+01
+high 1.662665e+01
+close 1.554572e+01
+low 1.437902e+01
+volume 5.458124e+09
+price_change 8.072595e-01
+p_change 1.664394e+01
+turnover 4.323800e+00
+my_price_change 6.409037e-01
+dtype: float64
+
+# 标准差
+
+data.std(0)
+
+open 3.930973
+high 4.077578
+close 3.942806
+low 3.791968
+volume 73879.119354
+price_change 0.898476
+p_change 4.079698
+turnover 2.079375
+my_price_change 0.800565
+dtype: float64</code></pre>
+<ul>
+<li>median()：中位数<br>中位数为将数据从小到大排列，在最中间的那个数为中位数。如果没有中间数，取中间两个数的平均值。</li>
+</ul>
+<pre><code class="python">df = pd.DataFrame({&#39;COL1&#39; : [2,3,4,5,4,2],
+&#39;COL2&#39; : [0,1,2,3,4,2]})
+
+df.median()
+
+COL1 3.5
+COL2 2.0
+dtype: float64</code></pre>
+<ul>
+<li>idxmax()、idxmin()</li>
+</ul>
+<pre><code class="python"># 求出最大值的位置
+
+data.idxmax(axis=0)
+
+open 2015-06-15
+high 2015-06-10
+close 2015-06-12
+low 2015-06-12
+volume 2017-10-26
+price_change 2015-06-09
+p_change 2015-08-28
+turnover 2017-10-26
+my_price_change 2015-07-10
+dtype: object
+
+# 求出最小值的位置
+
+data.idxmin(axis=0)
+
+open 2015-03-02
+high 2015-03-02
+close 2015-09-02
+low 2015-03-02
+volume 2016-07-06
+price_change 2015-06-15
+p_change 2015-09-01
+turnover 2016-07-06
+my_price_change 2015-06-15
+dtype: object</code></pre>
+<p><strong>3.3 累计统计函数</strong></p>
+<h3 id="Pandas-画图"><a href="#Pandas-画图" class="headerlink" title="Pandas 画图"></a>Pandas 画图</h3><h3 id="文件读取与存储"><a href="#文件读取与存储" class="headerlink" title="文件读取与存储"></a>文件读取与存储</h3><hr>
+<p>学习中，先占坑</p>
 
           
             <div class='article_footer'>
@@ -984,10 +1410,10 @@ _斜体文本_
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-07-22T20:56:22+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-08T10:59:34+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Jul 22, 2020</p>
+    <p>更新于：Oct 8, 2020</p>
   </a>
 </div>
 
@@ -996,7 +1422,7 @@ _斜体文本_
         
           
   
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/blog/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>blog</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Markdown/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Markdown</p></a></div>
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Python/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>机器学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>深度学习</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Matplotlib/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Matplotlib</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Numpy/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Numpy</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Pandas/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Pandas</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/Jupyter-Notebook/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>Jupyter Notebook</p></a></div>
 
 
         
@@ -1014,7 +1440,14 @@ _斜体文本_
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.flaglee.cn/2020/05/26/Markdown%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/&title=Markdown语法汇总 - 闲情记趣|FLAG's blog&pics=https://img.vim-cn.com/17/0c7b02722686d1527a1df807dae0794d995860.png&summary=Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。当前许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息，例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge 等。
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.flaglee.cn/2020/10/02/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%B8%89-%EF%BC%9APandas%E7%9A%84%E4%BD%BF%E7%94%A8/&title=机器学习基础知识及机器学习常用科学计算库的使用 - 闲情记趣|FLAG's blog&summary=
+
+
+2008 年 WesMcKinney 开发出的库
+专门用于数据挖掘的开源 python 库
+以 Numpy 为基础，借力 Numpy 模块在计算方面性能高的优势
+基于 matplotlib，能够简便的画图
+独特的数据结构
 "
           
           >
@@ -1027,7 +1460,14 @@ _斜体文本_
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.flaglee.cn/2020/05/26/Markdown%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/&title=Markdown语法汇总 - 闲情记趣|FLAG's blog&pics=https://img.vim-cn.com/17/0c7b02722686d1527a1df807dae0794d995860.png&summary=Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。当前许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息，例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge 等。
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.flaglee.cn/2020/10/02/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%B8%89-%EF%BC%9APandas%E7%9A%84%E4%BD%BF%E7%94%A8/&title=机器学习基础知识及机器学习常用科学计算库的使用 - 闲情记趣|FLAG's blog&summary=
+
+
+2008 年 WesMcKinney 开发出的库
+专门用于数据挖掘的开源 python 库
+以 Numpy 为基础，借力 Numpy 模块在计算方面性能高的优势
+基于 matplotlib，能够简便的画图
+独特的数据结构
 "
           
           >
@@ -1040,7 +1480,14 @@ _斜体文本_
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://www.flaglee.cn/2020/05/26/Markdown%E8%AF%AD%E6%B3%95%E6%B1%87%E6%80%BB/&title=Markdown语法汇总 - 闲情记趣|FLAG's blog&pics=https://img.vim-cn.com/17/0c7b02722686d1527a1df807dae0794d995860.png&summary=Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档。当前许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息，例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge 等。
+          href="http://service.weibo.com/share/share.php?url=https://www.flaglee.cn/2020/10/02/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%B8%89-%EF%BC%9APandas%E7%9A%84%E4%BD%BF%E7%94%A8/&title=机器学习基础知识及机器学习常用科学计算库的使用 - 闲情记趣|FLAG's blog&summary=
+
+
+2008 年 WesMcKinney 开发出的库
+专门用于数据挖掘的开源 python 库
+以 Numpy 为基础，借力 Numpy 模块在计算方面性能高的优势
+基于 matplotlib，能够简便的画图
+独特的数据结构
 "
           
           >
@@ -1065,15 +1512,15 @@ _斜体文本_
         
           <div class="prev-next">
             
-              <a class='prev' href='/2020/07/15/RTKlib-%E5%85%B3%E4%BA%8E%E9%AB%98%E7%B2%BE%E5%BA%A6GPS%E5%8A%A8%E6%80%81%E5%AE%9A%E4%BD%8D%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B/'>
-                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>RTKlib源码解析-高精度GNSS定位处理过程</p>
-                <p class='content'>RTKLIB 是用于 GNSS（全球导航卫星系统）的标准和精确定位的开源程序包。二进制文件以及完整原始代码见RTKlib.com。Demo5 是 RTKLIB 代码的修改版本，针对低成本的单频和...</p>
-              </a>
             
-            
-              <a class='next' href='/2020/05/26/hello-world/'>
-                <p class='title'>Hello World<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
-                <p class='content'>Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any ...</p>
+              <a class='next' href='/2020/09/25/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E4%BA%8C-%EF%BC%9ANumpy%E7%9A%84%E4%BD%BF%E7%94%A8/'>
+                <p class='title'>机器学习基础知识(二)：Numpy的使用<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>
+
+
+Numpy（Numerical Python）是一个开源的 Python 科学计算库，用于快速处理任意维度的数组。
+
+Numpy 支持常见的数组和矩阵操作。对于同样的数值计算任务，使用 N...</p>
               </a>
             
           </div>
@@ -1118,7 +1565,7 @@ _斜体文本_
 
   <script>
     window.subData = {
-      title: 'Markdown语法汇总',
+      title: '机器学习基础知识(三)：Pandas的使用',
       tools: true
     }
   </script>
@@ -1243,7 +1690,7 @@ _斜体文本_
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-标题"><span class="toc-number">1.</span> <span class="toc-text">Markdown 标题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-段落"><span class="toc-number">2.</span> <span class="toc-text">Markdown 段落</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#段落"><span class="toc-number">2.1.</span> <span class="toc-text">段落</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字体"><span class="toc-number">2.2.</span> <span class="toc-text">字体</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分割线"><span class="toc-number">2.3.</span> <span class="toc-text">分割线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除线"><span class="toc-number">2.4.</span> <span class="toc-text">删除线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#下划线"><span class="toc-number">2.5.</span> <span class="toc-text">下划线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-列表"><span class="toc-number">3.</span> <span class="toc-text">Markdown 列表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无序列表"><span class="toc-number">3.1.</span> <span class="toc-text">无序列表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#有序列表"><span class="toc-number">3.2.</span> <span class="toc-text">有序列表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-区块"><span class="toc-number">4.</span> <span class="toc-text">Markdown 区块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-代码"><span class="toc-number">5.</span> <span class="toc-text">Markdown 代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-链接"><span class="toc-number">6.</span> <span class="toc-text">Markdown 链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-图片"><span class="toc-number">7.</span> <span class="toc-text">Markdown 图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-表格"><span class="toc-number">8.</span> <span class="toc-text">Markdown 表格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown-高级技巧"><span class="toc-number">9.</span> <span class="toc-text">Markdown 高级技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#支持的-HTML-元素"><span class="toc-number">9.1.</span> <span class="toc-text">支持的 HTML 元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#转义"><span class="toc-number">9.2.</span> <span class="toc-text">转义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#公式"><span class="toc-number">9.3.</span> <span class="toc-text">公式</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-简介"><span class="toc-number">1.</span> <span class="toc-text">Pandas 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-数据结构"><span class="toc-number">2.</span> <span class="toc-text">Pandas 数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Series"><span class="toc-number">2.1.</span> <span class="toc-text">Series</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DataFrame"><span class="toc-number">2.2.</span> <span class="toc-text">DataFrame</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MultiIndex"><span class="toc-number">2.3.</span> <span class="toc-text">MultiIndex</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本数据操作"><span class="toc-number">3.</span> <span class="toc-text">基本数据操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#索引操作"><span class="toc-number">3.1.</span> <span class="toc-text">索引操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#赋值操作"><span class="toc-number">3.2.</span> <span class="toc-text">赋值操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序"><span class="toc-number">3.3.</span> <span class="toc-text">排序</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-运算"><span class="toc-number">4.</span> <span class="toc-text">DataFrame 运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-算术运算"><span class="toc-number">4.1.</span> <span class="toc-text">1 算术运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-逻辑运算"><span class="toc-number">4.2.</span> <span class="toc-text">2 逻辑运算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-统计运算"><span class="toc-number">4.3.</span> <span class="toc-text">3 统计运算</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pandas-画图"><span class="toc-number">5.</span> <span class="toc-text">Pandas 画图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件读取与存储"><span class="toc-number">6.</span> <span class="toc-text">文件读取与存储</span></a></li></ol>
     </div>
   </section>
 
