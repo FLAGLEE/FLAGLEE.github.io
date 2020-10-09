@@ -879,7 +879,7 @@ wis = wis.dropna()</code></pre>
 <li>假设按照身⾼分⼏个区间段： 150<del>165, 165</del>180,180~195</li>
 </ul>
 <p>这样我们将数据分到了三个区间段， 我可以对应的标记为矮、 中、 ⾼三个类别， 最终要处理成⼀个”哑变量”矩阵</p>
-<h4 id="股票的涨跌幅离散化"><a href="#股票的涨跌幅离散化" class="headerlink" title="股票的涨跌幅离散化"></a>股票的涨跌幅离散化</h4><p>我们对股票每日的”p_change”进行离散化</p>
+<h3 id="案例：股票的涨跌幅离散化"><a href="#案例：股票的涨跌幅离散化" class="headerlink" title="案例：股票的涨跌幅离散化"></a>案例：股票的涨跌幅离散化</h3><p>我们对股票每日的”p_change”进行离散化</p>
 <p><strong>读取股票的数据</strong><br>先读取股票的数据， 筛选出 p_change 数据</p>
 <pre><code class="python">data = pd.read_csv(&quot;./data/stock_day.csv&quot;)
 p_change= data[&#39;p_change&#39;]</code></pre>
@@ -985,9 +985,9 @@ result = pd.merge(left, right, on=[&#39;key1&#39;, &#39;key2&#39;])</code></pre>
 <img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008181421.png"/>
 
 <h2 id="交叉表与透视表"><a href="#交叉表与透视表" class="headerlink" title="交叉表与透视表"></a>交叉表与透视表</h2><p>以下图当中表示， week 代表星期⼏， 1,0 代表这⼀天股票的涨跌幅是好还是坏， ⾥⾯的数据代表⽐例<br>可以理解为所有时间为星期⼀等等的数据当中涨跌幅好坏的⽐例</p>
-<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008181743.png"/>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008181743.png" width="300"/>
 
-<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008181757.png"/>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201008181757.png" width="400"/>
 
 <h3 id="crosstab-交叉表"><a href="#crosstab-交叉表" class="headerlink" title="crosstab(交叉表)"></a>crosstab(交叉表)</h3><ul>
 <li><p>交叉表： 交叉表⽤于计算⼀列数据对于另外⼀列数据的分组个数(寻找两个列之间的关系)</p>
@@ -1029,8 +1029,209 @@ plt.show()</code></pre>
 <pre><code class="python"># 通过透视表， 将整个过程变成更简单⼀些
 data.pivot_table([&#39;posi_neg&#39;], index=&#39;week&#39;)</code></pre>
 <h2 id="分组与聚合"><a href="#分组与聚合" class="headerlink" title="分组与聚合"></a>分组与聚合</h2><p><strong>分组与聚合通常是分析数据的⼀种⽅式， 通常与⼀些统计函数⼀起使⽤， 查看数据的分组情况</strong></p>
-<p>想⼀想其实刚才的交叉表与透视表也有分组的功能， 所以算是分组的⼀种形式， 只不过他们主要是计算次数或者计算⽐例！ ！ 看其中的效果：</p>
-<h3 id="什么分组与聚合"><a href="#什么分组与聚合" class="headerlink" title="什么分组与聚合"></a>什么分组与聚合</h3><h3 id="分组-API"><a href="#分组-API" class="headerlink" title="分组 API"></a>分组 API</h3><h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2>
+<p>想⼀想其实刚才的交叉表与透视表也有分组的功能， 所以算是分组的⼀种形式， 只不过他们主要是计算次数或者计算⽐例！</p>
+<p>看其中的效果：</p>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/1602250879(1).png"/>
+
+<h3 id="什么分组与聚合"><a href="#什么分组与聚合" class="headerlink" title="什么分组与聚合"></a>什么分组与聚合</h3><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009214405.png"/>
+
+<h3 id="分组-API"><a href="#分组-API" class="headerlink" title="分组 API"></a>分组 API</h3><ul>
+<li><p>DataFrame.groupby(key, as_index=False)</p>
+<ul>
+<li>key:分组的列数据， 可以多个</li>
+</ul>
+</li>
+<li><p>案例:不同颜⾊的不同笔的价格数据</p>
+</li>
+</ul>
+<pre><code class="python">col =pd.DataFrame({&#39;color&#39;: [&#39;white&#39;,&#39;red&#39;,&#39;green&#39;,&#39;red&#39;,&#39;green&#39;], &#39;object&#39;: [&#39;pen&#39;,&#39;pencil&#39;,&#39;pencil&#39;,&#39;ashtray&#39;,
+&#39;pen&#39;],&#39;price1&#39;:[5.56,4.20,1.30,0.56,2.75],&#39;price2&#39;:[4.75,4.12,1.60,0.75,3.15]})
+
+color object price1 price2
+0 white pen 5.56 4.75
+1 red pencil 4.20 4.12
+2 green pencil 1.30 1.60
+3 red ashtray 0.56 0.75
+4 green pen 2.75 3.15</code></pre>
+<ul>
+<li>进⾏分组， 对颜⾊分组， price 进⾏聚合</li>
+</ul>
+<pre><code class="python">
+# 分组， 求平均值
+col.groupby([&#39;color&#39;])[&#39;price1&#39;].mean()
+col[&#39;price1&#39;].groupby(col[&#39;color&#39;]).mean()
+
+color
+green 2.025
+red 2.380
+white 5.560
+Name: price1, dtype: float64
+
+# 分组， 数据的结构不变
+col.groupby([&#39;color&#39;], as_index=False)[&#39;price1&#39;].mean()
+
+color price1
+0 green 2.025
+1 red 2.380
+2 white 5.560
+</code></pre>
+<h3 id="案例-星巴克零售店铺数据"><a href="#案例-星巴克零售店铺数据" class="headerlink" title="案例 星巴克零售店铺数据"></a>案例 星巴克零售店铺数据</h3><p>现在我们有⼀组关于全球星巴克店铺的统计数据，如果我想知道美国的星巴克数量和中国的哪个多，或者我想知道中国<br>每个省份星巴克的数量的情况，那么应该怎么办？</p>
+<blockquote>
+<p>数据来源： <a href="https://www.kaggle.com/starbucks/store-locations/data" target="_blank" rel="noopener">https://www.kaggle.com/starbucks/store-locations/data</a></p>
+</blockquote>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009214651.png"/>
+
+<p><strong>数据获取</strong></p>
+<p>从⽂件中读取星巴克店铺数据</p>
+<pre><code class="python"># 导⼊星巴克店的数据
+starbucks = pd.read_csv(&quot;./data/starbucks/directory.csv&quot;)</code></pre>
+<p><strong>进⾏分组聚合</strong></p>
+<pre><code class="python"># 按照国家分组， 求出每个国家的星巴克零售店数量
+count = starbucks.groupby([&#39;Country&#39;]).count()</code></pre>
+<p>画图显示结果</p>
+<pre><code class="python">count[&#39;Brand&#39;].plot(kind=&#39;bar&#39;, figsize=(20, 8))
+plt.show()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009214844.png"/>
+
+<p>假设我们加⼊省市⼀起进⾏分组</p>
+<pre><code class="python"># 设置多个索引， set_index()
+starbucks.groupby([&#39;Country&#39;, &#39;State/Province&#39;]).count()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009214924.png"/>
+
+<p>仔细观察这个结构，与前⾯的 MultiIndex 结构类似</p>
+<h2 id="案例-利用-Pandas-进行电影数据的分析"><a href="#案例-利用-Pandas-进行电影数据的分析" class="headerlink" title="案例 利用 Pandas 进行电影数据的分析"></a>案例 利用 Pandas 进行电影数据的分析</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>现在我们有⼀组从 2006 年到 2016 年 1000 部最流⾏的电影数据， 数据来源： <a href="https://www.kaggle.com/damianpanek/sunday-eda/data" target="_blank" rel="noopener">https://www.kaggle.com/damianpanek/sunday-eda/data</a></p>
+<ul>
+<li>问题 1： 我们想知道这些电影数据中评分的平均分， 导演的⼈数等信息， 我们应该怎么获取？</li>
+<li>问题 2： 对于这⼀组电影数据， 如果我们想 rating， runtime 的分布情况， 应该如何呈现数据？</li>
+<li>问题 3： 对于这⼀组电影数据， 如果我们希望统计电影分类(genre)的情况， 应该如何处理数据？</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>⾸先获取导⼊包， 获取数据</p>
+<pre><code class="python">%matplotlib inline
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+#⽂件的路径
+path = &quot;./data/IMDB-Movie-Data.csv&quot;
+#读取⽂件
+df = pd.read_csv(path)</code></pre>
+<h4 id="问题⼀："><a href="#问题⼀：" class="headerlink" title="问题⼀："></a>问题⼀：</h4><p>我们想知道这些电影数据中评分的平均分，导演的⼈数等信息，我们应该怎么获取？</p>
+<ul>
+<li>得出评分的平均分</li>
+</ul>
+<p>使⽤ mean 函数</p>
+<pre><code class="python">df[&quot;Rating&quot;].mean()</code></pre>
+<ul>
+<li>得出导演⼈数信息</li>
+</ul>
+<p>求出唯⼀值， 然后进⾏形状获取</p>
+<pre><code class="python">## 导演的⼈数
+# df[&quot;Director&quot;].unique().shape[0]
+np.unique(df[&quot;Director&quot;]).shape[0]
+644</code></pre>
+<h4 id="问题⼆："><a href="#问题⼆：" class="headerlink" title="问题⼆："></a>问题⼆：</h4><p>对于这⼀组电影数据， 如果我们想 Rating， Runtime (Minutes)的分布情况，应该如何呈现数据？</p>
+<ul>
+<li>直接呈现，以直⽅图的形式</li>
+</ul>
+<p>选择分数列数据， 进⾏ plot</p>
+<pre><code class="python">df[&quot;Rating&quot;].plot(kind=&#39;hist&#39;,figsize=(20,8))</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009215232.png"/>
+
+<ul>
+<li>Rating 进⾏分布展示</li>
+</ul>
+<p>进⾏绘制直⽅图</p>
+<pre><code class="python">plt.figure(figsize=(20,8),dpi=80)
+plt.hist(df[&quot;Rating&quot;].values,bins=20)
+plt.show()</code></pre>
+<p>修改刻度的间隔</p>
+<pre><code class="python"># 求出最⼤最⼩值
+max_ = df[&quot;Rating&quot;].max()
+min_ = df[&quot;Rating&quot;].min()
+# ⽣成刻度列表
+t1 = np.linspace(min_,max_,num=21)
+# [ 1.9 2.255 2.61 2.965 3.32 3.675 4.03 4.385 4.74 5.095 5.45 5.805 6.16 6.515 6.87 7.
+225 7.58 7.935 8.29 8.645 9. ]
+# 修改刻度
+plt.xticks(t1)
+# 添加⽹格
+plt.grid()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009215311.png"/>
+
+<ul>
+<li>Runtime (Minutes)进⾏分布展示</li>
+</ul>
+<p>进⾏绘制直⽅图</p>
+<pre><code class="python">plt.figure(figsize=(20,8),dpi=80)
+plt.hist(df[&quot;Runtime (Minutes)&quot;].values,bins=20)
+plt.show()</code></pre>
+<p>修改间隔</p>
+<pre><code class="python"># 求出最⼤最⼩值
+max_ = df[&quot;Runtime (Minutes)&quot;].max()
+min_ = df[&quot;Runtime (Minutes)&quot;].min()
+# # ⽣成刻度列表
+t1 = np.linspace(min_,max_,num=21)
+# 修改刻度
+plt.xticks(np.linspace(min_,max_,num=21))
+# 添加⽹格
+plt.grid()</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009215349.png"/>
+
+<h4 id="问题三："><a href="#问题三：" class="headerlink" title="问题三："></a>问题三：</h4><p>对于这⼀组电影数据， 如果我们希望统计电影分类(genre)的情况， 应该如何处理数据？</p>
+<ul>
+<li><p>思路分析</p>
+<ul>
+<li><p>思路</p>
+<ul>
+<li>1、 创建⼀个全为 0 的 dataframe， 列索引置为电影的分类， temp_df</li>
+<li>2、 遍历每⼀部电影， temp_df 中把分类出现的列的值置为 1</li>
+<li>3、 求和</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>1、 创建⼀个全为 0 的 dataframe， 列索引置为电影的分类， temp_df</p>
+</li>
+</ul>
+<pre><code class="python"># 进⾏字符串分割
+temp_list = [i.split(&quot;,&quot;) for i in df[&quot;Genre&quot;]]
+# 获取电影的分类
+genre_list = np.unique([i for j in temp_list for i in j])
+# 增加新的列
+temp_df = pd.DataFrame(np.zeros([df.shape[0],genre_list.shape[0]]),columns=genre_list)</code></pre>
+<ul>
+<li>2、 遍历每⼀部电影， temp_df 中把分类出现的列的值置为 1</li>
+</ul>
+<pre><code class="python">for i in range(1000):
+#temp_list[i] [&#39;Action&#39;,&#39;Adventure&#39;,&#39;Animation&#39;]
+temp_df.ix[i,temp_list[i]]=1
+print(temp_df.sum().sort_values())</code></pre>
+<ul>
+<li>3、 求和,绘图</li>
+</ul>
+<pre><code class="python">temp_df.sum().sort_values(ascending=False).plot(kind=&quot;bar&quot;,figsize=(20,8),fontsize=20,colormap=&quot;cool&quot;)
+Musical 5.0
+Western 7.0
+War 13.0
+Music 16.0
+Sport 18.0
+History 29.0
+Animation 49.0
+Family 51.0
+Biography 81.0
+Fantasy 101.0
+Mystery 106.0
+Horror 119.0
+Sci-Fi 120.0
+Romance 141.0
+Crime 150.0
+Thriller 195.0
+Adventure 259.0
+Comedy 279.0
+Action 303.0
+Drama 513.0
+dtype: float64</code></pre>
+<img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20201009215515.png"/>
+
           
             <div class='article_footer'>
               
@@ -1114,10 +1315,10 @@ data.pivot_table([&#39;posi_neg&#39;], index=&#39;week&#39;)</code></pre>
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-08T18:37:24+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-09T21:55:23+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Oct 8, 2020</p>
+    <p>更新于：Oct 9, 2020</p>
   </a>
 </div>
 
@@ -1377,7 +1578,7 @@ data.pivot_table([&#39;posi_neg&#39;], index=&#39;week&#39;)</code></pre>
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#缺失值处理"><span class="toc-number">1.</span> <span class="toc-text">缺失值处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理-nan"><span class="toc-number">1.1.</span> <span class="toc-text">如何处理 nan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电影数据的缺失值处理"><span class="toc-number">1.2.</span> <span class="toc-text">电影数据的缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据离散化"><span class="toc-number">2.</span> <span class="toc-text">数据离散化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要离散化"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要离散化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是数据的离散化"><span class="toc-number">2.2.</span> <span class="toc-text">什么是数据的离散化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#股票的涨跌幅离散化"><span class="toc-number">2.2.1.</span> <span class="toc-text">股票的涨跌幅离散化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并"><span class="toc-number">3.</span> <span class="toc-text">合并</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pd-concat-实现数据合并"><span class="toc-number">3.1.</span> <span class="toc-text">pd.concat 实现数据合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pd-merge"><span class="toc-number">3.2.</span> <span class="toc-text">pd.merge</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交叉表与透视表"><span class="toc-number">4.</span> <span class="toc-text">交叉表与透视表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crosstab-交叉表"><span class="toc-number">4.1.</span> <span class="toc-text">crosstab(交叉表)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pivot-table-透视表"><span class="toc-number">4.2.</span> <span class="toc-text">pivot_table(透视表)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组与聚合"><span class="toc-number">5.</span> <span class="toc-text">分组与聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么分组与聚合"><span class="toc-number">5.1.</span> <span class="toc-text">什么分组与聚合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组-API"><span class="toc-number">5.2.</span> <span class="toc-text">分组 API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">6.</span> <span class="toc-text">案例</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#缺失值处理"><span class="toc-number">1.</span> <span class="toc-text">缺失值处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何处理-nan"><span class="toc-number">1.1.</span> <span class="toc-text">如何处理 nan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电影数据的缺失值处理"><span class="toc-number">1.2.</span> <span class="toc-text">电影数据的缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据离散化"><span class="toc-number">2.</span> <span class="toc-text">数据离散化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要离散化"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要离散化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是数据的离散化"><span class="toc-number">2.2.</span> <span class="toc-text">什么是数据的离散化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例：股票的涨跌幅离散化"><span class="toc-number">2.3.</span> <span class="toc-text">案例：股票的涨跌幅离散化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#合并"><span class="toc-number">3.</span> <span class="toc-text">合并</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pd-concat-实现数据合并"><span class="toc-number">3.1.</span> <span class="toc-text">pd.concat 实现数据合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pd-merge"><span class="toc-number">3.2.</span> <span class="toc-text">pd.merge</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交叉表与透视表"><span class="toc-number">4.</span> <span class="toc-text">交叉表与透视表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#crosstab-交叉表"><span class="toc-number">4.1.</span> <span class="toc-text">crosstab(交叉表)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pivot-table-透视表"><span class="toc-number">4.2.</span> <span class="toc-text">pivot_table(透视表)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组与聚合"><span class="toc-number">5.</span> <span class="toc-text">分组与聚合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么分组与聚合"><span class="toc-number">5.1.</span> <span class="toc-text">什么分组与聚合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组-API"><span class="toc-number">5.2.</span> <span class="toc-text">分组 API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#案例-星巴克零售店铺数据"><span class="toc-number">5.3.</span> <span class="toc-text">案例 星巴克零售店铺数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例-利用-Pandas-进行电影数据的分析"><span class="toc-number">6.</span> <span class="toc-text">案例 利用 Pandas 进行电影数据的分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需求"><span class="toc-number">6.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现"><span class="toc-number">6.2.</span> <span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题⼀："><span class="toc-number">6.2.1.</span> <span class="toc-text">问题⼀：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题⼆："><span class="toc-number">6.2.2.</span> <span class="toc-text">问题⼆：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题三："><span class="toc-number">6.2.3.</span> <span class="toc-text">问题三：</span></a></li></ol></li></ol></li></ol>
     </div>
   </section>
 
@@ -1454,19 +1655,19 @@ data.pivot_table([&#39;posi_neg&#39;], index=&#39;week&#39;)</code></pre>
   
   
   
-  <!-- <div><p>Blog content follows the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License</a></p>
+  <!-- <div><p>博客內容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh_TW" target="_blank" rel="noopener">姓名標示-非商業性-相同方式分享 4.0 國際 (CC BY-NC-SA 4.0) 協議</a></p>
 </div>
   
   
   
-  Use
+  本站使用
   <a href="https://volantis.js.org/" target="_blank" class="codename">Volantis</a> -->
-  <!-- as theme -->
+  <!-- 作為主題 -->
   
-  <!-- ,  -->
-  total visits
+  <!-- ， -->
+  總訪問量為
   <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
-  times
+  次
   
   <!-- 
   
