@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.flaglee.cn/2020/08/10/%E4%BD%BF%E7%94%A8QT%E7%BC%96%E8%AF%91RTKLIB-GUI%E7%A8%8B%E5%BA%8F/</loc>
+    
+    <lastmod>2021-03-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.flaglee.cn/2020/10/08/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-%E5%9B%9B-%EF%BC%9APandas%E9%AB%98%E7%BA%A7%E5%A4%84%E7%90%86/</loc>
     
     <lastmod>2020-10-09</lastmod>
@@ -61,13 +68,6 @@
     <loc>https://www.flaglee.cn/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/</loc>
     
     <lastmod>2020-09-08</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/2020/08/10/%E4%BD%BF%E7%94%A8QT%E7%BC%96%E8%AF%91RTKLIB-GUI%E7%A8%8B%E5%BA%8F/</loc>
-    
-    <lastmod>2020-08-11</lastmod>
     
   </url>
   
@@ -193,7 +193,28 @@
   </url>
   
   <url>
+    <loc>https://www.flaglee.cn/tags/QT/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.flaglee.cn/tags/GNSS/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/RTKlib/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/RTK/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -214,14 +235,28 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/RTKlib/</loc>
+    <loc>https://www.flaglee.cn/tags/Hexo/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/tags/RTK/</loc>
+    <loc>https://www.flaglee.cn/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/%E8%BF%9B%E7%A8%8B/</loc>
+    <lastmod>2021-03-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.flaglee.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -269,41 +304,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://www.flaglee.cn/tags/Hexo/</loc>
-    <lastmod>2021-03-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/%E5%A4%9A%E4%BB%BB%E5%8A%A1/</loc>
-    <lastmod>2021-03-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/%E8%BF%9B%E7%A8%8B/</loc>
-    <lastmod>2021-03-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2021-03-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.flaglee.cn/tags/QT/</loc>
-    <lastmod>2021-03-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   
   <url>
@@ -335,14 +335,14 @@
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/categories/Machine-Learning/</loc>
+    <loc>https://www.flaglee.cn/categories/blog/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.flaglee.cn/categories/blog/</loc>
+    <loc>https://www.flaglee.cn/categories/Machine-Learning/</loc>
     <lastmod>2021-03-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
