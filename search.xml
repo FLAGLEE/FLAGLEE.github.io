@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>异常星历筛选算法</title>
+      <link href="/2020/12/03/%E5%BC%82%E5%B8%B8%E6%98%9F%E5%8E%86%E7%AD%9B%E9%80%89%E7%AE%97%E6%B3%95/"/>
+      <url>/2020/12/03/%E5%BC%82%E5%B8%B8%E6%98%9F%E5%8E%86%E7%AD%9B%E9%80%89%E7%AE%97%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>近期在各种项目中，总是不可避免地遇到星历异常问题，而广播星历的误差会对 GPS 定位精度会产生严重影响。因此，设计一种监测数据实时解算星历异常处理方法极为重要。</p><p>这篇文章记录一下做的第二个工作，剔除星历文件中异常的卫星，得到最优星历。</p></blockquote><a id="more"></a><h2 id="异常处理方法"><a href="#异常处理方法" class="headerlink" title="异常处理方法"></a>异常处理方法</h2><p>当接收到融合后的到广播星历实时融合流和到广播星历实时接收流之后，首先要验证其中是否有错误的卫星星历，考虑到变形监测的实时性需要，我们采用求解 SPP 的办法来简单高效地验证星历异常问题。验证流程如下图所示，因为实际应用中多系统 GNSS 星历异常检验过于复杂，这里我们采用 GPS+BDS 双系统做简要讲解。<br><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20210314140205.png" style="text-align: center;" /></p><p>首先，采用原始的接收到的 GPS+BDS 双系统的星历去计算 SPP，若有解，判断解的历元数是否大于观测数据历元数的 1/2 及解的标准偏差是否小于 1000（这里的 1/2 和 1000 为认为设置的阈值，目的是排除星历错误但仍有解、部分时段星历错误但仍有解等其他情况），若满足则输出解，若不满足则与双系统无解一样去分别计算单系统情况。</p><p>若 BDS 有解，则接下来尝试逐次移除 GPS 卫星组合来尝试双系统能否有解。举例说明，若剔除 G01、G02 后 SPP 解算正常也能通过阈值检验，那么便可以输出有问题的卫星和解算结果。单 GPS 有解也是类似操作，但由于 GPS 卫星分轨道的特殊性，BDS 的地球静止轨道卫星（GEO）和倾斜地球同步轨道卫星（IGSO）存在较频繁的轨道机动[8]，因此多了一步剔除某个轨道卫星的操作。</p><p>当我们得到完整解或提出错误卫星的解之后，在比较两种星历解的精度指标，比如解算卫星数、结果标准差等指标，每个指标赋予相应权重，挑选出最优的星历，用于实时变形监测工程。</p><h2 id="几个小函数"><a href="#几个小函数" class="headerlink" title="几个小函数"></a>几个小函数</h2><pre><code class="c">void comb(int deep, int n, int m) {    int i = 0;    if (deep &gt; n)  // 越界递归结束        return;    if (results_end == m)  // 找到结果，打印，递归结束    {        /*printf(&quot;exclude sat: &quot;);*/        for (i = 0; i &lt; m; i++) {            /*printf(&quot;%d &quot;, results[i]);*/            double_sat[double_count][i] = results[i];        }        double_count++;        /*printf(&quot;\n&quot;);*/        return;    }    results[results_end++] = array_for_comb[deep];    comb(deep + 1, n, m);  //向下一级递归    results_end--;    comb(deep + 1, n, m);  //向下一级递归}//struct for describe different soltypedef struct{    double ave_rr[3];       /* position (m) {x,y,z} or {e,n,u} */    double std[3];}dsc_per_sol;/* 中位数 */static void swap(void* a, void* b, size_t size){    char* p1 = (char*)a;    char* p2 = (char*)b;    char temp;    while (size--)    {        temp = *p1;        *p1 = *p2;        *p2 = temp;        p1++;        p2++;    }}static int PartSort(double* arr, int start, int end){    int left = start;    int right = end;    double key = arr[end];   //选取关键字    while (left &lt; right)    {        while (left &lt; right &amp;&amp; arr[left] &lt;= key)  //左边找比key大的值        {            ++left;        }        while (left &lt; right &amp;&amp; arr[right] &gt;= key)  //右边找比key小的值        {            --right;        }        if (left &lt; right)        {            swap(&amp;arr[left], &amp;arr[right], sizeof(double));  //找到之后交换左右的值        }    }    swap(&amp;arr[right], &amp;arr[end], sizeof(double));    return left;}extern int getmedium_array(const double* arr, const int size, double* median){    int start = 0;    int end = size - 1;    int mid = (size - 1) / 2;    int div = PartSort(arr, start, end);    while (div != mid)    {        if (mid &lt; div) //左半区间找            div = PartSort(arr, start, div - 1);        else   //左半区间找            div = PartSort(arr, div + 1, end);    }    if (median)* median = arr[mid];    return 0;}/* ave */void cal_ave(double rr_temp[][3], int size, double ave_rr[]) {    double sum[3] = { 0 };    int i, j;    for (i = 0; i &lt; size; i++) {        for (j = 0; j &lt; 3; j++) {            sum[j] += rr_temp[i][j];        }    }    for (i = 0; i &lt; 3; i++) {        ave_rr[i] = sum[i] / size;    }}/* std */void cal_std(double rr_temp[][3], int size, double ave_rr[], double std_rr[]) {    double sum[3] = { 0 };    int i, j;    for (i = 0; i &lt; size; i++) {        for (j = 0; j &lt; 3; j++) {            sum[j] += (rr_temp[i][j] - ave_rr[j]) * (rr_temp[i][j] - ave_rr[j]);        }    }    for (i = 0; i &lt; 3; i++) {        std_rr[i] = sqrt(sum[i] / size);    }}/* exclude satellite */void exclude_sat(char str_sats[], rtk_t* rtk, int print) {    char buff[1024];    char* sat_p, * sat_id;    int sat_prn;    int sat_prns[MAXSAT] = { 0 };    int count = 0;    char str_sat_prns[512];    char temp_sat_prns[4];    for (int i = 0; i &lt; MAXSAT; i++) rtk-&gt;opt.exsats[i] = 0;    strcpy(buff, str_sats);    /* strtok返回被分解的第一个子字符串，如果没有可检索的字符串，则返回一个空指针;分割后的str会变 */    for (sat_p = strtok(buff, &quot; &quot;); sat_p; sat_p = strtok(NULL, &quot; &quot;)) {        if (*sat_p == &#39;+&#39;) sat_id = sat_p + 1; else sat_id = sat_p;        if (!(sat_prn = satid2no(sat_id))) continue;        rtk-&gt;opt.exsats[sat_prn - 1] = *sat_p == &#39;+&#39; ? 2 : 1;        sat_prns[count++] = sat_prn;    }    if (print) {        strcpy(str_sat_prns, &quot;\texclude sat : &quot;);        for (int i = 0; i &lt; count; i++) {            //itoa(sat_prns[i], temp_sat_prns, 10);            sprintf(temp_sat_prns, &quot;%d&quot;, sat_prns[i]);            strcat(str_sat_prns, temp_sat_prns);            strcat(str_sat_prns, &quot; &quot;);            //trace(1, &quot;%d &quot;, sat_prns[i]);        }        trace(1, &quot;%s\n&quot;, str_sat_prns);        //trace(1, &quot;\n&quot;);    }}/* get satellite group */int get_sat_group(char str_sats[], int sat_prns[]) {    char buff[1024];    char* sat_p, * sat_id;    int sat_prn, count = 0;    strcpy(buff, str_sats);    /* strtok返回被分解的第一个子字符串，如果没有可检索的字符串，则返回一个空指针;分割后的str会变 */    for (sat_p = strtok(buff, &quot; &quot;); sat_p; sat_p = strtok(NULL, &quot; &quot;)) {        if (*sat_p == &#39;+&#39;) sat_id = sat_p + 1; else sat_id = sat_p;        if (!(sat_prn = satid2no(sat_id))) continue;        sat_prns[count++] = sat_prn;    }    return count;}</code></pre><p>其余代码较长，有兴趣的可以查看<a href="https://github.com/FLAGLEE/CalRef/tree/main/src" target="_blank" rel="noopener">FLAG’s GitHub</a>。</p><h2 id="程序示例"><a href="#程序示例" class="headerlink" title="程序示例"></a>程序示例</h2><ul><li><p>Features</p><ul><li>Filter abnormal GNSS satellite ephemeris</li><li>Eliminate the wrong satellite ephemeris</li><li>Return a list of satellites with wrong ephemeris</li><li>Calculate accurate reference station coordinates</li></ul></li><li><p>Input example</p><ul><li>-k D:\Document\RTK\CalRef\CalRef\data\calref.conf -o D:\Document\RTK\CalRef\sc 北斗 GEO 星历错误\sc 北斗 GEO 星历错误\SCDC02_test.pos D:\Document\RTK\CalRef\sc 北斗 GEO 星历错误\sc 北斗 GEO 星历错误\SCDC02.obs D:\Document\RTK\CalRef\sc 北斗 GEO 星历错误\sc 北斗 GEO 星历错误\brdc0350-lqz.21p</li></ul></li><li><p>Output example</p><ul><li>Success<ul><li>//有解</li></ul></li><li>Error<ul><li>//无解</li></ul></li><li>Error System :navsys=5<ul><li>//剔除错误卫星系统，有解</li></ul></li><li>Error Satellite List :C01 C02 C03 C04 C05 C18<ul><li>//剔除错误卫星，有解</li></ul></li></ul></li></ul><p>结果文件：<br><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20210314141109.png" alt=""></p><h2 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h2><p>软件开源提供给大家使用，目前有 Windows 版本和 Linux 版本，软件地址为<a href="https://github.com/FLAGLEE/CalRef/tree/main/bin" target="_blank" rel="noopener">FLAG’s GitHub</a>。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> GNSS </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> GNSS </tag>
+            
+            <tag> RTK </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>接收机星历融合算法</title>
       <link href="/2020/11/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/"/>
       <url>/2020/11/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/</url>
@@ -22,9 +49,9 @@
             
             <tag> GNSS </tag>
             
-            <tag> RTKlib </tag>
-            
             <tag> RTK </tag>
+            
+            <tag> RTKlib </tag>
             
         </tags>
       
@@ -288,11 +315,11 @@
             
             <tag> GNSS </tag>
             
-            <tag> RTKlib </tag>
-            
             <tag> RTK </tag>
             
             <tag> QT </tag>
+            
+            <tag> RTKlib </tag>
             
         </tags>
       
@@ -319,13 +346,13 @@
             
             <tag> GNSS </tag>
             
-            <tag> GPS </tag>
-            
-            <tag> BDS </tag>
+            <tag> RTK </tag>
             
             <tag> RTKlib </tag>
             
-            <tag> RTK </tag>
+            <tag> GPS </tag>
+            
+            <tag> BDS </tag>
             
         </tags>
       
@@ -377,9 +404,9 @@
       
         <tags>
             
-            <tag> blog </tag>
-            
             <tag> Hexo </tag>
+            
+            <tag> blog </tag>
             
         </tags>
       
