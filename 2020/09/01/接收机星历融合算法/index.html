@@ -16,8 +16,12 @@
 
   <!-- 页面元数据 -->
   
-    <title>about me - 闲情记趣|FLAG&#39;s blog</title>
+    <title>接收机星历融合算法 - 闲情记趣|FLAG&#39;s blog</title>
   
+    <meta name="keywords" content="RTKlib,RTK,GNSS,星历,接收机">
+  
+  
+    <meta name="description" content="接收机星历融合算法">
   
 
   <!-- feed -->
@@ -156,93 +160,7 @@
     }
   </style>
   
-  <div class="cover-wrapper">
-    
-      <cover class='cover page half'>
-        <div class='cover-body'>
-  <div class='a'>
-    
-      <img class='logo' src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/logo5.png'/>
-    
-    
-    
-      <p class="subtitle">This is Major Tom to Ground Control.</p>
-    
-  </div>
-  <div class='b'>
-    
-      <div class="m_search">
-        <form name="searchform" class="form u-search-form">
-          <input type="text" class="input u-search-input" placeholder="" />
-          <i class="icon fas fa-search fa-fw"></i>
-        </form>
-      </div>
-    
-    <div class='menu navigation'>
-      <ul class='cover-list-h'>
-        
-          
-            <li>
-              <a class="nav home"
-                href="/"
-                
-                
-                id="home">
-                <i class='fas fa-feather-alt fa-fw'></i>首页
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/archives/"
-                
-                
-                id="archives">
-                <i class='fas fa-book fa-fw'></i>博文
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/shuoshuo/"
-                
-                
-                id="shuoshuo">
-                <i class='fas fa-comment-dots fa-fw'></i>说说
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/comment/"
-                
-                  rel="external nofollow noopener noreferrer"
-                
-                
-                id="comment">
-                <i class='fas fa-comments fa-fw'></i>留言
-              </a>
-            </li>
-          
-            <li>
-              <a class="nav home"
-                href="/about/"
-                
-                
-                id="about">
-                <i class='fa fa-flag fa-fw'></i>关于
-              </a>
-            </li>
-          
-        
-      </ul>
-    </div>
-  </div>
-</div>
-
-      </cover>
-    
-    <div id="loading-bar-wrapper">
+  <div id="loading-bar-wrapper">
   <div id="loading-bar"></div>
 </div>
 <header class="l_header shadow blur">
@@ -735,10 +653,9 @@
 
 <script>setLoadingBarProgress(40);</script>
 
-  </div>
 
 
-  <div class="l_body">
+  <div class="l_body nocover">
     <div class="body-wrapper">
       
 
@@ -746,7 +663,7 @@
   
 
   
-    <article id="page" class="post white-box reveal shadow blur article-type-page" itemscope itemprop="blogPost">
+    <article id="post" class="post white-box reveal shadow blur article-type-post" itemscope itemprop="blogPost">
       
 
 
@@ -758,8 +675,8 @@
         
           
   <h1 class="title">
-    <a href="/about/index.html">
-      about me
+    <a href="/2020/09/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/">
+      接收机星历融合算法
     </a>
   </h1>
 
@@ -782,6 +699,14 @@
           
             
               
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/GNSS/' rel="nofollow">
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <p>GNSS</p>
+    </a>
+  </div>
+
 
             
           
@@ -789,7 +714,7 @@
               <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
-    <p>发布于：May 28, 2020</p>
+    <p>发布于：Sep 1, 2020</p>
   </a>
 </div>
 
@@ -813,32 +738,312 @@
         <div class="article-entry" itemprop="articleBody">
           
           
-          <p class='p center subtitle red'>自夸出色</p>
-<p class='p center subtitle yellow'>平平无奇</p>
-<p class='p center subtitle green'>年轻无为</p>
-<p class='p center subtitle cyan'>卖马为生</p>
+          <blockquote>
+<p>近期在各种项目中，总是不可避免地遇到星历异常问题，而广播星历的误差会对 GPS 定位精度会产生严重影响。因此，设计一种监测数据实时解算星历异常处理方法极为重要。</p>
+</blockquote>
+<blockquote>
+<p>这篇文章记录一下做的第一个工作，将各个参考站接收机的星历融合为一个文件。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="星历异常问题"><a href="#星历异常问题" class="headerlink" title="星历异常问题"></a>星历异常问题</h2><p>目前项目中广播星历实时获取主要有两种方式：</p>
+<ul>
+<li>接收网上各个分析中心的实时广播星历数据（包括 products.igs-ip.net、rt.igs.org 等）</li>
+<li>使用 GNSS 变形监测的接收机本身接收到的星历</li>
+</ul>
+<p>但是两种方式都存在不稳定因素：</p>
+<ul>
+<li>第一种广播星历实时融合流会不可避免地遇到网络延迟、播发延迟甚至网络传输故障问题</li>
+<li>第二种广播星历实时接收流因为依赖于接收机，所以可能会遇到设备没电、设备网络信号不好甚至设备遭到人为破坏等问题</li>
+</ul>
+<p>每一种问题对于实时变形监测工程来说都是致命的，因此要设计一种方式得到最优的星历。</p>
+<h2 id="主要方案"><a href="#主要方案" class="headerlink" title="主要方案"></a>主要方案</h2><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20210314131553.png" style="text-align: center;" />
+
+<p>将实时从各个网站上接收的星历融合为一个文件，同时收集各个接收机的星历融合为一个文件，在分别筛选两个星历文件有无异常，得出最优星历。<br>这篇文章先谈一下第一部分融合星历。</p>
+<h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><pre><code class="c">int main(int argc, char *argv[])
+{
+    double nmeapos[3];
+    int i, strs[MAXSTRINPPP] = { 0 };
+    char* paths[MAXSTRINPPP], * cmds[MAXSTRINPPP] = { 0 }, * cmds_periodic[MAXSTRINPPP] = { 0 }, * rcvopts[MAXSTRINPPP] = { 0 }, info[MAXSTRINPPP][100];
+
+    int formats[MAXSTRINPPP] = { 0 };
+
+    prcopt_t prcopt = prcopt_default;
+    solopt_t solopt = solopt_default;
+    int cycle = 10;
+    int buffsize = 32768;
+    int navsel = 3;
+    int nmeacycle = 1000;
+    int nmeareq = 2;
+    char errmsg[100] = { 0 };
+    char cmdm8t[1024] = &quot;&quot;;
 
 
 
-<pre><code>Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Flat is better than nested.
-Sparse is better than dense.
-Readability counts.
-Special cases aren&#39;t special enough to break the rules.
-Although practicality beats purity.
-Errors should never pass silently.
-Unless explicitly silenced.
-In the face of ambiguity, refuse the temptation to guess.
-There should be one-- and preferably only one --obvious way to do it.
-Although that way may not be obvious at first unless you&#39;re Dutch.
-Now is better than never.
-Although never is often better than *right* now.
-If the implementation is hard to explain, it&#39;s a bad idea.
-If the implementation is easy to explain, it may be a good idea.
-Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre>
+    eph_t  eph0 = { 0,-1,-1 };
+    geph_t geph0 = { 0,-1 };
+    seph_t seph0 = { 0 };
+    ephh_t nhead0 = { 0 };
+
+    char* p, buff[200], currDir[MAX_PATH], streamFile[MAX_PATH], fileFile[MAX_PATH];
+    int n = 0;
+
+
+
+    initlock(&amp;global_lock);
+
+    GetCurrentDirectoryA(MAX_PATH, currDir);
+
+
+    printf(&quot;\nStart receiving broadcast ephemeris...\n&quot;);
+
+    for (i = 1; i &lt; argc; i++) {
+        if (!strcmp(argv[i], &quot;-p&quot;) &amp;&amp; i + 1 &lt; argc) {
+            printf(&quot;Self-defined prefix is %s\n\n&quot;, argv[i+1]);
+            strcpy(ephprefix, argv[++i]);
+            prefixflag = 1;
+            break;
+        }
+    }
+    if (!prefixflag) {
+        printf(&quot;Default prefix is brdc\n\n&quot;);
+    }
+
+
+    /* load stream options from configuration file */
+    for (i = 1; i &lt; argc; i++) {
+        if (!strcmp(argv[i], &quot;-s&quot;)) {
+            typeflag = 2;
+            printf(&quot;Read nav from stream\n\n&quot;);
+            sprintf(streamFile, &quot;%s\\%s&quot;, currDir, &quot;stream.txt&quot;);
+            if (!loadoptxt(typeflag, streamFile, info, strs, &amp;corNum)) {
+                printf(&quot;no input path\n&quot;);
+                return -1;
+            }
+
+        }
+        else if (!strcmp(argv[i], &quot;-f&quot;)) {
+            typeflag = 1;
+            printf(&quot;Read nav from file\n\n&quot;);
+            sprintf(fileFile, &quot;%s\\%s&quot;, currDir, &quot;file.txt&quot;);
+            if (!loadoptxt(typeflag, fileFile, info, strs, &amp;corNum)) {
+                printf(&quot;no input path\n&quot;);
+                return -1;
+            }
+
+        }
+        else if (!strcmp(argv[i], &quot;-o&quot;) &amp;&amp; i + 1 &lt; argc) {
+            strcpy(brdmdir, argv[++i]);
+            printf(&quot;output path is %s\n&quot;, brdmdir);
+            verbrdc = 2.0;
+        }
+        else if (!strcmp(argv[i], &quot;-p&quot;) &amp;&amp; i + 1 &lt; argc) { ++i; continue; }
+        else if (n &lt; MAXSTRINPPP) {
+            strcpy(info[n], argv[i]);
+            printf(&quot;file path %d is %s\n&quot;, n+1, info[n]);
+            strs[n++] = 2;
+        }
+    }
+    if (!typeflag) {
+        corNum = n;
+    }
+
+
+    for (i = 0; i&lt; MAXSTRINPPP; i++) {
+        paths[i] = (char *)malloc(256 * sizeof(char));
+        paths[i][0] = &#39;\0&#39;;
+    }
+    for (i = 0; i &lt; corNum; i++)
+    {
+        strcpy(paths[i], info[i]);
+        formats[i] = STRFMT_RTCM3;
+
+        cmds[i] = (char *)malloc(256 * sizeof(char));
+        rcvopts[i] = (char *)malloc(256 * sizeof(char));
+        cmds[i][0] = rcvopts[i][0] = &#39;\0&#39;;
+    }
+    pppsvr = (pppsvr_t*)malloc(sizeof(pppsvr_t) * (corNum));
+
+    for (i = 0; i &lt; corNum; i++)
+    {
+        rtksvrinit(pppsvr + i);
+    }
+
+    if (!(navppp.eph = (eph_t*)malloc(sizeof(eph_t) * (MAXSAT) * 2)) ||
+        !(navppp.geph = (geph_t*)malloc(sizeof(geph_t) * NSATGLO * 2)) ||
+        !(navppp.seph = (seph_t*)malloc(sizeof(seph_t) * NSATSBS * 2))) {
+        return 0;
+    }
+
+    for (i = 0; i &lt; (MAXSAT) * 2; i++) navppp.eph[i] = eph0;
+    for (i = 0; i &lt; NSATGLO * 2; i++) navppp.geph[i] = geph0;
+    for (i = 0; i &lt; NSATSBS * 2; i++) navppp.seph[i] = seph0;
+    navppp.n = (MAXSAT) * 2;
+    navppp.ng = NSATGLO * 2;
+    navppp.ns = NSATSBS * 2;
+    navppp.nhead = nhead0;
+
+
+    //printf(&quot;%d file\n&quot;, corNum);
+    printf(&quot;\nStart fusion...\n&quot;);
+    rtksvrstart(pppsvr, cycle, buffsize, strs, paths, formats, navsel, cmds, cmds_periodic, rcvopts, nmeacycle, nmeareq, nmeapos,&amp;prcopt, &amp;solopt, &amp;monistr, errmsg);
+    //system(&quot;pause&quot;);
+
+
+    for (i = 0; i &lt; MAXSTRINPPP; i++)
+    {
+        free(paths[i]);
+    }
+    for (i = 0; i &lt; MAXSTRINPPP; i++)
+    {
+        free(rcvopts[i]);
+        free(cmds[i]);
+    }
+    //printf(&quot;pthread join\n&quot;);
+
+    for (int i = 0; i &lt; corNum; i++) {
+        if (pppsvr[i].thread &gt; 0) {
+            printf(&quot;thread is %d\n&quot;, pppsvr[i].thread);
+            WaitForSingleObject(pppsvr[i].thread, INFINITE);
+
+
+        }
+    }
+
+    printf(&quot;Fusion finish.\n&quot;);
+    return 0;
+
+}</code></pre>
+<p>各个函数详细内容欢迎查看<a href="https://github.com/FLAGLEE/MergeNav/tree/main/src" target="_blank" rel="noopener">FLAG’s GitHub</a>。</p>
+<h2 id="程序示例"><a href="#程序示例" class="headerlink" title="程序示例"></a>程序示例</h2><p><img src="https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/20210314133034.png" alt=""></p>
+<p>融合后的文件中包含了所有接收机的星历，且不含重复星历。</p>
+<h2 id="软件下载"><a href="#软件下载" class="headerlink" title="软件下载"></a>软件下载</h2><p>软件开源提供给大家使用，目前有 Windows 版本和 Linux 版本，软件地址为<a href="https://github.com/FLAGLEE/MergeNav/tree/main/bin" target="_blank" rel="noopener">FLAG’s GitHub</a>。</p>
+<pre><code># MergeNav V2.0
+## -s
+    stream type
+    read stream_path\out_path\out_file_prefix from stream.txt
+    e.g.    ./MergeNav -s
+
+## -f
+    file type
+    read stream_path\out_path\out_file_prefix from file.txt
+    e.g.    ./MergeNav -f
+
+## -p
+    self-define output file prefix
+    e.g.    ./MergeNav -p WHUSGG
+        out:        WHUSGG.20p
+        default:    brdcDOY0.20p
+
+## -o
+    output path
+    e.g.    ./MergeNav -o ./Result/
+
+## other
+    input file path
+
+
+
+# e.g.
+## read from cmd
+    ./MergeNav -p LQZcmdflie -o ./Result/ ./RTCM3/HH0012.2020330binRTCM3 ./RTCM3/HH0013.2020330binRTCM3 ./RTCM3/HH0014.2020330binRTCM3
+    ./MergeNav -p LQZcmdflie -o ./Result/ ./RTCM3/HH0012.2020330binRTCM3 ./RTCM3/HH0013.2020330binRTCM3 ./RTCM3/HH0014.2020330binRTCM3 ./RTCM3/HH0015.2020330binRTCM3 ./RTCM3/HH0016.2020330binRTCM3 ./RTCM3/HH0017.2020330binRTCM3 ./RTCM3/HH0018.2020330binRTCM3 ./RTCM3/HH0019.2020330binRTCM3 ./RTCM3/HH0020.2020330binRTCM3 ./RTCM3/HH0021.2020330binRTCM3
+
+## read from stream file
+    ./MergeNav -s
+    ./MergeNav -s -p LQZstreamfile
+    ./MergeNav -s -p LQZstreamfile -o -o ./Result/
+
+## read from file file
+    ./MergeNav -f
+    ./MergeNav -s -p LQZfilefile
+    ./MergeNav -s -p LQZfilefile -o -o ./Result/
+
+
+# ver log
+## 1.0
+## 1.1
+    - add file auto stop
+    - add linux version
+## 1.2
+    - fix one file bug
+## 2.0
+    - fix thread bug, now can calculate 1 to 10 files, More files have not been tested.
+&quot;# MergeNav&quot;
+</code></pre>
+          
+            <div class='article_footer'>
+              
+                
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      
+        
+          <div style="text-align:center">💗您的喜欢是作者写作最大的动力💗</div>
+        
+      
+        
+          <div style="text-align:center">😃👇有问题欢迎加博主QQ或微信联系👇😃</div>
+        
+      
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+      
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/QQ.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+      
+        <div class='fancybox'><img src='https://cdn.jsdelivr.net/gh/FLAGLEE/imgHost/image/WeChat.jpg'
+        
+          height='64px'
+        ></div>
+      
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
           
         </div>
         
@@ -849,10 +1054,10 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-10-08T11:03:41+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-03-14T13:33:24+08:00">
   <a class='notlink'>
     <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Oct 8, 2020</p>
+    <p>更新于：Mar 14, 2021</p>
   </a>
 </div>
 
@@ -860,6 +1065,9 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/GNSS/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>GNSS</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/RTKlib/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>RTKlib</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/RTK/" rel="nofollow"><i class="fa fa-tags fa-fw" aria-hidden="true"></i><p>RTK</p></a></div>
+
 
         
       
@@ -876,7 +1084,12 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.flaglee.cn/about/index.html&title=about me - 闲情记趣|FLAG's blog&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.flaglee.cn/2020/09/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/&title=接收机星历融合算法 - 闲情记趣|FLAG's blog&summary=
+近期在各种项目中，总是不可避免地遇到星历异常问题，而广播星历的误差会对 GPS 定位精度会产生严重影响。因此，设计一种监测数据实时解算星历异常处理方法极为重要。
+
+
+这篇文章记录一下做的第一个工作，将各个参考站接收机的星历融合为一个文件。
+"
           
           >
           
@@ -888,7 +1101,12 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.flaglee.cn/about/index.html&title=about me - 闲情记趣|FLAG's blog&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.flaglee.cn/2020/09/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/&title=接收机星历融合算法 - 闲情记趣|FLAG's blog&summary=
+近期在各种项目中，总是不可避免地遇到星历异常问题，而广播星历的误差会对 GPS 定位精度会产生严重影响。因此，设计一种监测数据实时解算星历异常处理方法极为重要。
+
+
+这篇文章记录一下做的第一个工作，将各个参考站接收机的星历融合为一个文件。
+"
           
           >
           
@@ -900,7 +1118,12 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=https://www.flaglee.cn/about/index.html&title=about me - 闲情记趣|FLAG's blog&summary="
+          href="http://service.weibo.com/share/share.php?url=https://www.flaglee.cn/2020/09/01/%E6%8E%A5%E6%94%B6%E6%9C%BA%E6%98%9F%E5%8E%86%E8%9E%8D%E5%90%88%E7%AE%97%E6%B3%95/&title=接收机星历融合算法 - 闲情记趣|FLAG's blog&summary=
+近期在各种项目中，总是不可避免地遇到星历异常问题，而广播星历的误差会对 GPS 定位精度会产生严重影响。因此，设计一种监测数据实时解算星历异常处理方法极为重要。
+
+
+这篇文章记录一下做的第一个工作，将各个参考站接收机的星历融合为一个文件。
+"
           
           >
           
@@ -922,6 +1145,23 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
 
         
         
+          <div class="prev-next">
+            
+              <a class='prev' href='/2020/09/04/Python%E5%A4%9A%E4%BB%BB%E5%8A%A1%E7%BC%96%E7%A8%8B%EF%BC%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>Python多任务编程：进程和线程</p>
+                <p class='content'>
+一般写的程序都是单任务的，也就是说一个函数或者方法执行完成之后另外一个函数或者方法才能执行，要想实现多个任务同时执行的操作就需要使用多任务。多任务的最大好处是充分利用 CPU 资源，提高程序的...</p>
+              </a>
+            
+            
+              <a class='next' href='/2020/08/10/%E4%BD%BF%E7%94%A8QT%E7%BC%96%E8%AF%91RTKLIB-GUI%E7%A8%8B%E5%BA%8F/'>
+                <p class='title'>使用QT编译RTKLIB的GUI程序<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>
+近期在基于 RTKLIB 改了一些代码，但一直是基于源码运行的，于是便想着编译一个自己的图形用户界面。查阅 manual 2.4.2 手册上使用的是  Embarcadero C++ Buil...</p>
+              </a>
+            
+          </div>
+        
       </section>
     </article>
   
@@ -931,7 +1171,24 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
 
 
 
-  
+  <article class="post white-box reveal comments shadow blur">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      
+      
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+          </div>
+        </section>
+      
+      
+    </section>
+  </article>
 
 
   
@@ -942,6 +1199,13 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
 <!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
 
 
+
+  <script>
+    window.subData = {
+      title: '接收机星历融合算法',
+      tools: true
+    }
+  </script>
 
 
 </div>
@@ -1052,6 +1316,20 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
     
 
 
+
+  <section class="widget toc-wrapper shadow blur desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#星历异常问题"><span class="toc-number">1.</span> <span class="toc-text">星历异常问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要方案"><span class="toc-number">2.</span> <span class="toc-text">主要方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键代码"><span class="toc-number">3.</span> <span class="toc-text">关键代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序示例"><span class="toc-number">4.</span> <span class="toc-text">程序示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件下载"><span class="toc-number">5.</span> <span class="toc-text">软件下载</span></a></li></ol>
+    </div>
+  </section>
 
 
   
@@ -1360,6 +1638,60 @@ Namespaces are one honking great idea -- let&#39;s do more of those!</code></pre
 
 
 
+
+  
+    
+<script src="/js/valine.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var meta = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick','mail','link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function(item){
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+  var valine = new Valine();
+  function emoji(path, idx, ext) {
+      return path + "/" + path + "-" + idx + "." + ext;
+  }
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+  valine.init({
+    el: '#valine_container',
+    meta: meta,
+    
+    appId: "PTG9uQqktRPr46BlMpak0Xiq-gzGzoHsz",
+    appKey: "AX0b83MMJKlMHAiIN2sa3wUC",
+    placeholder: "填写昵称和邮箱即可评论,输入正确邮箱方便收到回复通知哦~",
+    pageSize:'10',
+    avatar:'robohash',
+    lang:'zh-cn',
+    visitor: 'true',
+    highlight: 'true',
+    mathJax: 'false',
+    enableQQ: 'true',
+    requiredFields: requiredFields,
+    emojiCDN: 'https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/emoji/valine/',
+    emojiMaps: emojiMaps
+  })
+  </script>
 
 
 
